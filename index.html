@@ -324,7 +324,7 @@ const PC={pedido:'pf-pedido',transito:'pf-transito',alfandega:'pf-alfandega',che
 let D=[],filt='todos',cSt='pedido',dIdx=null,eIdx=null,imgD=null;
 
 const CFG_KEY='elyon_supa_cfg';
-let SUPA_URL='',SUPA_KEY='';
+let SUPA_URL='https://osjalefepyfpmbmynsbl.supabase.co',SUPA_KEY='sb_publishable_XR1GQA05jl5GQlXVExKGzw_HKnwK2xx';
 
 function loadCfg(){
   try{const c=JSON.parse(localStorage.getItem(CFG_KEY)||'{}');SUPA_URL=c.url||'';SUPA_KEY=c.key||'';}catch(e){}
@@ -642,7 +642,7 @@ async function delC(){
 
 document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 
-async function init(){loadCfg();await dbLoad();}
+async function init(){await dbLoad();}
 init();
 </script>
 </body>
