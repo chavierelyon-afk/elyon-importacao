@@ -7,161 +7,71 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0D0D0D;
-  --s1:#141414;
-  --s2:#1C1C1C;
-  --s3:#252525;
-  --s4:#2E2E2E;
-  --bd:rgba(255,255,255,0.09);
-  --y:#FFE500;
-  --yd:#D4BF00;
-  --white:#FFFFFF;
-  --w80:rgba(255,255,255,0.80);
-  --w50:rgba(255,255,255,0.50);
-  --w30:rgba(255,255,255,0.30);
-  --w12:rgba(255,255,255,0.12);
-  --w06:rgba(255,255,255,0.06);
-  --bp:#5BA3FF;
-  --bt:#FF8C3A;
-  --ba:#FF5572;
-  --bv:#3ECF7A;
+  --bg:#0D0D0D;--s1:#141414;--s2:#1C1C1C;--s3:#252525;--s4:#2E2E2E;
+  --bd:rgba(255,255,255,0.09);--y:#FFE500;--yd:#D4BF00;--white:#FFFFFF;
+  --w80:rgba(255,255,255,0.80);--w50:rgba(255,255,255,0.50);
+  --w30:rgba(255,255,255,0.30);--w12:rgba(255,255,255,0.12);
+  --w06:rgba(255,255,255,0.06);--bp:#5BA3FF;--bt:#FF8C3A;--ba:#FF5572;--bv:#3ECF7A;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--s4);border-radius:2px}
-
-/* ── HEADER ── */
-header{
-  height:54px;background:var(--s1);
-  border-bottom:1px solid var(--bd);
-  display:flex;align-items:center;gap:12px;
-  padding:0 24px;position:sticky;top:0;z-index:100;
-}
+header{height:54px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px;padding:0 24px;position:sticky;top:0;z-index:100}
 header img{height:32px;object-fit:contain;flex-shrink:0}
 .h-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.08em;color:var(--white)}
 .h-sep{width:1px;height:18px;background:var(--bd);margin:0 6px}
 .h-tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--w30);font-weight:300}
 .h-right{margin-left:auto;display:flex;gap:8px;align-items:center}
-.saved-pill{
-  font-size:11px;color:var(--bv);background:rgba(62,207,122,.1);
-  border:1px solid rgba(62,207,122,.25);padding:3px 10px;border-radius:4px;
-  display:none;letter-spacing:.06em;font-weight:500;
-}
-.hbtn{
-  padding:7px 14px;border-radius:6px;border:1px solid var(--bd);
-  background:transparent;color:var(--w80);font-size:12px;font-weight:500;
-  font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap;
-}
+.saved-pill{font-size:11px;color:var(--bv);background:rgba(62,207,122,.1);border:1px solid rgba(62,207,122,.25);padding:3px 10px;border-radius:4px;display:none;letter-spacing:.06em;font-weight:500}
+.hbtn{padding:7px 14px;border-radius:6px;border:1px solid var(--bd);background:transparent;color:var(--w80);font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap}
 .hbtn:hover{border-color:var(--w30);color:var(--white)}
 .hbtn.y{background:var(--y);border-color:var(--y);color:#000;font-weight:700}
 .hbtn.y:hover{background:var(--yd);border-color:var(--yd)}
-
-/* ── PIPELINE ── */
-.pipeline{
-  background:var(--s1);border-bottom:1px solid var(--bd);
-  padding:0 24px;display:flex;align-items:stretch;gap:0;overflow-x:auto;
-}
-.pipe-step{
-  display:flex;align-items:center;gap:8px;
-  padding:12px 20px;cursor:pointer;white-space:nowrap;
-  border-bottom:2px solid transparent;transition:all .15s;
-  position:relative;
-}
+.pipeline{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 24px;display:flex;align-items:stretch;gap:0;overflow-x:auto}
+.pipe-step{display:flex;align-items:center;gap:8px;padding:12px 20px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s;position:relative}
 .pipe-step:hover{background:var(--w06)}
 .pipe-step.active{border-bottom-color:var(--y)}
 .pipe-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .pipe-label{font-size:12px;font-weight:500;color:var(--w50);letter-spacing:.04em;transition:color .15s}
 .pipe-step.active .pipe-label{color:var(--white)}
-.pipe-count{
-  font-size:11px;font-weight:600;
-  background:var(--s3);padding:2px 7px;border-radius:3px;color:var(--w50);
-}
+.pipe-count{font-size:11px;font-weight:600;background:var(--s3);padding:2px 7px;border-radius:3px;color:var(--w50)}
 .pipe-step.active .pipe-count{background:rgba(255,229,0,.15);color:var(--y)}
 .pipe-arr{color:var(--w12);font-size:18px;line-height:1;display:flex;align-items:center;padding:0 2px;flex-shrink:0}
-
-/* ── METRICS ── */
-.metrics{
-  display:grid;grid-template-columns:repeat(6,1fr);
-  padding:16px 24px;gap:10px;border-bottom:1px solid var(--bd);
-}
-.metric{
-  background:var(--s2);border:1px solid var(--bd);
-  border-radius:8px;padding:13px 15px;
-  border-top:2px solid var(--mc,var(--bd));
-  transition:transform .15s;
-}
+.metrics{display:grid;grid-template-columns:repeat(6,1fr);padding:16px 24px;gap:10px;border-bottom:1px solid var(--bd)}
+.metric{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:13px 15px;border-top:2px solid var(--mc,var(--bd));transition:transform .15s}
 .metric:hover{transform:translateY(-1px)}
 .m-lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--w30);font-weight:500;margin-bottom:6px}
 .m-val{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.02em;color:var(--white);line-height:1}
 .m-sub{font-size:10px;color:var(--w30);margin-top:3px}
-
-/* ── TOOLBAR ── */
-.toolbar{
-  padding:13px 24px;display:flex;gap:10px;align-items:center;
-  border-bottom:1px solid var(--bd);background:var(--s1);
-}
-.srch{
-  flex:1;min-width:180px;position:relative;
-}
-.srch input{
-  width:100%;background:var(--s2);border:1px solid var(--bd);
-  border-radius:6px;padding:8px 12px 8px 36px;
-  font-size:13px;color:var(--white);outline:none;
-  font-family:'DM Sans',sans-serif;transition:border-color .15s;
-}
+.toolbar{padding:13px 24px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--bd);background:var(--s1)}
+.srch{flex:1;min-width:180px;position:relative}
+.srch input{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:8px 12px 8px 36px;font-size:13px;color:var(--white);outline:none;font-family:'DM Sans',sans-serif;transition:border-color .15s}
 .srch input:focus{border-color:var(--w30)}
 .srch input::placeholder{color:var(--w30)}
-.srch::before{
-  content:'⌕';position:absolute;left:11px;top:50%;
-  transform:translateY(-50%);color:var(--w30);font-size:16px;pointer-events:none;
-}
-
-/* ── GRID ── */
+.srch::before{content:'\2315';position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--w30);font-size:16px;pointer-events:none}
 .main{padding:20px 24px 60px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
-
-/* ── CARD ── */
-.card{
-  background:var(--s1);border:1px solid var(--bd);
-  border-radius:10px;overflow:hidden;cursor:pointer;
-  display:flex;flex-direction:column;
-  transition:border-color .2s,transform .15s,box-shadow .2s;
-}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:10px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:border-color .2s,transform .15s,box-shadow .2s}
 .card:hover{border-color:rgba(255,255,255,0.2);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.5)}
 .c-thumb{width:100%;height:105px;object-fit:cover;display:block;border-bottom:1px solid var(--bd)}
-.c-thumb-ph{
-  width:100%;height:70px;background:var(--s2);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--w30);font-size:12px;font-weight:500;
-  border-bottom:1px solid var(--bd);letter-spacing:.06em;gap:6px;
-}
+.c-thumb-ph{width:100%;height:70px;background:var(--s2);display:flex;align-items:center;justify-content:center;color:var(--w30);font-size:12px;font-weight:500;border-bottom:1px solid var(--bd);letter-spacing:.06em;gap:6px}
 .c-body{padding:12px 13px;flex:1;display:flex;flex-direction:column;gap:8px}
 .c-head{display:flex;align-items:center;gap:7px;flex-wrap:nowrap}
-.badge{
-  font-size:10px;font-weight:600;letter-spacing:.08em;
-  text-transform:uppercase;padding:3px 9px;border-radius:3px;white-space:nowrap;
-  flex-shrink:0;
-}
+.badge{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:3px;white-space:nowrap;flex-shrink:0}
 .b-pedido{background:rgba(91,163,255,.15);color:#8CC4FF;border:1px solid rgba(91,163,255,.3)}
 .b-transito{background:rgba(255,140,58,.15);color:#FFB07A;border:1px solid rgba(255,140,58,.3)}
 .b-alfandega{background:rgba(255,85,114,.15);color:#FF8FA3;border:1px solid rgba(255,85,114,.3)}
 .b-chegou{background:rgba(62,207,122,.15);color:#7EEDB0;border:1px solid rgba(62,207,122,.3)}
-.c-id{
-  font-family:'Bebas Neue',sans-serif;font-size:16px;
-  letter-spacing:.06em;color:var(--white);white-space:nowrap;
-}
+.c-id{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.06em;color:var(--white);white-space:nowrap}
 .c-forn{font-size:11px;color:var(--w30);margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;flex-shrink:0}
 .c-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
 .meta-i{display:flex;flex-direction:column;gap:1px}
 .meta-l{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--w30);font-weight:500}
 .meta-v{font-size:12px;color:var(--w80);font-weight:400}
 .late-tag{font-size:9px;color:#FF8FA3;font-weight:600;letter-spacing:.06em}
-.c-foot{
-  display:flex;align-items:center;justify-content:space-between;
-  padding-top:8px;border-top:1px solid var(--bd);margin-top:auto;
-}
+.c-foot{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--bd);margin-top:auto}
 .c-skus{font-size:11px;color:var(--w30);font-weight:500}
 .prog{background:var(--s3);border-radius:2px;height:3px;flex:1;margin-left:10px;overflow:hidden}
 .pf{height:100%;border-radius:2px}
@@ -169,67 +79,31 @@ header img{height:32px;object-fit:contain;flex-shrink:0}
 .pf-transito{background:var(--bt);width:55%}
 .pf-alfandega{background:var(--ba);width:80%}
 .pf-chegou{background:var(--bv);width:100%}
-
-/* ── EMPTY ── */
-.empty{
-  grid-column:1/-1;text-align:center;padding:72px 20px;color:var(--w30);
-}
+.empty{grid-column:1/-1;text-align:center;padding:72px 20px;color:var(--w30)}
 .empty-ic{font-size:48px;opacity:.25;margin-bottom:14px}
 .empty-tx{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.14em;color:var(--w30)}
-
-/* ── OVERLAYS ── */
-.ov{
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);
-  z-index:200;align-items:flex-start;justify-content:center;
-  padding:24px 16px;overflow-y:auto;
-}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:flex-start;justify-content:center;padding:24px 16px;overflow-y:auto}
 .ov.open{display:flex}
-.modal{
-  background:var(--s1);border:1px solid var(--bd);
-  border-radius:12px;padding:24px;width:100%;max-width:560px;
-  box-shadow:0 40px 100px rgba(0,0,0,.8);
-  animation:up .2s ease both;
-}
+.modal{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;width:100%;max-width:560px;box-shadow:0 40px 100px rgba(0,0,0,.8);animation:up .2s ease both}
 @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .m-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .m-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.08em;color:var(--white)}
-.xbtn{
-  padding:5px 9px;border-radius:5px;border:1px solid var(--bd);
-  background:transparent;color:var(--w50);cursor:pointer;font-size:14px;
-  transition:all .15s;line-height:1;
-}
+.xbtn{padding:5px 9px;border-radius:5px;border:1px solid var(--bd);background:transparent;color:var(--w50);cursor:pointer;font-size:14px;transition:all .15s;line-height:1}
 .xbtn:hover{border-color:var(--w50);color:var(--white)}
 .fld{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
 .fld label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--w30);font-weight:500}
-.fld input,.fld textarea,.fld select{
-  background:var(--s2);border:1px solid var(--bd);
-  border-radius:6px;padding:9px 12px;
-  font-size:13px;color:var(--white);outline:none;
-  font-family:'DM Sans',sans-serif;transition:border-color .15s;width:100%;
-}
+.fld input,.fld textarea,.fld select{background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:9px 12px;font-size:13px;color:var(--white);outline:none;font-family:'DM Sans',sans-serif;transition:border-color .15s;width:100%}
 .fld input:focus,.fld textarea:focus{border-color:var(--w50)}
 .fld input::placeholder,.fld textarea::placeholder{color:var(--w30)}
 .r2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.sec{
-  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--y);opacity:.6;font-weight:500;
-  margin:16px 0 8px;display:flex;align-items:center;justify-content:space-between;
-}
+.sec{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--y);opacity:.6;font-weight:500;margin:16px 0 8px;display:flex;align-items:center;justify-content:space-between}
 .st-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-.sopt{
-  font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-  padding:5px 13px;border-radius:4px;border:1px solid var(--bd);
-  cursor:pointer;background:transparent;color:var(--w50);transition:all .15s;
-}
+.sopt{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 13px;border-radius:4px;border:1px solid var(--bd);cursor:pointer;background:transparent;color:var(--w50);transition:all .15s}
 .s-pedido.sel{border-color:var(--bp);color:#8CC4FF;background:rgba(91,163,255,.12)}
 .s-transito.sel{border-color:var(--bt);color:#FFB07A;background:rgba(255,140,58,.12)}
 .s-alfandega.sel{border-color:var(--ba);color:#FF8FA3;background:rgba(255,85,114,.12)}
 .s-chegou.sel{border-color:var(--bv);color:#7EEDB0;background:rgba(62,207,122,.12)}
-.img-drop{
-  border:1px dashed var(--bd);border-radius:7px;
-  padding:18px;text-align:center;cursor:pointer;
-  background:var(--s2);transition:border-color .2s;position:relative;overflow:hidden;
-}
+.img-drop{border:1px dashed var(--bd);border-radius:7px;padding:18px;text-align:center;cursor:pointer;background:var(--s2);transition:border-color .2s;position:relative;overflow:hidden}
 .img-drop:hover{border-color:var(--w30)}
 .img-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .img-drop-lbl{font-size:11px;color:var(--w30);margin-top:5px}
@@ -241,32 +115,13 @@ header img{height:32px;object-fit:contain;flex-shrink:0}
 .sku-row input{font-size:12px;padding:7px 9px}
 .del{background:transparent;border:none;color:var(--w30);cursor:pointer;font-size:14px;transition:color .15s;display:flex;align-items:center;justify-content:center;padding:0}
 .del:hover{color:var(--ba)}
-.add-sku{
-  width:100%;padding:8px;border-radius:5px;
-  border:1px dashed var(--bd);background:transparent;
-  color:var(--w30);font-size:12px;cursor:pointer;
-  font-family:'DM Sans',sans-serif;transition:all .2s;font-weight:500;
-}
+.add-sku{width:100%;padding:8px;border-radius:5px;border:1px dashed var(--bd);background:transparent;color:var(--w30);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;font-weight:500}
 .add-sku:hover{border-color:var(--w50);color:var(--white)}
-.m-actions{
-  display:flex;gap:8px;justify-content:flex-end;
-  margin-top:16px;padding-top:14px;border-top:1px solid var(--bd);
-}
-.btn-s{
-  padding:9px 22px;border-radius:6px;border:none;
-  background:var(--y);color:#000;font-size:13px;font-weight:700;
-  font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;font-size:15px;
-  cursor:pointer;transition:all .15s;
-}
+.m-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;padding-top:14px;border-top:1px solid var(--bd)}
+.btn-s{padding:9px 22px;border-radius:6px;border:none;background:var(--y);color:#000;font-size:15px;font-weight:700;font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;cursor:pointer;transition:all .15s}
 .btn-s:hover{background:var(--yd);transform:translateY(-1px)}
-.btn-c{
-  padding:9px 16px;border-radius:6px;border:1px solid var(--bd);
-  background:transparent;color:var(--w50);font-size:13px;
-  font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;
-}
+.btn-c{padding:9px 16px;border-radius:6px;border:1px solid var(--bd);background:transparent;color:var(--w50);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s}
 .btn-c:hover{border-color:var(--w30);color:var(--white)}
-
-/* detail */
 .d-img{width:100%;height:140px;object-fit:cover;border-radius:7px;margin-bottom:14px}
 .d-ph{width:100%;height:55px;background:var(--s2);border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--w30);font-size:12px;gap:6px;margin-bottom:14px;font-weight:500}
 .d-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--bd);font-size:13px}
@@ -279,23 +134,19 @@ header img{height:32px;object-fit:contain;flex-shrink:0}
 .sku-tbl tr:last-child td{border-bottom:none}
 .sku-tot{display:flex;justify-content:space-between;padding:8px 6px 0;font-size:13px;font-weight:700;border-top:1px solid var(--bd);margin-top:4px;color:var(--white)}
 .s-change{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;margin-bottom:2px}
-
-/* storage indicator */
-.store-bar{
-  background:var(--s2);border-bottom:1px solid var(--bd);
-  padding:6px 24px;display:flex;align-items:center;gap:10px;
-  font-size:10px;letter-spacing:.08em;color:var(--w30);font-weight:500;
-}
+.store-bar{background:var(--s2);border-bottom:1px solid var(--bd);padding:6px 24px;display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.08em;color:var(--w30);font-weight:500}
 .store-dot{width:6px;height:6px;border-radius:50%;background:var(--bv);flex-shrink:0;box-shadow:0 0 6px var(--bv)}
+.store-dot.loading{background:var(--bt);box-shadow:0 0 6px var(--bt);animation:pulse .8s infinite alternate}
+.store-dot.error{background:var(--ba);box-shadow:0 0 6px var(--ba)}
+@keyframes pulse{from{opacity:.4}to{opacity:1}}
 .store-info{color:var(--w30)}
 .store-size{margin-left:auto;color:var(--w30)}
-.backup-btn{
-  padding:3px 10px;border-radius:4px;border:1px solid var(--bd);
-  background:transparent;color:var(--w50);font-size:10px;cursor:pointer;
-  font-family:'DM Sans',sans-serif;transition:all .15s;letter-spacing:.06em;
-}
+.backup-btn{padding:3px 10px;border-radius:4px;border:1px solid var(--bd);background:transparent;color:var(--w50);font-size:10px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;letter-spacing:.06em}
 .backup-btn:hover{border-color:var(--y);color:var(--y)}
-
+.cfg-modal{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;width:100%;max-width:480px;box-shadow:0 40px 100px rgba(0,0,0,.8);animation:up .2s ease both}
+.cfg-note{font-size:11px;color:var(--w30);margin-top:6px;line-height:1.5}
+.cfg-note a{color:var(--y);text-decoration:none}
+.cfg-note a:hover{text-decoration:underline}
 @media(max-width:600px){
   .metrics{grid-template-columns:repeat(2,1fr)}
   header,.toolbar,.pipeline,.main,.metrics,.store-bar{padding-left:14px;padding-right:14px}
@@ -305,9 +156,8 @@ header img{height:32px;object-fit:contain;flex-shrink:0}
 </style>
 </head>
 <body>
-
 <header>
-  <img src="data:image/jpeg;base64,/9j/4QC8RXhpZgAASUkqAAgAAAAGABIBAwABAAAAAQAAABoBBQABAAAAVgAAABsBBQABAAAAXgAAACgBAwABAAAAAgAAABMCAwABAAAAAQAAAGmHBAABAAAAZgAAAAAAAABgAAAAAQAAAGAAAAABAAAABgAAkAcABAAAADAyMTABkQcABAAAAAECAwAAoAcABAAAADAxMDABoAMAAQAAAP//AAACoAQAAQAAAAAEAAADoAQAAQAAAOsCAAAAAAAA/+EOWWh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8APD94cGFja2V0IGJlZ2luPSfvu78nIGlkPSdXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQnPz4KPHg6eG1wbWV0YSB4bWxuczp4PSdhZG9iZTpuczptZXRhLyc+CjxyZGY6UkRGIHhtbG5zOnJkZj0naHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyc+CgogPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9JycKICB4bWxuczpBdHRyaWI9J2h0dHA6Ly9ucy5hdHRyaWJ1dGlvbi5jb20vYWRzLzEuMC8nPgogIDxBdHRyaWI6QWRzPgogICA8cmRmOlNlcT4KICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0nUmVzb3VyY2UnPgogICAgIDxBdHRyaWI6Q3JlYXRlZD4yMDI1LTEyLTE2PC9BdHRyaWI6Q3JlYXRlZD4KICAgICA8QXR0cmliOkV4dElkPmQwYWIzMTE1LTk0NmUtNGRiOS1hNTc5LTQ0YzhkNzhiMDMzYzwvQXR0cmliOkV4dElkPgogICAgIDxBdHRyaWI6RmJJZD41MjUyNjU5MTQxNzk1ODA8L0F0dHJpYjpGYklkPgogICAgIDxBdHRyaWI6VG91Y2hUeXBlPjI8L0F0dHJpYjpUb3VjaFR5cGU+CiAgICA8L3JkZjpsaT4KICAgPC9yZGY6U2VxPgogIDwvQXR0cmliOkFkcz4KIDwvcmRmOkRlc2NyaXB0aW9uPgoKIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PScnCiAgeG1sbnM6ZGM9J2h0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvJz4KICA8ZGM6dGl0bGU+CiAgIDxyZGY6QWx0PgogICAgPHJkZjpsaSB4bWw6bGFuZz0neC1kZWZhdWx0Jz5MT0dPIFJFREVTIFNPQ0lBSVMgICjDjWNvbmUgcGFyYSBZb3VUdWJlKSAtIDE8L3JkZjpsaT4KICAgPC9yZGY6QWx0PgogIDwvZGM6dGl0bGU+CiA8L3JkZjpEZXNjcmlwdGlvbj4KCiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0nJwogIHhtbG5zOnBkZj0naHR0cDovL25zLmFkb2JlLmNvbS9wZGYvMS4zLyc+CiAgPHBkZjpBdXRob3I+cmFmYWVsIGVseW9uPC9wZGY6QXV0aG9yPgogPC9yZGY6RGVzY3JpcHRpb24+CgogPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9JycKICB4bWxuczp4bXA9J2h0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8nPgogIDx4bXA6Q3JlYXRvclRvb2w+Q2FudmEgZG9jPURBR2xrd3V2dGkwIHVzZXI9VUFGN1JMeGYyR1EgYnJhbmQ9RXF1aXBlIGRlIEVseW9uIGRvIGJyYXNpbCB0ZW1wbGF0ZT08L3htcDpDcmVhdG9yVG9vbD4KIDwvcmRmOkRlc2NyaXB0aW9uPgo8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8P3hwYWNrZXQgZW5kPSd3Jz8+/9sAQwAGBAUGBQQGBgUGBwcGCAoQCgoJCQoUDg8MEBcUGBgXFBYWGh0lHxobIxwWFiAsICMmJykqKRkfLTAtKDAlKCko/9sAQwEHBwcKCAoTCgoTKBoWGigoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo/8AAEQgC6wQAAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A+VKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigCa2tbi6fbawSzMO0aFj+lXBoOrnppd8f+2D/AOFfWH7FOmGLwlruoSRgfaLpY0YjqFXnH4mvpEAY6CgD8wP+Ef1n/oE3/wD4Dv8A4VHJouqRqWk029UDkkwMMfpX6iYHoKp6vcQWWmXVzclUhhjZ3Y9gBQB+XB4ODSVLdSGa5mlbq7lj+JqKgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoop8MbSzJGgJZ2CgDuTQB9/fsz6adN+DOgK6bZJlknb33yMQfyxXqYrH8HWi2HhLRbRECCGzhj24xjCAVsUAFedftB6iNN+D3iWXfsd7fyl55JZgv9TXop6V4D+2TqAt/hvZ2gfD3N4vy56qASf6UAfFNFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRVnTbK41K/gs7ONpbidwiIO5Nd7/AGfo2j3E2l6XpD+J9Xt+Li6VmNvGw4IRV++v+0etAHnNFd850O6lGn+IdBl0K6lP7u9hLbUPbdGeCvqRzXJeINIudD1a40+8A82JuGU5V1PIZT3BGCDQBnUUUUAFFFFABRRRQAUUUUAF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UUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH//2Q==" alt="Elyon">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Elyon" id="logoImg">
   <span class="h-name">Elyon do Brasil</span>
   <span class="h-sep"></span>
   <span class="h-tag">Importação · Peças de Moto</span>
@@ -318,8 +168,6 @@ header img{height:32px;object-fit:contain;flex-shrink:0}
     <button class="hbtn y" onclick="openAdd()">+ Novo Container</button>
   </div>
 </header>
-
-<!-- PIPELINE -->
 <div class="pipeline">
   <div class="pipe-step active" data-f="todos" onclick="setF('todos',this)">
     <span class="pipe-dot" style="background:#FFE500"></span>
@@ -351,34 +199,54 @@ header img{height:32px;object-fit:contain;flex-shrink:0}
     <span class="pipe-count" id="c-chegou">0</span>
   </div>
 </div>
-
-<!-- STORAGE BAR -->
 <div class="store-bar">
-  <span class="store-dot"></span>
-  <span class="store-info" id="storeInfo">Armazenamento local ativo</span>
+  <span class="store-dot" id="storeDot"></span>
+  <span class="store-info" id="storeInfo">Conectando ao Supabase...</span>
   <span class="store-size" id="storeSize"></span>
-  <label style="cursor:pointer">
-    <button class="backup-btn" onclick="document.getElementById('importFile').click()">⬆ Restaurar Backup</button>
-    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(this)">
-  </label>
+  <button class="backup-btn" onclick="exportBackup()">⬇ Backup JSON</button>
+  <button class="backup-btn" onclick="openCfg()" style="border-color:rgba(255,229,0,.3);color:var(--y)">⚙ Config</button>
 </div>
-
-<!-- METRICS -->
+<div class="ov" id="cfgOv">
+<div class="cfg-modal">
+  <div class="m-hd">
+    <span class="m-title">Configurar Supabase</span>
+    <button class="xbtn" onclick="closeCfg()">✕</button>
+  </div>
+  <div class="fld">
+    <label>URL do Projeto Supabase</label>
+    <input id="cfg-url" placeholder="https://xxxxxxxxxxx.supabase.co">
+  </div>
+  <div class="fld">
+    <label>Chave Anon (anon key)</label>
+    <input id="cfg-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+  </div>
+  <p class="cfg-note">
+    1. Acesse <a href="https://supabase.com" target="_blank">supabase.com</a> → crie projeto gratuito<br>
+    2. Vá em <strong>Settings → API</strong> e copie a URL e a <em>anon public key</em><br>
+    3. No Editor SQL, rode:<br>
+    <code style="display:block;background:var(--s3);padding:8px;border-radius:4px;margin-top:6px;font-size:11px;white-space:pre">CREATE TABLE containers (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+ALTER TABLE containers ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "public_all" ON containers FOR ALL USING (true) WITH CHECK (true);</code>
+  </p>
+  <div class="m-actions">
+    <button class="btn-c" onclick="closeCfg()">CANCELAR</button>
+    <button class="btn-s" onclick="saveCfg()">SALVAR E CONECTAR</button>
+  </div>
+</div>
+</div>
 <div class="metrics" id="metricsBar"></div>
-
-<!-- TOOLBAR -->
 <div class="toolbar">
   <div class="srch">
     <input type="text" placeholder="buscar container, fornecedor, SKU, invoice..." id="srchInput" oninput="render()">
   </div>
 </div>
-
-<!-- MAIN -->
 <div class="main">
   <div class="grid" id="cardsGrid"></div>
 </div>
-
-<!-- ADD/EDIT MODAL -->
 <div class="ov" id="addOv">
 <div class="modal">
   <div class="m-hd">
@@ -433,8 +301,6 @@ header img{height:32px;object-fit:contain;flex-shrink:0}
   </div>
 </div>
 </div>
-
-<!-- DETAIL MODAL -->
 <div class="ov" id="detOv">
 <div class="modal">
   <div class="m-hd">
@@ -451,65 +317,101 @@ header img{height:32px;object-fit:contain;flex-shrink:0}
   </div>
 </div>
 </div>
-
 <script>
-const KEY='elyon_v3';
 const SL={pedido:'Pedido',transito:'Em Trânsito',alfandega:'Alfândega',chegou:'Chegou'};
 const SC={pedido:'b-pedido',transito:'b-transito',alfandega:'b-alfandega',chegou:'b-chegou'};
 const PC={pedido:'pf-pedido',transito:'pf-transito',alfandega:'pf-alfandega',chegou:'pf-chegou'};
-
 let D=[],filt='todos',cSt='pedido',dIdx=null,eIdx=null,imgD=null;
 
-/* ── STORAGE ── */
-function save(notify=true){
-  try{
-    const json=JSON.stringify(D);
-    localStorage.setItem(KEY,json);
-    localStorage.setItem(KEY+'_ts',new Date().toISOString());
-    updateStoreInfo();
-    if(notify){
-      const p=document.getElementById('savedPill');
-      p.style.display='inline-flex';
-      setTimeout(()=>p.style.display='none',2500);
-    }
-  }catch(e){alert('Erro ao salvar: armazenamento cheio? Use o botão Backup JSON.');}
+const CFG_KEY='elyon_supa_cfg';
+let SUPA_URL='',SUPA_KEY='';
+
+function loadCfg(){
+  try{const c=JSON.parse(localStorage.getItem(CFG_KEY)||'{}');SUPA_URL=c.url||'';SUPA_KEY=c.key||'';}catch(e){}
+}
+function openCfg(){
+  document.getElementById('cfg-url').value=SUPA_URL;
+  document.getElementById('cfg-key').value=SUPA_KEY;
+  document.getElementById('cfgOv').classList.add('open');
+}
+function closeCfg(){document.getElementById('cfgOv').classList.remove('open');}
+function saveCfg(){
+  SUPA_URL=document.getElementById('cfg-url').value.trim().replace(/\/$/,'');
+  SUPA_KEY=document.getElementById('cfg-key').value.trim();
+  localStorage.setItem(CFG_KEY,JSON.stringify({url:SUPA_URL,key:SUPA_KEY}));
+  closeCfg();init();
+}
+function supaHeaders(){
+  return{'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Prefer':'return=representation'};
+}
+function setStatus(state,msg,size){
+  const dot=document.getElementById('storeDot');
+  dot.className='store-dot'+(state==='loading'?' loading':state==='error'?' error':'');
+  document.getElementById('storeInfo').textContent=msg;
+  document.getElementById('storeSize').textContent=size||'';
 }
 
-function load(){
+async function dbLoad(){
+  if(!SUPA_URL||!SUPA_KEY){setStatus('error','⚠ Configure o Supabase (botão Config)','');D=[];render();return;}
+  setStatus('loading','Carregando...','');
   try{
-    const r=localStorage.getItem(KEY);
-    if(r){D=JSON.parse(r);return;}
-  }catch(e){}
-  D=[
-    {id:'CTN-2025-01',forn:'Guangzhou Parts Co.',pedido:'2025-01-10',prev:'2025-03-20',invoice:'INV-20250110',valor:18500,status:'chegou',obs:'Chegou completo. Etiquetas prontas.',img:null,skus:[
-      {sku:'MP-1021',desc:'Pastilha freio dianteira',qtd:200,unit:4.50},
-      {sku:'MP-1022',desc:'Cabo de embreagem CG125',qtd:150,unit:3.20},
-      {sku:'MP-1030',desc:'Rolamento roda traseira',qtd:80,unit:8.90},
-    ]},
-    {id:'CTN-2025-02',forn:'Shenzhen Motors Ltd.',pedido:'2025-02-05',prev:'2025-04-15',invoice:'INV-20250205',valor:22300,status:'alfandega',obs:'Documentação na Receita. Aguardar despacho.',img:null,skus:[
-      {sku:'SM-0045',desc:'Pistão motor 150cc',qtd:100,unit:22.00},
-      {sku:'SM-0046',desc:'Anel de pistão std',qtd:400,unit:1.80},
-    ]},
-    {id:'CTN-2025-03',forn:'Guangzhou Parts Co.',pedido:'2025-03-01',prev:'2025-05-10',invoice:'INV-20250301',valor:15700,status:'transito',obs:'Saiu de Xangai 10/03. ETA 45 dias.',img:null,skus:[
-      {sku:'MP-2010',desc:'Corrente transmissão 520',qtd:120,unit:12.50},
-      {sku:'MP-2011',desc:'Pinhão dianteiro Z14',qtd:120,unit:5.00},
-    ]},
-    {id:'CTN-2025-04',forn:'Hangzhou Moto Supply',pedido:'2025-04-01',prev:'2025-06-05',invoice:'INV-20250401',valor:9800,status:'pedido',obs:'Aguardando confirmação.',img:null,skus:[
-      {sku:'HM-3301',desc:'Espelho retrovisor par',qtd:60,unit:7.00},
-    ]},
-  ];
-  save(false);
+    const r=await fetch(SUPA_URL+'/rest/v1/containers?select=id,data,updated_at&order=updated_at.desc',{headers:supaHeaders()});
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    const rows=await r.json();
+    D=rows.map(row=>({...row.data,_rowId:row.id}));
+    const ts=rows.length?new Date(rows[0].updated_at).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+    setStatus('ok','Supabase · atualizado '+ts,rows.length+' containers');
+    await seedIfEmpty();
+    render();
+  }catch(e){
+    setStatus('error','Erro ao conectar: '+e.message,'');
+    render();
+  }
 }
 
-function updateStoreInfo(){
+async function dbSave(obj){
+  if(!SUPA_URL||!SUPA_KEY)return;
+  const payload={id:obj.id,data:obj,updated_at:new Date().toISOString()};
+  const r=await fetch(SUPA_URL+'/rest/v1/containers',{
+    method:'POST',
+    headers:{...supaHeaders(),'Prefer':'resolution=merge-duplicates,return=representation'},
+    body:JSON.stringify(payload)
+  });
+  if(!r.ok){const t=await r.text();throw new Error(t);}
+}
+
+async function dbDelete(id){
+  if(!SUPA_URL||!SUPA_KEY)return;
+  const r=await fetch(SUPA_URL+'/rest/v1/containers?id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:supaHeaders()});
+  if(!r.ok){const t=await r.text();throw new Error(t);}
+}
+
+async function save(obj,isDelete){
+  const pill=document.getElementById('savedPill');
   try{
-    const json=localStorage.getItem(KEY)||'';
-    const kb=(json.length/1024).toFixed(1);
-    const ts=localStorage.getItem(KEY+'_ts');
-    const info=ts?'Salvo em '+new Date(ts).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'Armazenamento ativo';
-    document.getElementById('storeInfo').textContent=info;
-    document.getElementById('storeSize').textContent=kb+' KB usados';
-  }catch(e){}
+    if(isDelete){await dbDelete(obj.id);}else{await dbSave(obj);}
+    pill.style.display='inline-flex';
+    setTimeout(()=>pill.style.display='none',2500);
+    const now=new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+    setStatus('ok','Supabase · salvo '+now,D.length+' containers');
+  }catch(e){
+    alert('Erro ao salvar no Supabase: '+e.message);
+  }
+}
+
+const containers_seed=[
+  {"id":"CTN-ELYON-2026-01","forn":"Royaumann Co., Ltd — China","pedido":"2026-01-29","prev":"","invoice":"","valor":29314.64,"cambio":0,"valorBRL":0,"status":"pedido","obs":"Cotação Royaumann 04/04/2026. FOB Ningbo → Santos. 1x40HQ. Total: US$ 29.314,64.","img":null,"skus":[{"sku":"TMI-BAP035","desc":"Baú 45L Plástico ABS Preto c/ suporte, chaves, encosto","qtd":1100,"unit":13.34,"unitBRL":0},{"sku":"EL-PR003","desc":"Paralama Traseiro CG / Titan 125 1979-1982","qtd":200,"unit":2.48,"unitBRL":0},{"sku":"EL-PR004","desc":"Paralama Dianteiro CG 125 1979-1982","qtd":300,"unit":2.5,"unitBRL":0},{"sku":"EL-PRT01","desc":"Protetor Escape XRE 300 2013-2023","qtd":600,"unit":2.75,"unitBRL":0},{"sku":"EL-PRF001","desc":"Parafuso Carburador Regulagem NX 200 / XR 200","qtd":500,"unit":0.74,"unitBRL":0},{"sku":"EL-PDL001","desc":"Pedal Câmbio Completo Intruder GN 125 2002-2016","qtd":1000,"unit":0.59,"unitBRL":0},{"sku":"EL-FA004","desc":"Farol Kansas 150 Preto Aro Cromado 2008-2015","qtd":300,"unit":5.52,"unitBRL":0},{"sku":"EL-FA003","desc":"Farol Kansas 150 Cromado 2008-2015","qtd":500,"unit":6.04,"unitBRL":0},{"sku":"EL-FA005","desc":"Farol Bloco Óptico Hornet CB600 2012-2014","qtd":100,"unit":9.49,"unitBRL":0},{"sku":"EL-CBC01","desc":"Cabeçote Intruder 125 2005-2010 Completo","qtd":228,"unit":22.63,"unitBRL":0}]},
+  {"id":"CTN-CHINOVA-2026-01","forn":"Chinova Co., Ltd — China","pedido":"2026-03-20","prev":"","invoice":"CN-BR260320","valor":15250.0,"cambio":0,"valorBRL":0,"status":"pedido","obs":"PI CN-BR260320. FOB Shanghai → Santos. Fornecedor: Chinova / Lucio. Câmbio 1USD=6.9CNY. Pagamento: 100% antes do embarque.","img":null,"skus":[{"sku":"EL-BAP007","desc":"Baú 45L Plástico ABS Preto c/ suporte, chaves, encosto — Chinova","qtd":1250,"unit":12.2,"unitBRL":0}]},
+  {"id":"CTN-TMAC-2026-01","forn":"TMAC — China","pedido":"","prev":"","invoice":"","valor":19953.87,"cambio":0,"valorBRL":0,"status":"pedido","obs":"Container TMAC.","img":null,"skus":[{"sku":"TMAC-LOT-35","desc":"Lote 35% do container (422 unidades)","qtd":422,"unit":15.96,"unitBRL":0},{"sku":"TMAC-LOT-65","desc":"Lote 65% do container (705 unidades)","qtd":705,"unit":18.75,"unitBRL":0}]},
+  {"id":"CTN-ELYON-2025-01","forn":"Royaumann Co., Ltd — China","pedido":"2025-05-07","prev":"","invoice":"K25RM05001","valor":39865.0,"cambio":0,"valorBRL":0,"status":"chegou","obs":"1º Container da Elyon do Brasil. 1x40HQ. FOB Ningbo → Santos.","img":null,"skus":[{"sku":"EL-RE001","desc":"Retrovisor Intruder GN 125 - All Years - Par","qtd":800,"unit":1.66,"unitBRL":0},{"sku":"EL-RE002","desc":"Retrovisor CG 125 1978-1982 - Par","qtd":800,"unit":1.41,"unitBRL":0},{"sku":"EL-CA001","desc":"Carburador Honda CBX200 NX200 XR200 XR250 XLR250","qtd":500,"unit":15.34,"unitBRL":0}]},
+  {"id":"CTN-R13-2025-01","forn":"Royaumann Co., Ltd — China","pedido":"2025-09-01","prev":"","invoice":"KB25RM07008","valor":53924.3,"cambio":0,"valorBRL":0,"status":"chegou","obs":"Container 1x40HQ. FOB Shanghai → Santos. Empresa: R13.","img":null,"skus":[{"sku":"EL-FA001","desc":"Farol DK 150 2018 à 2024","qtd":1000,"unit":5.52,"unitBRL":0},{"sku":"EL-BAP007","desc":"Baú 45 Litros Plástico ABS Preto","qtd":330,"unit":11.34,"unitBRL":0}]},
+  {"id":"CTN-2025-CHINA-01","forn":"China — Chef","pedido":"","prev":"","invoice":"","valor":0,"cambio":0,"valorBRL":0,"status":"transito","obs":"16 SKUs — planilha etiquetas/desenhos.","img":null,"skus":[{"sku":"EL-RE020","desc":"Retrovisor Intruder GN 125","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-FA010","desc":"Farol DK 150 2018 à 2024","qtd":1,"unit":0,"unitBRL":0}]}
+];
+
+async function seedIfEmpty(){
+  if(D.length>0)return;
+  for(const c of containers_seed){try{await dbSave(c);}catch(e){}}
+  D=[...containers_seed];
 }
 
 function exportBackup(){
@@ -518,50 +420,29 @@ function exportBackup(){
   a.download='elyon_backup_'+new Date().toISOString().slice(0,10)+'.json';a.click();
 }
 
-function importBackup(input){
-  const f=input.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=e=>{
-    try{
-      const obj=JSON.parse(e.target.result);
-      const arr=obj.data||obj;
-      if(!Array.isArray(arr))throw new Error('Formato inválido');
-      if(!confirm('Isso substituirá todos os dados atuais. Continuar?'))return;
-      D=arr;save();render();
-      alert('Backup restaurado com sucesso! '+D.length+' containers carregados.');
-    }catch(err){alert('Erro ao importar: '+err.message);}
-  };
-  r.readAsText(f);
-  input.value='';
-}
-
 function exportCSV(){
   const h=['Nº Container','Fornecedor','Invoice','Data Pedido','Previsão','Valor US$','Câmbio','Valor R$','Status','SKUs','Unidades','Observações'];
   const rows=D.map(c=>{
     const u=(c.skus||[]).reduce((a,s)=>a+(+s.qtd||0),0);
-    return[c.id,c.forn,c.invoice,c.pedido,c.prev,c.valor,c.cambio||'',c.valorBRL||'',SL[c.status],(c.skus||[]).length,u,c.obs].map(v=>`"${String(v||'').replace(/"/g,'""')}"`);
+    return[c.id,c.forn,c.invoice,c.pedido,c.prev,c.valor,c.cambio||'',c.valorBRL||'',SL[c.status],(c.skus||[]).length,u,c.obs].map(v=>'"'+String(v||'').replace(/"/g,'""')+'"');
   });
   const sh=['','Nº Container','SKU','Descrição','Qtd','Unit US$','Unit R$','Total US$'];
   const sr=[];
-  D.forEach(c=>(c.skus||[]).forEach(s=>sr.push(['',c.id,s.sku,s.desc,s.qtd,s.unit,s.unitBRL||'',(s.qtd*s.unit).toFixed(2)].map(v=>`"${String(v||'').replace(/"/g,'""')}"`  ))));
+  D.forEach(c=>(c.skus||[]).forEach(s=>sr.push(['',c.id,s.sku,s.desc,s.qtd,s.unit,s.unitBRL||'',(s.qtd*s.unit).toFixed(2)].map(v=>'"'+String(v||'').replace(/"/g,'""')+'"'))));
   const csv=[h,...rows,[''],sh,...sr].map(r=>r.join(',')).join('\n');
   const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='elyon_containers.csv';a.click();
 }
 
-/* ── RENDER ── */
-function calcTot(s){return(s||[]).reduce((a,r)=>a+((+r.qtd||0)*(+r.unit||0)),0)}
-function fmt(d){if(!d)return'—';const[y,m,dd]=d.split('-');return`${dd}/${m}/${y}`}
-function isLate(p,s){if(s==='chegou')return false;if(!p)return false;return new Date(p)<new Date()}
+function calcTot(s){return(s||[]).reduce((a,r)=>a+((+r.qtd||0)*(+r.unit||0)),0);}
+function fmt(d){if(!d)return'—';const[y,m,dd]=d.split('-');return dd+'/'+m+'/'+y;}
+function isLate(p,s){if(s==='chegou')return false;if(!p)return false;return new Date(p)<new Date();}
 
 function renderMetrics(){
   const cnt={todos:D.length,pedido:0,transito:0,alfandega:0,chegou:0};
-  let usd=0,units=0;
-  let brl=0;
-  D.forEach(c=>{cnt[c.status]++;usd+=+c.valor||0;brl+=+c.valorBRL||0;units+=(c.skus||[]).reduce((a,s)=>a+(+s.qtd||0),0)});
-  ['todos','pedido','transito','alfandega','chegou'].forEach(k=>{
-    const el=document.getElementById('c-'+k);if(el)el.textContent=cnt[k];
-  });
+  let usd=0,brl=0,units=0;
+  D.forEach(c=>{cnt[c.status]++;usd+=+c.valor||0;brl+=+c.valorBRL||0;units+=(c.skus||[]).reduce((a,s)=>a+(+s.qtd||0),0);});
+  ['todos','pedido','transito','alfandega','chegou'].forEach(k=>{const el=document.getElementById('c-'+k);if(el)el.textContent=cnt[k];});
   const defs=[
     {l:'Containers',v:D.length,c:'#FFE500',sub:'total'},
     {l:'Em Trânsito',v:cnt.transito,c:'#FF8C3A',sub:'containers'},
@@ -570,12 +451,7 @@ function renderMetrics(){
     {l:'Total US$',v:'US$ '+usd.toLocaleString('pt-BR',{minimumFractionDigits:2}),c:'#FFE500',sub:units.toLocaleString('pt-BR')+' unidades',small:true},
     {l:'Total R$',v:brl>0?'R$ '+brl.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—',c:'#3ECF7A',sub:'câmbio médio ponderado',small:true},
   ];
-  document.getElementById('metricsBar').innerHTML=defs.map(d=>`
-    <div class="metric" style="--mc:${d.c}">
-      <div class="m-lbl">${d.l}</div>
-      <div class="m-val" style="${d.small?'font-size:20px;margin-top:4px':''}${d.small?';color:'+d.c:''}">${d.v}</div>
-      <div class="m-sub">${d.sub}</div>
-    </div>`).join('');
+  document.getElementById('metricsBar').innerHTML=defs.map(d=>'<div class="metric" style="--mc:'+d.c+'"><div class="m-lbl">'+d.l+'</div><div class="m-val" style="'+(d.small?'font-size:20px;margin-top:4px':'')+(d.small?';color:'+d.c:'')+'">'+d.v+'</div><div class="m-sub">'+d.sub+'</div></div>').join('');
 }
 
 function render(){
@@ -587,47 +463,31 @@ function render(){
     return mf&&ms;
   });
   renderMetrics();
-  if(!list.length){
-    grid.innerHTML=`<div class="empty"><div class="empty-ic">📦</div><div class="empty-tx">Nenhum container encontrado</div></div>`;
-    return;
-  }
+  if(!list.length){grid.innerHTML='<div class="empty"><div class="empty-ic">📦</div><div class="empty-tx">Nenhum container encontrado</div></div>';return;}
   grid.innerHTML=list.map(c=>{
     const idx=D.indexOf(c);
     const sq=(c.skus||[]).length;
     const su=(c.skus||[]).reduce((a,s)=>a+(+s.qtd||0),0);
     const late=isLate(c.prev,c.status);
-    const img=c.img?`<img class="c-thumb" src="${c.img}" alt="">`:`<div class="c-thumb-ph">📦 sem imagem</div>`;
-    return`<div class="card" onclick="openDet(${idx})">
-      ${img}
-      <div class="c-body">
-        <div class="c-head">
-          <span class="badge ${SC[c.status]}">${SL[c.status]}</span>
-          <span class="c-id">${c.id}</span>
-          <span class="c-forn">${c.forn}</span>
-        </div>
-        <div class="c-meta">
-          <div class="meta-i"><span class="meta-l">Invoice</span><span class="meta-v">${c.invoice||'—'}</span></div>
-          <div class="meta-i"><span class="meta-l">Pedido</span><span class="meta-v">${fmt(c.pedido)}</span></div>
-          <div class="meta-i"><span class="meta-l">Previsão</span><span class="meta-v">${fmt(c.prev)}${late?' <span class="late-tag">⚠ atrasado</span>':''}</span></div>
-          <div class="meta-i"><span class="meta-l">Valor US$</span><span class="meta-v">US$ ${(+c.valor||0).toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>
-          <div class="meta-i"><span class="meta-l">Valor R$</span><span class="meta-v" style="${c.valorBRL>0?'color:#3ECF7A':''}">${c.valorBRL>0?'R$ '+c.valorBRL.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—'}</span></div>
-        </div>
-        <div class="c-foot">
-          <span class="c-skus">📦 ${sq} SKUs · ${su.toLocaleString('pt-BR')} unid.</span>
-          <div class="prog"><div class="pf ${PC[c.status]}"></div></div>
-        </div>
-      </div>
-    </div>`;
+    const img=c.img?'<img class="c-thumb" src="'+c.img+'" alt="">':'<div class="c-thumb-ph">📦 sem imagem</div>';
+    return '<div class="card" onclick="openDet('+idx+')">'
+      +img
+      +'<div class="c-body">'
+      +'<div class="c-head"><span class="badge '+SC[c.status]+'">'+SL[c.status]+'</span><span class="c-id">'+c.id+'</span><span class="c-forn">'+c.forn+'</span></div>'
+      +'<div class="c-meta">'
+      +'<div class="meta-i"><span class="meta-l">Invoice</span><span class="meta-v">'+(c.invoice||'—')+'</span></div>'
+      +'<div class="meta-i"><span class="meta-l">Pedido</span><span class="meta-v">'+fmt(c.pedido)+'</span></div>'
+      +'<div class="meta-i"><span class="meta-l">Previsão</span><span class="meta-v">'+fmt(c.prev)+(late?' <span class="late-tag">⚠ atrasado</span>':'')+'</span></div>'
+      +'<div class="meta-i"><span class="meta-l">Valor US$</span><span class="meta-v">US$ '+(+c.valor||0).toLocaleString('pt-BR',{minimumFractionDigits:2})+'</span></div>'
+      +'<div class="meta-i"><span class="meta-l">Valor R$</span><span class="meta-v" style="'+(c.valorBRL>0?'color:#3ECF7A':'')+'">'+(c.valorBRL>0?'R$ '+c.valorBRL.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—')+'</span></div>'
+      +'</div>'
+      +'<div class="c-foot"><span class="c-skus">📦 '+sq+' SKUs · '+su.toLocaleString('pt-BR')+' unid.</span><div class="prog"><div class="pf '+PC[c.status]+'"></div></div></div>'
+      +'</div></div>';
   }).join('');
 }
 
-function setF(f,btn){
-  filt=f;
-  document.querySelectorAll('.pipe-step').forEach(b=>b.classList.toggle('active',b.dataset.f===f));
-  render();
-}
+function setF(f,btn){filt=f;document.querySelectorAll('.pipe-step').forEach(b=>b.classList.toggle('active',b.dataset.f===f));render();}
 
-/* ── ADD / EDIT ── */
 function openAdd(){
   eIdx=null;imgD=null;
   document.getElementById('formTitle').textContent='Novo Container';
@@ -642,23 +502,19 @@ function openAdd(){
   document.getElementById('skuLst').innerHTML='';addSkuRow();
   document.getElementById('addOv').classList.add('open');
 }
+
 function calcBRL(){
   const usd=parseFloat(document.getElementById('f-valor').value)||0;
   const cambio=parseFloat(document.getElementById('f-cambio').value)||0;
   const brl=document.getElementById('f-brl');
   if(usd>0&&cambio>0){
-    brl.value='R$ '+( usd*cambio ).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-    // recalcula skus
-    document.querySelectorAll('#skuLst .sku-row').forEach(row=>{
-      const inp=row.querySelectorAll('input');
-      const u=parseFloat(inp[3].value)||0;
-      if(u>0) inp[4].value=(u*cambio).toFixed(2);
-    });
-  } else brl.value='—';
+    brl.value='R$ '+(usd*cambio).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    document.querySelectorAll('#skuLst .sku-row').forEach(row=>{const inp=row.querySelectorAll('input');const u=parseFloat(inp[3].value)||0;if(u>0)inp[4].value=(u*cambio).toFixed(2);});
+  }else brl.value='—';
 }
-function closeAdd(){document.getElementById('addOv').classList.remove('open')}
 
-function setSt(s,btn){cSt=s;document.querySelectorAll('#stOpts .sopt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel')}
+function closeAdd(){document.getElementById('addOv').classList.remove('open');}
+function setSt(s,btn){cSt=s;document.querySelectorAll('#stOpts .sopt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
 
 function prevImg(input){
   const f=input.files[0];if(!f)return;
@@ -670,21 +526,22 @@ function prevImg(input){
 function addSkuRow(sku){
   const lst=document.getElementById('skuLst');
   const d=document.createElement('div');d.className='sku-row';
-  const unitBRL = sku&&sku.unitBRL ? sku.unitBRL : '';
-  d.innerHTML=`<input type="text" placeholder="SKU" value="${sku?sku.sku:''}">
-    <input type="text" placeholder="descrição" value="${sku?sku.desc:''}">
-    <input type="number" placeholder="0" min="0" value="${sku?sku.qtd:''}" oninput="recalcSkuBRL(this)">
-    <input type="number" placeholder="0.00" min="0" step="0.01" value="${sku?sku.unit:''}" oninput="recalcSkuBRL(this)">
-    <input type="number" placeholder="R$" min="0" step="0.01" value="${unitBRL}" style="background:var(--s3);color:var(--bv)" title="Valor unitário em R$">
-    <button class="del" onclick="this.parentElement.remove()">✕</button>`;
+  const unitBRL=sku&&sku.unitBRL?sku.unitBRL:'';
+  d.innerHTML='<input type="text" placeholder="SKU" value="'+(sku?sku.sku||'':'')+'">'
+    +'<input type="text" placeholder="descrição" value="'+(sku?sku.desc||'':'')+'">'
+    +'<input type="number" placeholder="0" min="0" value="'+(sku?sku.qtd||'':'')+'" oninput="recalcSkuBRL(this)">'
+    +'<input type="number" placeholder="0.00" min="0" step="0.01" value="'+(sku?sku.unit||'':'')+'" oninput="recalcSkuBRL(this)">'
+    +'<input type="number" placeholder="R$" min="0" step="0.01" value="'+unitBRL+'" style="background:var(--s3);color:var(--bv)" title="Valor unitário em R$">'
+    +'<button class="del" onclick="this.parentElement.remove()">✕</button>';
   lst.appendChild(d);
 }
+
 function recalcSkuBRL(el){
   const row=el.closest('.sku-row');
   const inputs=row.querySelectorAll('input');
   const usd=parseFloat(inputs[3].value)||0;
   const cambio=parseFloat(document.getElementById('f-cambio').value)||0;
-  if(cambio>0) inputs[4].value=(usd*cambio).toFixed(2);
+  if(cambio>0)inputs[4].value=(usd*cambio).toFixed(2);
 }
 
 function getSkus(){
@@ -694,7 +551,7 @@ function getSkus(){
   }).filter(s=>s.sku||s.desc);
 }
 
-function saveC(){
+async function saveC(){
   const id=document.getElementById('f-id').value.trim();
   const forn=document.getElementById('f-forn').value.trim();
   if(!id||!forn){alert('Informe o nº do container e o fornecedor.');return;}
@@ -705,62 +562,51 @@ function saveC(){
     pedido:document.getElementById('f-pedido').value,
     prev:document.getElementById('f-prev').value,
     invoice:document.getElementById('f-invoice').value.trim(),
-    valor:valorUSD,
-    cambio:cambio,
-    valorBRL:cambio>0?(valorUSD*cambio):0,
+    valor:valorUSD,cambio,valorBRL:cambio>0?(valorUSD*cambio):0,
     status:cSt,
     obs:document.getElementById('f-obs').value.trim(),
     img:imgD!==null?imgD:(eIdx!==null?D[eIdx].img:null),
     skus:getSkus(),
   };
   if(eIdx!==null)D[eIdx]=obj;else D.unshift(obj);
-  save();closeAdd();render();
+  await save(obj);
+  closeAdd();render();
 }
 
-/* ── DETAIL ── */
 function openDet(idx){
   dIdx=idx;const c=D[idx];
   document.getElementById('detTitle').textContent=c.id;
-  const sr=(c.skus||[]).map(s=>`<tr>
-    <td title="${s.sku}">${s.sku}</td>
-    <td title="${s.desc}">${s.desc}</td>
-    <td style="text-align:right">${(+s.qtd).toLocaleString('pt-BR')}</td>
-    <td style="text-align:right">US$ ${(+s.unit).toFixed(2)}</td>
-    <td style="text-align:right">US$ ${(s.qtd*s.unit).toFixed(2)}</td>
-    <td style="text-align:right;color:#3ECF7A">${s.unitBRL>0?'R$ '+(+s.unitBRL).toFixed(2):'—'}</td>
-  </tr>`).join('');
+  const sr=(c.skus||[]).map(s=>'<tr><td title="'+s.sku+'">'+s.sku+'</td><td title="'+s.desc+'">'+s.desc+'</td><td style="text-align:right">'+(+s.qtd).toLocaleString('pt-BR')+'</td><td style="text-align:right">US$ '+(+s.unit).toFixed(2)+'</td><td style="text-align:right">US$ '+(s.qtd*s.unit).toFixed(2)+'</td><td style="text-align:right;color:#3ECF7A">'+(s.unitBRL>0?'R$ '+(+s.unitBRL).toFixed(2):'—')+'</td></tr>').join('');
   const tot=calcTot(c.skus);
   const su=(c.skus||[]).reduce((a,s)=>a+(+s.qtd||0),0);
-  const iH=c.img?`<img class="d-img" src="${c.img}" alt="">`:`<div class="d-ph">📦 sem imagem</div>`;
-  const sB=['pedido','transito','alfandega','chegou'].map(s=>`<button class="sopt s-${s}${c.status===s?' sel':''}" onclick="chgSt('${s}',this)">${SL[s]}</button>`).join('');
+  const iH=c.img?'<img class="d-img" src="'+c.img+'" alt="">':'<div class="d-ph">📦 sem imagem</div>';
+  const sB=['pedido','transito','alfandega','chegou'].map(s=>'<button class="sopt s-'+s+(c.status===s?' sel':'')+'" onclick="chgSt(\'' +s+'\',this)">'+SL[s]+'</button>').join('');
   const late=isLate(c.prev,c.status);
-  document.getElementById('detBody').innerHTML=`
-    ${iH}
-    ${[['Fornecedor',c.forn],['Invoice',c.invoice||'—'],['Data do Pedido',fmt(c.pedido)],['Previsão',fmt(c.prev)+(late?' ⚠ atrasado':'')],['Valor Total US$','US$ '+(+c.valor||0).toLocaleString('pt-BR',{minimumFractionDigits:2})],['Câmbio','R$ '+(+c.cambio||0).toFixed(2)+' / US$'],['Valor Total R$',c.valorBRL>0?'<span style="color:#3ECF7A;font-weight:700">R$ '+c.valorBRL.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</span>':'—'],['Observações',c.obs||'—']].map(r=>`<div class="d-row"><span class="d-k">${r[0]}</span><span class="d-v">${r[1]}</span></div>`).join('')}
-    <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--w30);margin:14px 0 6px;font-weight:500">Alterar status:</div>
-    <div class="s-change">${sB}</div>
-    <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--white);margin:16px 0 6px;display:flex;justify-content:space-between;align-items:center">
-      Produtos
-      <span style="font-weight:400;color:var(--w30);font-size:10px;text-transform:none">${(c.skus||[]).length} SKUs · ${su.toLocaleString('pt-BR')} unid.</span>
-    </div>
-    ${(c.skus||[]).length?`<div style="overflow-x:auto"><table class="sku-tbl">
-      <thead><tr><th style="width:14%">SKU</th><th>Descrição</th><th style="width:9%;text-align:right">Qtd</th><th style="width:12%;text-align:right">US$</th><th style="width:12%;text-align:right">Total US$</th><th style="width:13%;text-align:right;color:#3ECF7A">R$ unit</th></tr></thead>
-      <tbody>${sr}</tbody>
-    </table>
-    <div class="sku-tot"><span>Total US$</span><span>US$ ${tot.toFixed(2)}</span></div>
-    ${c.valorBRL>0?`<div class="sku-tot" style="border-top:none;padding-top:4px"><span style="color:#3ECF7A">Total R$</span><span style="color:#3ECF7A">R$ ${c.valorBRL.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`:''}
-    </div>`
-    :`<div style="font-size:12px;color:var(--w30);padding:8px 0">Nenhum produto cadastrado.</div>`}`;
+  const rows=[
+    ['Fornecedor',c.forn],['Invoice',c.invoice||'—'],['Data do Pedido',fmt(c.pedido)],
+    ['Previsão',fmt(c.prev)+(late?' ⚠ atrasado':'')],
+    ['Valor Total US$','US$ '+(+c.valor||0).toLocaleString('pt-BR',{minimumFractionDigits:2})],
+    ['Câmbio','R$ '+(+c.cambio||0).toFixed(2)+' / US$'],
+    ['Valor Total R$',c.valorBRL>0?'<span style="color:#3ECF7A;font-weight:700">R$ '+c.valorBRL.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</span>':'—'],
+    ['Observações',c.obs||'—']
+  ].map(r=>'<div class="d-row"><span class="d-k">'+r[0]+'</span><span class="d-v">'+r[1]+'</span></div>').join('');
+  document.getElementById('detBody').innerHTML=iH+rows
+    +'<div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--w30);margin:14px 0 6px;font-weight:500">Alterar status:</div>'
+    +'<div class="s-change">'+sB+'</div>'
+    +'<div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--white);margin:16px 0 6px;display:flex;justify-content:space-between;align-items:center">Produtos<span style="font-weight:400;color:var(--w30);font-size:10px;text-transform:none">'+(c.skus||[]).length+' SKUs · '+su.toLocaleString('pt-BR')+' unid.</span></div>'
+    +((c.skus||[]).length?'<div style="overflow-x:auto"><table class="sku-tbl"><thead><tr><th style="width:14%">SKU</th><th>Descrição</th><th style="width:9%;text-align:right">Qtd</th><th style="width:12%;text-align:right">US$</th><th style="width:12%;text-align:right">Total US$</th><th style="width:13%;text-align:right;color:#3ECF7A">R$ unit</th></tr></thead><tbody>'+sr+'</tbody></table><div class="sku-tot"><span>Total US$</span><span>US$ '+tot.toFixed(2)+'</span></div>'+(c.valorBRL>0?'<div class="sku-tot" style="border-top:none;padding-top:4px"><span style="color:#3ECF7A">Total R$</span><span style="color:#3ECF7A">R$ '+c.valorBRL.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</span></div>':'')+'</div>':'<div style="font-size:12px;color:var(--w30);padding:8px 0">Nenhum produto cadastrado.</div>');
   document.getElementById('detOv').classList.add('open');
 }
 
-function chgSt(s,btn){
+async function chgSt(s,btn){
   if(dIdx===null)return;
-  D[dIdx].status=s;save();
+  D[dIdx].status=s;
+  await save(D[dIdx]);
   document.querySelectorAll('#detBody .sopt').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');render();
 }
-function closeDet(){document.getElementById('detOv').classList.remove('open');dIdx=null}
+
+function closeDet(){document.getElementById('detOv').classList.remove('open');dIdx=null;}
 
 function editFromDet(){
   const idx=dIdx;closeDet();const c=D[idx];eIdx=idx;imgD=null;
@@ -785,43 +631,19 @@ function editFromDet(){
   document.getElementById('addOv').classList.add('open');
 }
 
-function delC(){
+async function delC(){
   if(dIdx===null)return;
-  if(!confirm('Excluir container '+D[dIdx].id+'?'))return;
-  D.splice(dIdx,1);save();closeDet();render();
+  const c=D[dIdx];
+  if(!confirm('Excluir container '+c.id+'?'))return;
+  D.splice(dIdx,1);
+  await save(c,true);
+  closeDet();render();
 }
 
-// fechar no backdrop
-document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')}));
+document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 
-
-// ── INJEÇÃO AUTOMÁTICA DOS CONTAINERS ──
-(function(){
-  const KEY='elyon_v3';
-  const containers_seed = [
-    {"id": "CTN-ELYON-2026-01", "forn": "Royaumann Co., Ltd — China", "pedido": "2026-01-29", "prev": "", "invoice": "", "valor": 29314.64, "cambio": 0, "valorBRL": 0, "status": "pedido", "obs": "Cotação Royaumann 04/04/2026. FOB Ningbo → Santos. 1x40HQ. Total: US$ 29.314,64.", "img": null, "skus": [{"sku": "TMI-BAP035", "desc": "Baú 45L Plástico ABS Preto c/ suporte, chaves, encosto", "qtd": 1100, "unit": 13.34, "unitBRL": 0}, {"sku": "EL-PR003", "desc": "Paralama Traseiro CG / Titan 125 1979-1982", "qtd": 200, "unit": 2.48, "unitBRL": 0}, {"sku": "EL-PR004", "desc": "Paralama Dianteiro CG 125 1979-1982", "qtd": 300, "unit": 2.5, "unitBRL": 0}, {"sku": "EL-PRT01", "desc": "Protetor Escape XRE 300 2013-2023", "qtd": 600, "unit": 2.75, "unitBRL": 0}, {"sku": "EL-PRF001", "desc": "Parafuso Carburador Regulagem NX 200 / XR 200", "qtd": 500, "unit": 0.74, "unitBRL": 0}, {"sku": "EL-PDL001", "desc": "Pedal Câmbio Completo Intruder GN 125 2002-2016", "qtd": 1000, "unit": 0.59, "unitBRL": 0}, {"sku": "EL-FA004", "desc": "Farol Kansas 150 Preto Aro Cromado 2008-2015", "qtd": 300, "unit": 5.52, "unitBRL": 0}, {"sku": "EL-FA003", "desc": "Farol Kansas 150 Cromado 2008-2015", "qtd": 500, "unit": 6.04, "unitBRL": 0}, {"sku": "EL-FA005", "desc": "Farol Bloco Óptico Hornet CB600 2012-2014", "qtd": 100, "unit": 9.49, "unitBRL": 0}, {"sku": "EL-CBC01", "desc": "Cabeçote Intruder 125 2005-2010 Completo", "qtd": 228, "unit": 22.63, "unitBRL": 0}]},
-    {"id": "CTN-CHINOVA-2026-01", "forn": "Chinova Co., Ltd — China", "pedido": "2026-03-20", "prev": "", "invoice": "CN-BR260320", "valor": 15250.0, "cambio": 0, "valorBRL": 0, "status": "pedido", "obs": "PI CN-BR260320. FOB Shanghai → Santos. Fornecedor: Chinova / Lucio. Câmbio 1USD=6.9CNY. Pagamento: 100% antes do embarque.", "img": null, "skus": [{"sku": "EL-BAP007", "desc": "Baú 45L Plástico ABS Preto c/ suporte, chaves, encosto — Chinova", "qtd": 1250, "unit": 12.2, "unitBRL": 0}]},
-    {"id": "CTN-TMAC-2026-01", "forn": "TMAC — China", "pedido": "", "prev": "", "invoice": "", "valor": 19953.87, "cambio": 0, "valorBRL": 0, "status": "pedido", "obs": "Container TMAC. 35% do container: 422 un × US$ 15,96 | 65% do container: 705 un × US$ 18,75. Total: US$ 19953.87. Detalhes de SKU a preencher.", "img": null, "skus": [{"sku": "TMAC-LOT-35", "desc": "Lote 35% do container (422 unidades)", "qtd": 422, "unit": 15.96, "unitBRL": 0}, {"sku": "TMAC-LOT-65", "desc": "Lote 65% do container (705 unidades)", "qtd": 705, "unit": 18.75, "unitBRL": 0}]},
-    {"id": "CTN-ELYON-2025-01", "forn": "Royaumann Co., Ltd — China", "pedido": "2025-05-07", "prev": "", "invoice": "K25RM05001", "valor": 39865.0, "cambio": 0, "valorBRL": 0, "status": "chegou", "obs": "1º Container da Elyon do Brasil. 1x40HQ. FOB Ningbo → Santos. PI: K25RM05001. Advance: US$ 11.959,50 | Balance: US$ 27.905,50.", "img": null, "skus": [{"sku": "EL-RE001", "desc": "Retrovisor Intruder GN 125 - All Years - Par", "qtd": 800, "unit": 1.66, "unitBRL": 0}, {"sku": "EL-RE002", "desc": "Retrovisor CG 125 1978-1982 - Par", "qtd": 800, "unit": 1.41, "unitBRL": 0}, {"sku": "EL-PA001", "desc": "Paralama Intruder GN 125 até 2015", "qtd": 400, "unit": 2.69, "unitBRL": 0}, {"sku": "EL-PA010", "desc": "Painel Dafra Speed 150 - All Years", "qtd": 300, "unit": 5.94, "unitBRL": 0}, {"sku": "EL-PA030", "desc": "Painel YBR 125 Factor 2009-2011", "qtd": 700, "unit": 6.39, "unitBRL": 0}, {"sku": "EL-LT001", "desc": "Lanterna Traseira Intruder GN 125 até 2015", "qtd": 400, "unit": 2.82, "unitBRL": 0}, {"sku": "EL-BA001", "desc": "Baú ACM 65 Litros Preto - c/ suporte, forro e chaves", "qtd": 370, "unit": 37.0, "unitBRL": 0}, {"sku": "EL-BA002", "desc": "Baú ACM 65 Litros Prata - c/ suporte, forro e chaves", "qtd": 80, "unit": 37.0, "unitBRL": 0}, {"sku": "EL-CA001", "desc": "Carburador Honda CBX200 NX200 XR200 XR250 XLR250", "qtd": 500, "unit": 15.34, "unitBRL": 0}, {"sku": "EL-CA002", "desc": "Carburador Racing 14mm 2T Mini Moto Pocket 49cc", "qtd": 500, "unit": 4.77, "unitBRL": 0}, {"sku": "EL-CA003", "desc": "Carburador 2 Tempos - Mobilete / Bicicleta Motorizada", "qtd": 500, "unit": 4.49, "unitBRL": 0}]},
-    {"id": "CTN-R13-2025-01", "forn": "Royaumann Co., Ltd — China", "pedido": "2025-09-01", "prev": "", "invoice": "KB25RM07008", "valor": 53924.3, "cambio": 0, "valorBRL": 0, "status": "chegou", "obs": "Container 1x40HQ. FOB Shanghai → Santos. PI: KB25RM07008. Advance: US$ 13.123,33 | Balance: US$ 40.800,97. Empresa: R13.", "img": null, "skus": [{"sku": "EL-BA003", "desc": "Baú ACM 45 Litros Preto - c/ suporte, forro e chaves", "qtd": 100, "unit": 28.83, "unitBRL": 0}, {"sku": "EL-BA004", "desc": "Baú ACM 45 Litros Prata - c/ suporte, forro e chaves", "qtd": 50, "unit": 28.83, "unitBRL": 0}, {"sku": "EL-BA005", "desc": "Baú ACM 55 Litros Preto - c/ suporte, forro e chaves", "qtd": 70, "unit": 32.26, "unitBRL": 0}, {"sku": "EL-BA006", "desc": "Baú ACM 55 Litros Prata - c/ suporte, forro e chaves", "qtd": 15, "unit": 32.26, "unitBRL": 0}, {"sku": "EL-BG001D", "desc": "Bengala Fan 125 / Titan 125 ESD Disco 2000-2008 Lado Direito", "qtd": 200, "unit": 14.79, "unitBRL": 0}, {"sku": "EL-BG002D", "desc": "Bengala Titan 150 KS Lona 2004-2008 Lado Direito", "qtd": 300, "unit": 18.4, "unitBRL": 0}, {"sku": "EL-FA001", "desc": "Farol DK 150 2018 à 2024", "qtd": 1000, "unit": 5.52, "unitBRL": 0}, {"sku": "EL-FA002", "desc": "Farol Angel Eye Universal com Suporte", "qtd": 400, "unit": 8.43, "unitBRL": 0}, {"sku": "EL-BAP007", "desc": "Baú 45 Litros Plástico ABS Preto - c/ suporte e kit encosto", "qtd": 330, "unit": 11.34, "unitBRL": 0}, {"sku": "EL-FM01B", "desc": "Farol Auxiliar U7 Mini Universal Branco - Par", "qtd": 300, "unit": 5.0, "unitBRL": 0}, {"sku": "EL-FM01A", "desc": "Farol Auxiliar U7 Mini Universal Azul - Par", "qtd": 250, "unit": 5.0, "unitBRL": 0}, {"sku": "EL-FM01V", "desc": "Farol Auxiliar U7 Mini Universal Vermelho - Par", "qtd": 25, "unit": 5.0, "unitBRL": 0}, {"sku": "EL-FM02B", "desc": "Farol Auxiliar Universal Branco - Par", "qtd": 300, "unit": 4.0, "unitBRL": 0}, {"sku": "EL-FM02A", "desc": "Farol Auxiliar Universal Azul - Par", "qtd": 210, "unit": 4.0, "unitBRL": 0}, {"sku": "EL-FM02V", "desc": "Farol Auxiliar Universal Vermelho - Par", "qtd": 30, "unit": 4.0, "unitBRL": 0}, {"sku": "EL-SEV03", "desc": "Sensor Velocidade CBX 250 2001-2008 / XR 250 2001-2009", "qtd": 1000, "unit": 2.6, "unitBRL": 0}, {"sku": "EL-SEV01", "desc": "Sensor Velocidade CB 300 2000-2015", "qtd": 1000, "unit": 2.6, "unitBRL": 0}, {"sku": "EL-SEV02", "desc": "Sensor Velocidade XRE 300 2010-2018", "qtd": 1000, "unit": 2.6, "unitBRL": 0}, {"sku": "EL-PN001", "desc": "Punho NC 750 Titan/Fan 150 2004-2013 c/ Pisca Emergência", "qtd": 1000, "unit": 2.4, "unitBRL": 0}, {"sku": "EL-CA004", "desc": "Carburador Speed 150 / Kansas 150 2008-2014", "qtd": 400, "unit": 4.63, "unitBRL": 0}, {"sku": "EL-RE003", "desc": "Retrovisor Dominar 250/400 Rosca Direita - Par", "qtd": 240, "unit": 4.9, "unitBRL": 0}, {"sku": "EL-ST01", "desc": "Pisca CB Twister XRE 300 após 2019 Coxim - Par", "qtd": 1000, "unit": 1.13, "unitBRL": 0}, {"sku": "EL-ST02", "desc": "Pisca CB Twister XRE 300 após 2019 Parafuso - Par", "qtd": 1000, "unit": 1.13, "unitBRL": 0}, {"sku": "EL-ST03", "desc": "Pisca Ninja 300 Z400 Z800 - Todos os Anos - Par", "qtd": 400, "unit": 1.94, "unitBRL": 0}, {"sku": "EL-LT002", "desc": "Lanterna Traseira Intruder GN125 2012-2016", "qtd": 500, "unit": 2.34, "unitBRL": 0}, {"sku": "EL-LED001", "desc": "Lâmpada LED Olho de Peixe Projetor", "qtd": 1000, "unit": 0.87, "unitBRL": 0}, {"sku": "EL-PA004", "desc": "Painel Digital DK 150 2018-2025", "qtd": 100, "unit": 14.44, "unitBRL": 0}]},
-    {"id":"CTN-2025-CHINA-01","forn":"China — Chef","pedido":"","prev":"","invoice":"","valor":0,"cambio":0,"valorBRL":0,"status":"transito","obs":"16 SKUs — planilha etiquetas/desenhos. Qtd e valores a preencher quando confirmar com chef.","img":null,"skus":[{"sku":"EL-RE020","desc":"Retrovisor Intruder GN 125 - All Years - 1 Par","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-RE015","desc":"Retrovisor CG 125 1978-1982 Cromado","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-RE010","desc":"Par Espelho Retrovisor CB 300 Rosca Direita - 1 Kit","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-BAP007","desc":"Baú 45 Litros Plástico ABS Preto","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-PA010","desc":"Painel Dafra Speed 150 2008 à 2015","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-PA030","desc":"Painel YBR 125 Factor 2009 à 2011","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-PA040","desc":"Painel Digital DK 150 2018 à 2025","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-BG060D","desc":"Bengala Factor 125 2009-2012 Freio Lona Lado Direito - 1 Pç","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-BG050E","desc":"Bengala Factor 125 2009-2012 Freio Lona Lado Esquerdo - 1 Pç","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-BG040E","desc":"Bengala Titan 150 ESD 2009-2013 Disco Lado Esquerdo - 1 Pç","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-BG040D","desc":"Bengala Titan 150 ESD 2009-2013 Disco Lado Direito - 1 Pç","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-BG030D","desc":"Bengala Fan/Titan 125 KS Lona 2000-2008 Lado Direito - 1 Pç","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-BG040E","desc":"Bengala Fan/Titan 125 KS Lona 2000-2008 Lado Esquerdo - 1 Pç","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-BG030D","desc":"Bengala Titan 125 CG Today 1994-1999 Lona Direito - 1 Pç","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-BG030E","desc":"Bengala Titan 125 CG Today 1994-1999 Lona Esquerdo - 1 Pç","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-FA010","desc":"Farol DK 150 2018 à 2024 - 1 Kit","qtd":1,"unit":0,"unitBRL":0}]}
-  ];
-  try {
-    let arr = [];
-    const raw = localStorage.getItem(KEY);
-    if(raw) arr = JSON.parse(raw);
-    let changed = false;
-    containers_seed.forEach(novo => {
-      if(!arr.find(c=>c.id===novo.id)){
-        arr.unshift(novo);
-        changed = true;
-      }
-    });
-    if(changed) localStorage.setItem(KEY, JSON.stringify(arr));
-  } catch(e){}
-})();
-
-load();render();updateStoreInfo();
+async function init(){loadCfg();await dbLoad();}
+init();
 </script>
 </body>
 </html>
