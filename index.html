@@ -794,18 +794,11 @@ const S = {
 // ─── INIT ────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', init);
 async function init() {
-  SBURL = localStorage.getItem('sb_url') || '';
-  SBKEY = localStorage.getItem('sb_key') || '';
-  if (SBURL && SBKEY) {
-    initSB();
-    await loadAll();
-  } else {
-    setSyncStatus('⚙ config necessária', '#e55');
-    openModal('modal-config');
-    document.getElementById('containers-grid').innerHTML = '';
-    document.getElementById('products-list').innerHTML = '';
-    document.getElementById('suppliers-list').innerHTML = '';
-  }
+  // Credenciais fixas — não precisa configurar
+  SBURL = 'https://osjalefepyfpmbmynsbl.supabase.co';
+  SBKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zamFsZWZlcHlmcG1ibXluc2JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4ODA5MDMsImV4cCI6MjA5NDQ1NjkwM30.ww6e56Es9Hx5Y8hjVEDdZCcIXWRRc7aRyRuy3NXS4Dw';
+  initSB();
+  await loadAll();
 }
 function initSB() {
   try { sb = mkSB(SBURL, SBKEY); } catch(e) { toast('Erro ao inicializar Supabase: '+e.message,'error'); }
