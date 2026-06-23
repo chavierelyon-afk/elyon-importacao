@@ -4,646 +4,1766 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Elyon do Brasil — Importação</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0D0D0D;--s1:#141414;--s2:#1C1C1C;--s3:#252525;--s4:#2E2E2E;
-  --bd:rgba(255,255,255,0.09);--y:#FFE500;--yd:#D4BF00;--white:#FFFFFF;
-  --w80:rgba(255,255,255,0.80);--w50:rgba(255,255,255,0.50);
-  --w30:rgba(255,255,255,0.30);--w12:rgba(255,255,255,0.12);
-  --w06:rgba(255,255,255,0.06);--bp:#5BA3FF;--bt:#FF8C3A;--ba:#FF5572;--bv:#3ECF7A;
+  --bg:#111;--bg2:#1a1a1a;--bg3:#222;--bg4:#2a2a2a;
+  --border:#333;--border2:#444;
+  --text:#eee;--text2:#aaa;--text3:#666;
+  --yellow:#F5C842;--yellow2:#e6b800;--yellow-dim:#2a2200;
+  --red:#e55;--red-dim:#2a0000;--green:#4c4;--blue:#4af;
+  --radius:8px;--radius-sm:4px;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--s4);border-radius:2px}
-header{height:54px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px;padding:0 24px;position:sticky;top:0;z-index:100}
-header img{height:32px;object-fit:contain;flex-shrink:0}
-.h-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.08em;color:var(--white)}
-.h-sep{width:1px;height:18px;background:var(--bd);margin:0 6px}
-.h-tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--w30);font-weight:300}
-.h-right{margin-left:auto;display:flex;gap:8px;align-items:center}
-.saved-pill{font-size:11px;color:var(--bv);background:rgba(62,207,122,.1);border:1px solid rgba(62,207,122,.25);padding:3px 10px;border-radius:4px;display:none;letter-spacing:.06em;font-weight:500}
-.hbtn{padding:7px 14px;border-radius:6px;border:1px solid var(--bd);background:transparent;color:var(--w80);font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap}
-.hbtn:hover{border-color:var(--w30);color:var(--white)}
-.hbtn.y{background:var(--y);border-color:var(--y);color:#000;font-weight:700}
-.hbtn.y:hover{background:var(--yd);border-color:var(--yd)}
-.pipeline{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 24px;display:flex;align-items:stretch;gap:0;overflow-x:auto}
-.pipe-step{display:flex;align-items:center;gap:8px;padding:12px 20px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s;position:relative}
-.pipe-step:hover{background:var(--w06)}
-.pipe-step.active{border-bottom-color:var(--y)}
-.pipe-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.pipe-label{font-size:12px;font-weight:500;color:var(--w50);letter-spacing:.04em;transition:color .15s}
-.pipe-step.active .pipe-label{color:var(--white)}
-.pipe-count{font-size:11px;font-weight:600;background:var(--s3);padding:2px 7px;border-radius:3px;color:var(--w50)}
-.pipe-step.active .pipe-count{background:rgba(255,229,0,.15);color:var(--y)}
-.pipe-arr{color:var(--w12);font-size:18px;line-height:1;display:flex;align-items:center;padding:0 2px;flex-shrink:0}
-.metrics{display:grid;grid-template-columns:repeat(6,1fr);padding:16px 24px;gap:10px;border-bottom:1px solid var(--bd)}
-.metric{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:13px 15px;border-top:2px solid var(--mc,var(--bd));transition:transform .15s}
-.metric:hover{transform:translateY(-1px)}
-.m-lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--w30);font-weight:500;margin-bottom:6px}
-.m-val{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.02em;color:var(--white);line-height:1}
-.m-sub{font-size:10px;color:var(--w30);margin-top:3px}
-.toolbar{padding:13px 24px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--bd);background:var(--s1)}
-.srch{flex:1;min-width:180px;position:relative}
-.srch input{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:8px 12px 8px 36px;font-size:13px;color:var(--white);outline:none;font-family:'DM Sans',sans-serif;transition:border-color .15s}
-.srch input:focus{border-color:var(--w30)}
-.srch input::placeholder{color:var(--w30)}
-.srch::before{content:'\2315';position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--w30);font-size:16px;pointer-events:none}
-.main{padding:20px 24px 60px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
-.card{background:var(--s1);border:1px solid var(--bd);border-radius:10px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:border-color .2s,transform .15s,box-shadow .2s}
-.card:hover{border-color:rgba(255,255,255,0.2);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.5)}
-.c-thumb{width:100%;height:105px;object-fit:cover;display:block;border-bottom:1px solid var(--bd)}
-.c-thumb-ph{width:100%;height:70px;background:var(--s2);display:flex;align-items:center;justify-content:center;color:var(--w30);font-size:12px;font-weight:500;border-bottom:1px solid var(--bd);letter-spacing:.06em;gap:6px}
-.c-body{padding:12px 13px;flex:1;display:flex;flex-direction:column;gap:8px}
-.c-head{display:flex;align-items:center;gap:7px;flex-wrap:nowrap}
-.badge{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:3px;white-space:nowrap;flex-shrink:0}
-.b-pedido{background:rgba(91,163,255,.15);color:#8CC4FF;border:1px solid rgba(91,163,255,.3)}
-.b-transito{background:rgba(255,140,58,.15);color:#FFB07A;border:1px solid rgba(255,140,58,.3)}
-.b-alfandega{background:rgba(255,85,114,.15);color:#FF8FA3;border:1px solid rgba(255,85,114,.3)}
-.b-chegou{background:rgba(62,207,122,.15);color:#7EEDB0;border:1px solid rgba(62,207,122,.3)}
-.c-id{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.06em;color:var(--white);white-space:nowrap}
-.c-forn{font-size:11px;color:var(--w30);margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;flex-shrink:0}
-.c-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
-.meta-i{display:flex;flex-direction:column;gap:1px}
-.meta-l{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--w30);font-weight:500}
-.meta-v{font-size:12px;color:var(--w80);font-weight:400}
-.late-tag{font-size:9px;color:#FF8FA3;font-weight:600;letter-spacing:.06em}
-.c-foot{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--bd);margin-top:auto}
-.c-skus{font-size:11px;color:var(--w30);font-weight:500}
-.prog{background:var(--s3);border-radius:2px;height:3px;flex:1;margin-left:10px;overflow:hidden}
-.pf{height:100%;border-radius:2px}
-.pf-pedido{background:var(--bp);width:15%}
-.pf-transito{background:var(--bt);width:55%}
-.pf-alfandega{background:var(--ba);width:80%}
-.pf-chegou{background:var(--bv);width:100%}
-.empty{grid-column:1/-1;text-align:center;padding:72px 20px;color:var(--w30)}
-.empty-ic{font-size:48px;opacity:.25;margin-bottom:14px}
-.empty-tx{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.14em;color:var(--w30)}
-.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:flex-start;justify-content:center;padding:24px 16px;overflow-y:auto}
-.ov.open{display:flex}
-.modal{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;width:100%;max-width:560px;box-shadow:0 40px 100px rgba(0,0,0,.8);animation:up .2s ease both}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.m-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.m-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.08em;color:var(--white)}
-.xbtn{padding:5px 9px;border-radius:5px;border:1px solid var(--bd);background:transparent;color:var(--w50);cursor:pointer;font-size:14px;transition:all .15s;line-height:1}
-.xbtn:hover{border-color:var(--w50);color:var(--white)}
-.fld{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
-.fld label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--w30);font-weight:500}
-.fld input,.fld textarea,.fld select{background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:9px 12px;font-size:13px;color:var(--white);outline:none;font-family:'DM Sans',sans-serif;transition:border-color .15s;width:100%}
-.fld input:focus,.fld textarea:focus{border-color:var(--w50)}
-.fld input::placeholder,.fld textarea::placeholder{color:var(--w30)}
-.r2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.sec{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--y);opacity:.6;font-weight:500;margin:16px 0 8px;display:flex;align-items:center;justify-content:space-between}
-.st-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-.sopt{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 13px;border-radius:4px;border:1px solid var(--bd);cursor:pointer;background:transparent;color:var(--w50);transition:all .15s}
-.s-pedido.sel{border-color:var(--bp);color:#8CC4FF;background:rgba(91,163,255,.12)}
-.s-transito.sel{border-color:var(--bt);color:#FFB07A;background:rgba(255,140,58,.12)}
-.s-alfandega.sel{border-color:var(--ba);color:#FF8FA3;background:rgba(255,85,114,.12)}
-.s-chegou.sel{border-color:var(--bv);color:#7EEDB0;background:rgba(62,207,122,.12)}
-.img-drop{border:1px dashed var(--bd);border-radius:7px;padding:18px;text-align:center;cursor:pointer;background:var(--s2);transition:border-color .2s;position:relative;overflow:hidden}
-.img-drop:hover{border-color:var(--w30)}
-.img-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.img-drop-lbl{font-size:11px;color:var(--w30);margin-top:5px}
-.img-prev{width:100%;height:85px;object-fit:cover;border-radius:5px;margin-top:8px;display:none}
-.sku-hdr{display:grid;grid-template-columns:1fr 1.2fr 60px 75px 75px 28px;gap:6px;margin-bottom:4px}
-.sku-hdr span{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--w30);font-weight:500}
-.sku-lst{display:flex;flex-direction:column;gap:5px;margin-bottom:6px}
-.sku-row{display:grid;grid-template-columns:1fr 1.2fr 60px 75px 75px 28px;gap:6px;align-items:center}
-.sku-row input{font-size:12px;padding:7px 9px}
-.del{background:transparent;border:none;color:var(--w30);cursor:pointer;font-size:14px;transition:color .15s;display:flex;align-items:center;justify-content:center;padding:0}
-.del:hover{color:var(--ba)}
-.add-sku{width:100%;padding:8px;border-radius:5px;border:1px dashed var(--bd);background:transparent;color:var(--w30);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;font-weight:500}
-.add-sku:hover{border-color:var(--w50);color:var(--white)}
-.m-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;padding-top:14px;border-top:1px solid var(--bd)}
-.btn-s{padding:9px 22px;border-radius:6px;border:none;background:var(--y);color:#000;font-size:15px;font-weight:700;font-family:'Bebas Neue',sans-serif;letter-spacing:.1em;cursor:pointer;transition:all .15s}
-.btn-s:hover{background:var(--yd);transform:translateY(-1px)}
-.btn-c{padding:9px 16px;border-radius:6px;border:1px solid var(--bd);background:transparent;color:var(--w50);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s}
-.btn-c:hover{border-color:var(--w30);color:var(--white)}
-.d-img{width:100%;height:140px;object-fit:cover;border-radius:7px;margin-bottom:14px}
-.d-ph{width:100%;height:55px;background:var(--s2);border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--w30);font-size:12px;gap:6px;margin-bottom:14px;font-weight:500}
-.d-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--bd);font-size:13px}
-.d-row:last-child{border-bottom:none}
-.d-k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--w30);font-weight:500}
-.d-v{color:var(--white);font-weight:500;text-align:right;max-width:65%}
-.sku-tbl{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;margin-top:6px}
-.sku-tbl th{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--w30);font-weight:500;padding:5px 6px;text-align:left;border-bottom:1px solid var(--bd)}
-.sku-tbl td{padding:7px 6px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--w80);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sku-tbl tr:last-child td{border-bottom:none}
-.sku-tot{display:flex;justify-content:space-between;padding:8px 6px 0;font-size:13px;font-weight:700;border-top:1px solid var(--bd);margin-top:4px;color:var(--white)}
-.s-change{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;margin-bottom:2px}
-.store-bar{background:var(--s2);border-bottom:1px solid var(--bd);padding:6px 24px;display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.08em;color:var(--w30);font-weight:500}
-.store-dot{width:6px;height:6px;border-radius:50%;background:var(--bv);flex-shrink:0;box-shadow:0 0 6px var(--bv)}
-.store-dot.loading{background:var(--bt);box-shadow:0 0 6px var(--bt);animation:pulse .8s infinite alternate}
-.store-dot.error{background:var(--ba);box-shadow:0 0 6px var(--ba)}
-@keyframes pulse{from{opacity:.4}to{opacity:1}}
-.store-info{color:var(--w30)}
-.store-size{margin-left:auto;color:var(--w30)}
-.backup-btn{padding:3px 10px;border-radius:4px;border:1px solid var(--bd);background:transparent;color:var(--w50);font-size:10px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;letter-spacing:.06em}
-.backup-btn:hover{border-color:var(--y);color:var(--y)}
-.cfg-modal{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;width:100%;max-width:480px;box-shadow:0 40px 100px rgba(0,0,0,.8);animation:up .2s ease both}
-.cfg-note{font-size:11px;color:var(--w30);margin-top:6px;line-height:1.5}
-.cfg-note a{color:var(--y);text-decoration:none}
-.cfg-note a:hover{text-decoration:underline}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
+a{color:var(--yellow);text-decoration:none}
+input,select,textarea{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 10px;border-radius:var(--radius-sm);font-size:14px;width:100%;outline:none;font-family:inherit}
+input:focus,select:focus,textarea:focus{border-color:var(--yellow)}
+textarea{resize:vertical;min-height:60px}
+button{cursor:pointer;border:none;border-radius:var(--radius-sm);padding:8px 16px;font-size:14px;font-weight:600;transition:opacity .15s}
+button:hover{opacity:.85}
+button:disabled{opacity:.4;cursor:not-allowed}
+.btn-yellow{background:var(--yellow);color:#000}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.btn-ghost:hover{border-color:var(--text2);color:var(--text)}
+.btn-red{background:var(--red-dim);color:var(--red);border:1px solid #500}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-icon{padding:6px 8px;font-size:16px;line-height:1;background:transparent;color:var(--text2)}
+.btn-icon:hover{color:var(--text)}
+
+/* ── HEADER ── */
+header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;gap:16px;height:52px;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;color:var(--yellow);white-space:nowrap}
+.logo span{color:var(--text2);font-weight:400;font-size:12px}
+nav{display:flex;gap:2px;flex:1}
+.nav-tab{background:transparent;border:none;color:var(--text2);padding:6px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
+.nav-tab:hover{color:var(--text);background:var(--bg3)}
+.nav-tab.active{background:var(--yellow-dim);color:var(--yellow);border:1px solid #3a2800}
+.header-actions{display:flex;gap:8px;align-items:center;margin-left:auto}
+
+/* ── TABS ── */
+.tab-panel{display:none;padding:20px}
+.tab-panel.active{display:block}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.stat-value{font-size:22px;font-weight:700;color:var(--yellow)}
+.stat-sub{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* ── FILTER BAR ── */
+.filter-bar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.filter-tabs{display:flex;gap:4px;background:var(--bg2);padding:4px;border-radius:var(--radius);border:1px solid var(--border)}
+.filter-tab{background:transparent;border:none;color:var(--text2);padding:5px 12px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap}
+.filter-tab.active{background:var(--yellow);color:#000}
+.search-box{position:relative;flex:1;min-width:180px}
+.search-box input{padding-left:32px}
+.search-box::before{content:'🔍';position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none}
+
+/* ── CONTAINERS GRID ── */
+.containers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.container-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:border-color .15s}
+.container-card:hover{border-color:var(--border2)}
+.card-header{padding:12px 14px;display:flex;align-items:flex-start;gap:10px;border-bottom:1px solid var(--border)}
+.card-status{font-size:10px;font-weight:700;padding:3px 7px;border-radius:20px;white-space:nowrap;margin-top:2px}
+.status-pedido{background:#1a1a2a;color:#88a;border:1px solid #334}
+.status-em_transito{background:#1a2a1a;color:#8a8;border:1px solid #343}
+.status-alfandega{background:#2a2000;color:#aa8;border:1px solid #440}
+.status-chegou{background:#1a2a00;color:#8c4;border:1px solid #360}
+.card-title{font-weight:700;font-size:14px;line-height:1.3}
+.card-forn{font-size:12px;color:var(--text2)}
+.card-body{padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.card-field{font-size:12px}
+.card-field-label{color:var(--text3);font-size:10px;text-transform:uppercase;margin-bottom:1px}
+.card-field-value{color:var(--text);font-weight:500}
+.card-footer{padding:10px 14px;background:var(--bg3);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card-skus{font-size:12px;color:var(--text2)}
+.card-img{width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden;flex-shrink:0}
+
+/* ── TABLE ── */
+.table-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.table-toolbar h2{font-size:16px;font-weight:700;flex:1}
+.data-table{width:100%;border-collapse:collapse;background:var(--bg2);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.data-table th{background:var(--bg3);color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:10px 12px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--border)}
+.data-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:13px}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--bg3)}
+.data-table .actions{display:flex;gap:4px}
+.sku-thumb{width:36px;height:36px;border-radius:var(--radius-sm);object-fit:cover;background:var(--bg3);border:1px solid var(--border);cursor:pointer}
+.sku-thumb-placeholder{width:36px;height:36px;border-radius:var(--radius-sm);background:var(--bg3);border:1px dashed var(--border2);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text3)}
+.ncm-badge{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-size:11px;padding:2px 6px;border-radius:3px;font-family:monospace}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);width:100%;max-width:860px;margin:auto;position:relative}
+.modal-lg{max-width:1100px}
+.modal-sm{max-width:480px}
+.modal-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.modal-header h2{font-size:16px;font-weight:700;flex:1}
+.modal-close{background:transparent;border:none;color:var(--text2);font-size:20px;cursor:pointer;line-height:1;padding:2px 6px}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:20px;overflow-y:auto;max-height:calc(100vh - 160px)}
+.modal-footer{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+
+/* ── FORM ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-grid-3{grid-template-columns:1fr 1fr 1fr}
+.form-grid-4{grid-template-columns:1fr 1fr 1fr 1fr}
+.col-span-2{grid-column:span 2}
+.col-span-3{grid-column:span 3}
+.col-span-4{grid-column:span 4}
+.form-field{display:flex;flex-direction:column;gap:5px}
+.form-field label{font-size:12px;color:var(--text2);font-weight:500}
+.form-section{margin-bottom:20px}
+.form-section-title{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.status-radio{display:flex;gap:8px;flex-wrap:wrap}
+.status-radio label{display:flex;align-items:center;gap:6px;cursor:pointer;padding:6px 12px;border-radius:var(--radius-sm);border:1px solid var(--border2);font-size:12px;font-weight:500}
+.status-radio input[type=radio]{display:none}
+.status-radio label:has(input:checked){border-color:var(--yellow);background:var(--yellow-dim);color:var(--yellow)}
+
+/* ── SKU ROWS ── */
+.skus-section{margin-top:4px}
+.skus-header{display:grid;grid-template-columns:140px 1fr 90px 80px 80px 40px;gap:6px;padding:6px 4px;font-size:10px;color:var(--text3);text-transform:uppercase;font-weight:600}
+.sku-row{display:grid;grid-template-columns:140px 1fr 90px 80px 80px 40px;gap:6px;padding:6px 4px;border-bottom:1px solid var(--border);align-items:start}
+.sku-row:last-child{border-bottom:none}
+.sku-row input{font-size:13px}
+.sku-img-zone{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.sku-img-thumb{width:32px;height:32px;object-fit:cover;border-radius:3px;cursor:pointer;border:1px solid var(--border)}
+.sku-img-add{width:32px;height:32px;border:1px dashed var(--border2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text3);cursor:pointer;flex-shrink:0}
+.sku-img-add:hover{border-color:var(--yellow);color:var(--yellow)}
+.sku-expanded{grid-column:1/-1;display:none;padding:8px;background:var(--bg3);border-radius:var(--radius-sm);margin-top:4px}
+.sku-expanded.open{display:block}
+.sku-extra-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.sku-extra-grid .form-field label{font-size:11px}
+.sku-extra-grid input{font-size:12px;padding:5px 7px}
+.sku-toggle{background:transparent;border:none;color:var(--text3);font-size:11px;cursor:pointer;padding:0;margin-top:4px}
+.sku-toggle:hover{color:var(--yellow)}
+
+/* ── IMAGE UPLOAD ZONE ── */
+.img-upload-zone{border:2px dashed var(--border2);border-radius:var(--radius);padding:24px;text-align:center;cursor:pointer;transition:border-color .15s;background:var(--bg3)}
+.img-upload-zone:hover,.img-upload-zone.drag{border-color:var(--yellow);background:var(--yellow-dim)}
+.img-upload-zone p{color:var(--text2);font-size:13px}
+.img-upload-zone .icon{font-size:32px;margin-bottom:8px}
+.img-gallery{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.img-gallery-item{position:relative;width:80px;height:80px}
+.img-gallery-item img{width:100%;height:100%;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.img-gallery-item .del{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+
+/* ── DETAIL MODAL ── */
+.detail-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:14px}
+.detail-status-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.detail-section{margin-bottom:20px}
+.detail-section h3{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.detail-field{font-size:13px}
+.detail-field-label{font-size:10px;color:var(--text3);text-transform:uppercase;margin-bottom:2px}
+.detail-field-value{color:var(--text);font-weight:500}
+.sku-detail-row{background:var(--bg3);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px;border:1px solid var(--border)}
+.sku-detail-name{font-weight:700;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.sku-detail-desc{font-size:12px;color:var(--text2);margin-bottom:8px}
+.sku-detail-meta{display:flex;flex-wrap:wrap;gap:8px}
+.sku-detail-tag{background:var(--bg4);border:1px solid var(--border);border-radius:3px;padding:3px 8px;font-size:11px;color:var(--text2)}
+.sku-images{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sku-images img{width:56px;height:56px;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer}
+
+/* ── CATALOG SELECTOR ── */
+.catalog-list{max-height:400px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius)}
+.catalog-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+.catalog-item:last-child{border-bottom:none}
+.catalog-item:hover{background:var(--bg3)}
+.catalog-item.selected{background:var(--yellow-dim);border-left:3px solid var(--yellow)}
+.catalog-item-img{width:40px;height:40px;object-fit:cover;border-radius:var(--radius-sm);background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;overflow:hidden}
+.catalog-item-info{flex:1;min-width:0}
+.catalog-item-sku{font-weight:700;font-size:13px}
+.catalog-item-desc{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.catalog-item-price{font-size:13px;font-weight:600;color:var(--yellow);white-space:nowrap}
+.catalog-qty{width:70px;flex-shrink:0}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast-msg{background:var(--bg4);border:1px solid var(--border2);color:var(--text);padding:10px 16px;border-radius:var(--radius);font-size:13px;box-shadow:0 4px 16px rgba(0,0,0,.5);animation:slideIn .2s ease}
+.toast-msg.success{border-left:3px solid var(--green)}
+.toast-msg.error{border-left:3px solid var(--red)}
+.toast-msg.info{border-left:3px solid var(--blue)}
+@keyframes slideIn{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text3)}
+.empty-state .icon{font-size:48px;margin-bottom:12px}
+.empty-state p{font-size:15px}
+
+/* ── LOADING ── */
+.loading{display:flex;align-items:center;gap:8px;color:var(--text2);font-size:13px;padding:20px}
+.spinner{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--yellow);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── MISC ── */
+.tag{display:inline-block;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:600}
+.tag-green{background:#0a2a0a;color:#4c4;border:1px solid #252}
+.tag-blue{background:#0a1a2a;color:#48f;border:1px solid #235}
+.divider{height:1px;background:var(--border);margin:16px 0}
+.highlight{color:var(--yellow);font-weight:600}
+.mono{font-family:monospace;font-size:12px}
+.text-right{text-align:right}
+.text-center{text-align:center}
+.flex{display:flex;gap:8px;align-items:center}
+.flex-wrap{flex-wrap:wrap}
+.status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+.dot-pedido{background:#88a}
+.dot-em_transito{background:#8a8}
+.dot-alfandega{background:#aa8}
+.dot-chegou{background:#8c4}
+
 @media(max-width:600px){
-  .metrics{grid-template-columns:repeat(2,1fr)}
-  header,.toolbar,.pipeline,.main,.metrics,.store-bar{padding-left:14px;padding-right:14px}
-  .grid{grid-template-columns:1fr}
-  .r2{grid-template-columns:1fr}
+  .form-grid,.form-grid-3,.form-grid-4{grid-template-columns:1fr}
+  .col-span-2,.col-span-3,.col-span-4{grid-column:span 1}
+  .skus-header,.sku-row{grid-template-columns:1fr 1fr 80px 32px}
+  header{padding:0 12px}
 }
 </style>
 </head>
 <body>
+
 <header>
-  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Elyon" id="logoImg">
-  <span class="h-name">Elyon do Brasil</span>
-  <span class="h-sep"></span>
-  <span class="h-tag">Importação · Peças de Moto</span>
-  <div class="h-right">
-    <span class="saved-pill" id="savedPill">✓ salvo</span>
-    <button class="hbtn" onclick="exportCSV()">⬇ Exportar CSV</button>
-    <button class="hbtn" onclick="exportBackup()">💾 Backup JSON</button>
-    <button class="hbtn y" onclick="openAdd()">+ Novo Container</button>
+  <div class="logo">📦 <span>Elyon do Brasil</span>&nbsp;Importação</div>
+  <nav>
+    <button class="nav-tab active" onclick="switchTab('containers')">🚢 Containers</button>
+    <button class="nav-tab" onclick="switchTab('products')">📦 Catálogo</button>
+    <button class="nav-tab" onclick="switchTab('suppliers')">🏭 Fornecedores</button>
+  </nav>
+  <div class="header-actions">
+    <span id="sync-status" style="font-size:11px;color:var(--text3)">conectando...</span>
+    <button class="btn-ghost btn-sm" onclick="openModal('modal-config')">⚙ Config</button>
   </div>
 </header>
-<div class="pipeline">
-  <div class="pipe-step active" data-f="todos" onclick="setF('todos',this)">
-    <span class="pipe-dot" style="background:#FFE500"></span>
-    <span class="pipe-label">Todos</span>
-    <span class="pipe-count" id="c-todos">0</span>
+
+<div id="toast"></div>
+
+<!-- ═══════ TAB: CONTAINERS ═══════ -->
+<div id="tab-containers" class="tab-panel active">
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat-card"><div class="stat-label">Total</div><div class="stat-value" id="st-total">–</div><div class="stat-sub">containers</div></div>
+    <div class="stat-card"><div class="stat-label">Em Trânsito</div><div class="stat-value" id="st-transit">–</div></div>
+    <div class="stat-card"><div class="stat-label">Na Alfândega</div><div class="stat-value" id="st-customs">–</div></div>
+    <div class="stat-card"><div class="stat-label">Total US$</div><div class="stat-value highlight" id="st-usd">–</div></div>
+    <div class="stat-card"><div class="stat-label">Unidades</div><div class="stat-value" id="st-units">–</div></div>
   </div>
-  <span class="pipe-arr">›</span>
-  <div class="pipe-step" data-f="pedido" onclick="setF('pedido',this)">
-    <span class="pipe-dot" style="background:#5BA3FF"></span>
-    <span class="pipe-label">Pedido</span>
-    <span class="pipe-count" id="c-pedido">0</span>
+  <div class="filter-bar">
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="setFilter('all')">Todos</button>
+      <button class="filter-tab" onclick="setFilter('pedido')">Pedido</button>
+      <button class="filter-tab" onclick="setFilter('em_transito')">Em Trânsito</button>
+      <button class="filter-tab" onclick="setFilter('alfandega')">Alfândega</button>
+      <button class="filter-tab" onclick="setFilter('chegou')">Chegou</button>
+    </div>
+    <div class="search-box"><input type="text" placeholder="Buscar container, fornecedor, SKU…" oninput="setSearch(this.value)" id="search-input"></div>
+    <button class="btn-yellow" onclick="openContainerModal()">+ Novo Container</button>
+    <button class="btn-ghost btn-sm" onclick="exportCSV()">⬇ CSV</button>
   </div>
-  <span class="pipe-arr">›</span>
-  <div class="pipe-step" data-f="transito" onclick="setF('transito',this)">
-    <span class="pipe-dot" style="background:#FF8C3A"></span>
-    <span class="pipe-label">Em Trânsito</span>
-    <span class="pipe-count" id="c-transito">0</span>
-  </div>
-  <span class="pipe-arr">›</span>
-  <div class="pipe-step" data-f="alfandega" onclick="setF('alfandega',this)">
-    <span class="pipe-dot" style="background:#FF5572"></span>
-    <span class="pipe-label">Alfândega</span>
-    <span class="pipe-count" id="c-alfandega">0</span>
-  </div>
-  <span class="pipe-arr">›</span>
-  <div class="pipe-step" data-f="chegou" onclick="setF('chegou',this)">
-    <span class="pipe-dot" style="background:#3ECF7A"></span>
-    <span class="pipe-label">Chegou</span>
-    <span class="pipe-count" id="c-chegou">0</span>
+  <div class="containers-grid" id="containers-grid">
+    <div class="loading"><div class="spinner"></div> Carregando…</div>
   </div>
 </div>
-<div class="store-bar">
-  <span class="store-dot" id="storeDot"></span>
-  <span class="store-info" id="storeInfo">Conectando ao Supabase...</span>
-  <span class="store-size" id="storeSize"></span>
-  <button class="backup-btn" onclick="exportBackup()">⬇ Backup JSON</button>
-  <button class="backup-btn" onclick="openCfg()" style="border-color:rgba(255,229,0,.3);color:var(--y)">⚙ Config</button>
-</div>
-<div class="ov" id="cfgOv">
-<div class="cfg-modal">
-  <div class="m-hd">
-    <span class="m-title">Configurar Supabase</span>
-    <button class="xbtn" onclick="closeCfg()">✕</button>
+
+<!-- ═══════ TAB: CATÁLOGO ═══════ -->
+<div id="tab-products" class="tab-panel">
+  <div class="table-toolbar">
+    <h2>Catálogo de Produtos</h2>
+    <div class="search-box" style="max-width:300px"><input type="text" placeholder="Buscar SKU, descrição, NCM…" oninput="setProdSearch(this.value)"></div>
+    <button class="btn-yellow" onclick="openProductModal()">+ Novo Produto</button>
+    <button class="btn-ghost btn-sm" onclick="exportProductsCSV()">⬇ CSV</button>
   </div>
-  <div class="fld">
-    <label>URL do Projeto Supabase</label>
-    <input id="cfg-url" placeholder="https://xxxxxxxxxxx.supabase.co">
-  </div>
-  <div class="fld">
-    <label>Chave Anon (anon key)</label>
-    <input id="cfg-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
-  </div>
-  <p class="cfg-note">
-    1. Acesse <a href="https://supabase.com" target="_blank">supabase.com</a> → crie projeto gratuito<br>
-    2. Vá em <strong>Settings → API</strong> e copie a URL e a <em>anon public key</em><br>
-    3. No Editor SQL, rode:<br>
-    <code style="display:block;background:var(--s3);padding:8px;border-radius:4px;margin-top:6px;font-size:11px;white-space:pre">CREATE TABLE containers (
-  id TEXT PRIMARY KEY,
-  data JSONB NOT NULL,
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-ALTER TABLE containers ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "public_all" ON containers FOR ALL USING (true) WITH CHECK (true);</code>
-  </p>
-  <div class="m-actions">
-    <button class="btn-c" onclick="closeCfg()">CANCELAR</button>
-    <button class="btn-s" onclick="saveCfg()">SALVAR E CONECTAR</button>
+  <div id="products-list">
+    <div class="loading"><div class="spinner"></div> Carregando…</div>
   </div>
 </div>
-</div>
-<div class="metrics" id="metricsBar"></div>
-<div class="toolbar">
-  <div class="srch">
-    <input type="text" placeholder="buscar container, fornecedor, SKU, invoice..." id="srchInput" oninput="render()">
+
+<!-- ═══════ TAB: FORNECEDORES ═══════ -->
+<div id="tab-suppliers" class="tab-panel">
+  <div class="table-toolbar">
+    <h2>Fornecedores</h2>
+    <button class="btn-yellow" onclick="openSupplierModal()">+ Novo Fornecedor</button>
+  </div>
+  <div id="suppliers-list">
+    <div class="loading"><div class="spinner"></div> Carregando…</div>
   </div>
 </div>
-<div class="main">
-  <div class="grid" id="cardsGrid"></div>
-</div>
-<div class="ov" id="addOv">
-<div class="modal">
-  <div class="m-hd">
-    <span class="m-title" id="formTitle">Novo Container</span>
-    <button class="xbtn" onclick="closeAdd()">✕</button>
-  </div>
-  <div class="r2">
-    <div class="fld"><label>Nº do Container</label><input id="f-id" placeholder="ex: CTN-2025-01"></div>
-    <div class="fld"><label>Fornecedor</label><input id="f-forn" placeholder="ex: Shenzhen Motors Ltd."></div>
-  </div>
-  <div class="r2">
-    <div class="fld"><label>Data do Pedido</label><input id="f-pedido" type="date"></div>
-    <div class="fld"><label>Previsão de Chegada</label><input id="f-prev" type="date"></div>
-  </div>
-  <div class="r2">
-    <div class="fld"><label>Invoice Nº</label><input id="f-invoice" placeholder="ex: INV-20250101"></div>
-    <div class="fld"><label>Valor Total (US$)</label><input id="f-valor" type="number" min="0" step="0.01" placeholder="0.00" oninput="calcBRL()"></div>
-  </div>
-  <div class="r2">
-    <div class="fld"><label>Câmbio (R$ por US$)</label><input id="f-cambio" type="number" min="0" step="0.01" placeholder="ex: 5.85" oninput="calcBRL()"></div>
-    <div class="fld"><label>Valor Total (R$) — calculado</label><input id="f-brl" type="text" placeholder="—" readonly style="background:var(--s3);color:var(--bv);font-weight:600;cursor:default"></div>
-  </div>
-  <div class="fld">
-    <label>Status</label>
-    <div class="st-btns" id="stOpts">
-      <button class="sopt s-pedido sel" onclick="setSt('pedido',this)">Pedido</button>
-      <button class="sopt s-transito" onclick="setSt('transito',this)">Em Trânsito</button>
-      <button class="sopt s-alfandega" onclick="setSt('alfandega',this)">Alfândega</button>
-      <button class="sopt s-chegou" onclick="setSt('chegou',this)">Chegou</button>
+
+<!-- ══════════════════════════════════════════════════════
+     MODAL: CONFIG SUPABASE
+══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-config">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h2>⚙ Configurar Supabase</h2>
+      <button class="modal-close" onclick="closeModal('modal-config')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="form-field">
+          <label>URL do Projeto Supabase</label>
+          <input type="text" id="cfg-url" placeholder="https://xxxx.supabase.co">
+        </div>
+        <div class="form-field">
+          <label>Chave Anon (anon key)</label>
+          <input type="text" id="cfg-key" placeholder="eyJ…">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-config')">Cancelar</button>
+      <button class="btn-yellow" onclick="saveConfig()">Salvar e Conectar</button>
     </div>
   </div>
-  <div class="fld"><label>Observações</label><textarea id="f-obs" rows="2" placeholder="ex: docs na Receita, aguardando pagamento, urgente..."></textarea></div>
-  <div class="sec">Foto / Invoice</div>
-  <div class="img-drop" onclick="document.getElementById('f-img').click()">
-    <input type="file" id="f-img" accept="image/*" onchange="prevImg(this)">
-    <div style="font-size:24px;color:var(--w30)">📷</div>
-    <div class="img-drop-lbl">Clique para adicionar foto ou imagem da invoice</div>
-    <img id="imgPrev" class="img-prev">
-  </div>
-  <div class="sec">
-    Produtos / SKUs
-    <button class="hbtn" style="font-size:11px;padding:4px 10px" onclick="addSkuRow()">+ item</button>
-  </div>
-  <div class="sku-hdr" style="grid-template-columns:1fr 1.2fr 60px 75px 75px 28px">
-    <span>SKU</span><span>Descrição</span><span>Qtd</span><span>Unit US$</span><span>Unit R$</span><span></span>
-  </div>
-  <div class="sku-lst" id="skuLst"></div>
-  <button class="add-sku" onclick="addSkuRow()">+ adicionar produto</button>
-  <div class="m-actions">
-    <button class="btn-c" onclick="closeAdd()">cancelar</button>
-    <button class="btn-s" id="saveBtn" onclick="saveC()">SALVAR</button>
-  </div>
 </div>
-</div>
-<div class="ov" id="detOv">
-<div class="modal">
-  <div class="m-hd">
-    <span class="m-title" id="detTitle">Detalhes</span>
-    <div style="display:flex;gap:6px">
-      <button class="xbtn" onclick="editFromDet()" title="Editar">✏</button>
-      <button class="xbtn" onclick="closeDet()">✕</button>
+
+<!-- ══════════════════════════════════════════════════════
+     MODAL: CONTAINER (create/edit)
+══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-container">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h2 id="container-modal-title">Novo Container</h2>
+      <button class="modal-close" onclick="closeModal('modal-container')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- SEÇÃO 1: Identificação -->
+      <div class="form-section">
+        <div class="form-section-title">Identificação</div>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Nº Container *</label>
+            <input type="text" id="c-id" placeholder="CTN-ELYON-2026-01">
+          </div>
+          <div class="form-field">
+            <label>Fornecedor</label>
+            <select id="c-supplier-id" onchange="fillSupplierFields()">
+              <option value="">— selecionar do cadastro —</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Nome do Fornecedor (manual)</label>
+            <input type="text" id="c-forn" placeholder="Royaumann Co., Ltd — China">
+          </div>
+          <div class="form-field">
+            <label>Invoice Nº (PI)</label>
+            <input type="text" id="c-invoice" placeholder="K26RM01020">
+          </div>
+          <div class="form-field">
+            <label>Data do Pedido</label>
+            <input type="date" id="c-pedido">
+          </div>
+          <div class="form-field">
+            <label>Previsão de Chegada</label>
+            <input type="date" id="c-prev">
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 2: Financeiro -->
+      <div class="form-section">
+        <div class="form-section-title">Financeiro &amp; Logística</div>
+        <div class="form-grid form-grid-4">
+          <div class="form-field">
+            <label>Valor Total (US$)</label>
+            <input type="number" id="c-valor" step="0.01" placeholder="0.00">
+          </div>
+          <div class="form-field">
+            <label>Câmbio (R$/US$)</label>
+            <input type="number" id="c-cambio" step="0.01" placeholder="5.85">
+          </div>
+          <div class="form-field">
+            <label>Porto Origem (POL)</label>
+            <input type="text" id="c-pol" placeholder="SHANGHAI">
+          </div>
+          <div class="form-field">
+            <label>Porto Destino (POD)</label>
+            <input type="text" id="c-pod" placeholder="SANTOS">
+          </div>
+          <div class="form-field">
+            <label>Container</label>
+            <input type="text" id="c-container-type" placeholder="1*40HQ">
+          </div>
+          <div class="form-field">
+            <label>Incoterm</label>
+            <select id="c-incoterm">
+              <option value="FOB">FOB</option>
+              <option value="CIF">CIF</option>
+              <option value="EXW">EXW</option>
+              <option value="CFR">CFR</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Pagamento</label>
+            <input type="text" id="c-payment-term" placeholder="30% adiantamento + saldo">
+          </div>
+          <div class="form-field">
+            <label>Status</label>
+            <select id="c-status">
+              <option value="pedido">Pedido</option>
+              <option value="em_transito">Em Trânsito</option>
+              <option value="alfandega">Alfândega</option>
+              <option value="chegou">Chegou</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field" style="margin-top:10px">
+          <label>Observações</label>
+          <textarea id="c-obs" rows="2" placeholder="Notas internas…"></textarea>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 3: Imagem da Invoice -->
+      <div class="form-section">
+        <div class="form-section-title">Foto / Invoice</div>
+        <div class="img-upload-zone" onclick="document.getElementById('c-img-input').click()" id="c-img-zone">
+          <div class="icon">📷</div>
+          <p>Clique para adicionar foto ou imagem da invoice</p>
+        </div>
+        <input type="file" id="c-img-input" accept="image/*,application/pdf" style="display:none" onchange="handleContainerImg(this)">
+        <img id="c-img-preview" style="display:none;max-width:100%;border-radius:6px;margin-top:8px;border:1px solid var(--border)">
+      </div>
+
+      <!-- SEÇÃO 4: SKUs -->
+      <div class="form-section">
+        <div class="form-section-title" style="display:flex;align-items:center;justify-content:space-between">
+          <span>Produtos / SKUs</span>
+          <div style="display:flex;gap:6px">
+            <button class="btn-ghost btn-sm" onclick="openCatalogSelector()">📚 Buscar no Catálogo</button>
+            <button class="btn-ghost btn-sm" onclick="addSkuRow()">+ Adicionar Manual</button>
+          </div>
+        </div>
+        <div class="skus-header">
+          <div>SKU</div><div>Descrição (PT)</div><div>Qtd</div><div>US$/un</div><div>R$/un</div><div></div>
+        </div>
+        <div id="skus-container"></div>
+        <div id="skus-total" style="text-align:right;font-size:13px;color:var(--text2);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)"></div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn-red btn-sm" id="c-delete-btn" onclick="deleteCurrentContainer()" style="display:none;margin-right:auto">🗑 Excluir</button>
+      <button class="btn-ghost" onclick="closeModal('modal-container')">Cancelar</button>
+      <button class="btn-yellow" onclick="saveContainer()">💾 Salvar</button>
     </div>
   </div>
-  <div id="detBody"></div>
-  <div class="m-actions">
-    <button class="btn-c" onclick="delC()" style="border-color:rgba(255,85,114,.3);color:#FF8FA3">🗑 excluir</button>
-    <button class="btn-s" onclick="closeDet()">FECHAR</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODAL: DETAIL VIEW
+══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h2 id="detail-title">Container</h2>
+      <div style="display:flex;gap:6px;margin-left:auto">
+        <button class="btn-ghost btn-sm" onclick="editCurrentContainer()">✏ Editar</button>
+        <button class="btn-yellow btn-sm" onclick="exportInvoice()">⬇ Invoice Excel</button>
+        <button class="modal-close" onclick="closeModal('modal-detail')">✕</button>
+      </div>
+    </div>
+    <div class="modal-body" id="detail-body"></div>
   </div>
 </div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODAL: PRODUTO (create/edit)
+══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-product">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h2 id="product-modal-title">Novo Produto</h2>
+      <button class="modal-close" onclick="closeModal('modal-product')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-section">
+        <div class="form-section-title">Identificação</div>
+        <div class="form-grid form-grid-3">
+          <div class="form-field">
+            <label>SKU *</label>
+            <input type="text" id="p-sku" placeholder="EL-FA001">
+          </div>
+          <div class="form-field">
+            <label>Código OEM</label>
+            <input type="text" id="p-oem" placeholder="35121H2D000H000">
+          </div>
+          <div class="form-field">
+            <label>NCM</label>
+            <input type="text" id="p-ncm" placeholder="85122011">
+          </div>
+          <div class="form-field col-span-2">
+            <label>Descrição PT (interna)</label>
+            <input type="text" id="p-desc-pt" placeholder="Farol DK 150 2018 à 2024">
+          </div>
+          <div class="form-field">
+            <label>Modelo</label>
+            <input type="text" id="p-model" placeholder="DK 150">
+          </div>
+          <div class="form-field col-span-3">
+            <label>Descrição EN (para invoice)</label>
+            <textarea id="p-desc-en" rows="2" placeholder="Motorcycle headlight assembly, waterproof IPX66, 12V, 20W, for Haojue DK150, dimensions 26 x 19 x 24 cm"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Embalagem &amp; Preço</div>
+        <div class="form-grid form-grid-4">
+          <div class="form-field">
+            <label>Packing</label>
+            <input type="text" id="p-packing" placeholder="Customized Box">
+          </div>
+          <div class="form-field">
+            <label>Unidade</label>
+            <select id="p-unit-type">
+              <option>PÇ</option><option>PAR</option><option>UN</option>
+              <option>CONJ</option><option>KIT</option><option>CJ</option>
+              <option>KT</option><option>MT</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>FOB USD/un</label>
+            <input type="number" id="p-fob" step="0.01" placeholder="5.52">
+          </div>
+          <div class="form-field">
+            <label>Pçs por Caixa</label>
+            <input type="number" id="p-pcs-box" step="1" placeholder="16">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Dimensões &amp; Peso</div>
+        <div class="form-grid form-grid-4">
+          <div class="form-field">
+            <label>Peso Líq. (kg/caixa)</label>
+            <input type="number" id="p-nw" step="0.001" placeholder="16.42">
+          </div>
+          <div class="form-field">
+            <label>Peso Bruto (kg/caixa)</label>
+            <input type="number" id="p-gw" step="0.001" placeholder="17.42">
+          </div>
+          <div class="form-field">
+            <label>Comprimento (cm)</label>
+            <input type="number" id="p-len" step="0.1" placeholder="80">
+          </div>
+          <div class="form-field">
+            <label>Largura (cm)</label>
+            <input type="number" id="p-wid" step="0.1" placeholder="54">
+          </div>
+          <div class="form-field">
+            <label>Altura (cm)</label>
+            <input type="number" id="p-hei" step="0.1" placeholder="51">
+          </div>
+          <div class="form-field col-span-3">
+            <label>Texto da Etiqueta</label>
+            <textarea id="p-label" rows="2" placeholder="EL-FA010&#10;FAROL DK 150 2018 À 2024&#10;1 KIT"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Observação</div>
+        <div class="form-field">
+          <textarea id="p-remark" rows="2" placeholder="Notas para a invoice…"></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Fotos do Produto</div>
+        <div class="img-upload-zone" id="p-img-zone"
+          ondragover="event.preventDefault();this.classList.add('drag')"
+          ondragleave="this.classList.remove('drag')"
+          ondrop="handleProductImgDrop(event)"
+          onclick="document.getElementById('p-img-input').click()">
+          <div class="icon">🖼</div>
+          <p>Clique ou arraste imagens aqui (JPG, PNG, WEBP)</p>
+        </div>
+        <input type="file" id="p-img-input" accept="image/*" multiple style="display:none" onchange="handleProductImgs(this)">
+        <div class="img-gallery" id="p-img-gallery"></div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn-red btn-sm" id="p-delete-btn" onclick="deleteCurrentProduct()" style="display:none;margin-right:auto">🗑 Excluir</button>
+      <button class="btn-ghost" onclick="closeModal('modal-product')">Cancelar</button>
+      <button class="btn-yellow" onclick="saveProduct()">💾 Salvar Produto</button>
+    </div>
+  </div>
 </div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODAL: FORNECEDOR (create/edit)
+══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-supplier">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="supplier-modal-title">Novo Fornecedor</h2>
+      <button class="modal-close" onclick="closeModal('modal-supplier')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-section">
+        <div class="form-section-title">Dados do Fornecedor</div>
+        <div class="form-grid">
+          <div class="form-field col-span-2">
+            <label>Nome *</label>
+            <input type="text" id="s-name" placeholder="Royaumann Co., Ltd">
+          </div>
+          <div class="form-field col-span-2">
+            <label>Endereço</label>
+            <input type="text" id="s-address" placeholder="Bldg. B, No. 256 Hongde Road, Hangzhou, China">
+          </div>
+          <div class="form-field">
+            <label>Website</label>
+            <input type="text" id="s-website" placeholder="www.royaumann.com">
+          </div>
+          <div class="form-field">
+            <label>E-mail</label>
+            <input type="email" id="s-email" placeholder="export@royaumann.com">
+          </div>
+          <div class="form-field">
+            <label>Fax</label>
+            <input type="text" id="s-fax" placeholder="86-579-89895333">
+          </div>
+          <div class="form-field">
+            <label>Telefone</label>
+            <input type="text" id="s-tel" placeholder="86-13735820619">
+          </div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">Logística</div>
+        <div class="form-grid form-grid-3">
+          <div class="form-field">
+            <label>Incoterm</label>
+            <select id="s-incoterm">
+              <option value="FOB">FOB</option>
+              <option value="CIF">CIF</option>
+              <option value="EXW">EXW</option>
+              <option value="CFR">CFR</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Porto Embarque (POL)</label>
+            <input type="text" id="s-pol" placeholder="SHANGHAI" value="SHANGHAI">
+          </div>
+          <div class="form-field">
+            <label>Porto Destino (POD)</label>
+            <input type="text" id="s-pod" placeholder="SANTOS" value="SANTOS">
+          </div>
+          <div class="form-field">
+            <label>Tipo Container</label>
+            <input type="text" id="s-container-type" placeholder="1*40HQ" value="1*40HQ">
+          </div>
+          <div class="form-field col-span-2">
+            <label>Condição de Pagamento</label>
+            <input type="text" id="s-payment-term" placeholder="30% adiantamento antes da produção; saldo antes do embarque">
+          </div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">Dados Bancários</div>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Beneficiário (nome)</label>
+            <input type="text" id="s-bank-bene-name" placeholder="ROYAUMANN CO., LTD">
+          </div>
+          <div class="form-field">
+            <label>Conta Nº</label>
+            <input type="text" id="s-bank-account" placeholder="201000294102002">
+          </div>
+          <div class="form-field">
+            <label>Banco</label>
+            <input type="text" id="s-bank-name" placeholder="ZHEJIANG RURAL CREDIT…">
+          </div>
+          <div class="form-field">
+            <label>SWIFT BIC</label>
+            <input type="text" id="s-bank-swift" placeholder="ZJRCCN2N">
+          </div>
+          <div class="form-field col-span-2">
+            <label>Endereço do Banco</label>
+            <input type="text" id="s-bank-address" placeholder="NO. 660 QIUTAO ROAD, HANGZHOU…">
+          </div>
+          <div class="form-field col-span-2">
+            <label>Endereço da Conta</label>
+            <input type="text" id="s-bank-acct-address" placeholder="N0113 QIUSHI ROAD. BEIYUAN STREET YIWU…">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-red btn-sm" id="s-delete-btn" onclick="deleteCurrentSupplier()" style="display:none;margin-right:auto">🗑 Excluir</button>
+      <button class="btn-ghost" onclick="closeModal('modal-supplier')">Cancelar</button>
+      <button class="btn-yellow" onclick="saveSupplier()">💾 Salvar Fornecedor</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODAL: SELETOR DE CATÁLOGO
+══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-catalog">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>📚 Selecionar do Catálogo</h2>
+      <button class="modal-close" onclick="closeModal('modal-catalog')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="search-box" style="margin-bottom:12px">
+        <input type="text" placeholder="Buscar SKU, descrição, modelo…" oninput="filterCatalog(this.value)" id="catalog-search">
+      </div>
+      <div class="catalog-list" id="catalog-list"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-catalog')">Cancelar</button>
+      <button class="btn-yellow" onclick="addCatalogSelection()">+ Adicionar Selecionados</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODAL: IMAGEM AMPLIADA
+══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-imgview" onclick="closeModal('modal-imgview')">
+  <div style="max-width:90vw;max-height:90vh;margin:auto">
+    <img id="imgview-src" style="max-width:90vw;max-height:90vh;border-radius:8px;display:block">
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-const SL={pedido:'Pedido',transito:'Em Trânsito',alfandega:'Alfândega',chegou:'Chegou'};
-const SC={pedido:'b-pedido',transito:'b-transito',alfandega:'b-alfandega',chegou:'b-chegou'};
-const PC={pedido:'pf-pedido',transito:'pf-transito',alfandega:'pf-alfandega',chegou:'pf-chegou'};
-let D=[],filt='todos',cSt='pedido',dIdx=null,eIdx=null,imgD=null;
+'use strict';
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let sb = null;
+let SBURL = '', SBKEY = '';
+const S = {
+  containers: [], products: [], suppliers: [],
+  filter: 'all', search: '', prodSearch: '',
+  editingContainer: null, editingProduct: null, editingSupplier: null,
+  detailContainer: null,
+  catalogSelected: {}, // sku -> qty
+};
 
-const CFG_KEY='elyon_supa_cfg';
-let SUPA_URL='https://osjalefepyfpmbmynsbl.supabase.co',SUPA_KEY='sb_publishable_XR1GQA05jl5GQlXVExKGzw_HKnwK2xx';
-
-function loadCfg(){
-  try{const c=JSON.parse(localStorage.getItem(CFG_KEY)||'{}');SUPA_URL=c.url||'';SUPA_KEY=c.key||'';}catch(e){}
-}
-function openCfg(){
-  document.getElementById('cfg-url').value=SUPA_URL;
-  document.getElementById('cfg-key').value=SUPA_KEY;
-  document.getElementById('cfgOv').classList.add('open');
-}
-function closeCfg(){document.getElementById('cfgOv').classList.remove('open');}
-function saveCfg(){
-  SUPA_URL=document.getElementById('cfg-url').value.trim().replace(/\/$/,'');
-  SUPA_KEY=document.getElementById('cfg-key').value.trim();
-  localStorage.setItem(CFG_KEY,JSON.stringify({url:SUPA_URL,key:SUPA_KEY}));
-  closeCfg();init();
-}
-function supaHeaders(){
-  return{'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Prefer':'return=representation'};
-}
-function setStatus(state,msg,size){
-  const dot=document.getElementById('storeDot');
-  dot.className='store-dot'+(state==='loading'?' loading':state==='error'?' error':'');
-  document.getElementById('storeInfo').textContent=msg;
-  document.getElementById('storeSize').textContent=size||'';
-}
-
-async function dbLoad(){
-  if(!SUPA_URL||!SUPA_KEY){setStatus('error','⚠ Configure o Supabase (botão Config)','');D=[];render();return;}
-  setStatus('loading','Carregando...','');
-  try{
-    const r=await fetch(SUPA_URL+'/rest/v1/containers?select=id,data,updated_at&order=updated_at.desc',{headers:supaHeaders()});
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    const rows=await r.json();
-    D=rows.map(row=>({...row.data,_rowId:row.id}));
-    const ts=rows.length?new Date(rows[0].updated_at).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
-    setStatus('ok','Supabase · atualizado '+ts,rows.length+' containers');
-    await seedIfEmpty();
-    render();
-  }catch(e){
-    setStatus('error','Erro ao conectar: '+e.message,'');
-    render();
+// ─── INIT ────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', init);
+async function init() {
+  SBURL = localStorage.getItem('sb_url') || '';
+  SBKEY = localStorage.getItem('sb_key') || '';
+  if (SBURL && SBKEY) {
+    initSB();
+    await loadAll();
+  } else {
+    setSyncStatus('⚙ config necessária', '#e55');
+    openModal('modal-config');
+    document.getElementById('containers-grid').innerHTML = '';
+    document.getElementById('products-list').innerHTML = '';
+    document.getElementById('suppliers-list').innerHTML = '';
   }
 }
-
-async function dbSave(obj){
-  if(!SUPA_URL||!SUPA_KEY)return;
-  const payload={id:obj.id,data:obj,updated_at:new Date().toISOString()};
-  const r=await fetch(SUPA_URL+'/rest/v1/containers',{
-    method:'POST',
-    headers:{...supaHeaders(),'Prefer':'resolution=merge-duplicates,return=representation'},
-    body:JSON.stringify(payload)
-  });
-  if(!r.ok){const t=await r.text();throw new Error(t);}
+function initSB() {
+  try { sb = supabase.createClient(SBURL, SBKEY); } catch(e) { toast('Erro ao inicializar Supabase: '+e.message,'error'); }
 }
-
-async function dbDelete(id){
-  if(!SUPA_URL||!SUPA_KEY)return;
-  const r=await fetch(SUPA_URL+'/rest/v1/containers?id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:supaHeaders()});
-  if(!r.ok){const t=await r.text();throw new Error(t);}
-}
-
-async function save(obj,isDelete){
-  const pill=document.getElementById('savedPill');
-  try{
-    if(isDelete){await dbDelete(obj.id);}else{await dbSave(obj);}
-    pill.style.display='inline-flex';
-    setTimeout(()=>pill.style.display='none',2500);
-    const now=new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-    setStatus('ok','Supabase · salvo '+now,D.length+' containers');
-  }catch(e){
-    alert('Erro ao salvar no Supabase: '+e.message);
+async function loadAll() {
+  setSyncStatus('⟳ carregando…', '#aaa');
+  try {
+    await Promise.all([loadContainers(), loadProducts(), loadSuppliers()]);
+    setSyncStatus('✓ atualizado', '#4c4');
+  } catch(e) {
+    setSyncStatus('✗ erro conexão', '#e55');
+    toast('Erro ao carregar dados: '+e.message,'error');
   }
 }
-
-const containers_seed=[
-  {"id":"CTN-ELYON-2026-01","forn":"Royaumann Co., Ltd — China","pedido":"2026-01-29","prev":"","invoice":"","valor":29314.64,"cambio":0,"valorBRL":0,"status":"pedido","obs":"Cotação Royaumann 04/04/2026. FOB Ningbo → Santos. 1x40HQ. Total: US$ 29.314,64.","img":null,"skus":[{"sku":"TMI-BAP035","desc":"Baú 45L Plástico ABS Preto c/ suporte, chaves, encosto","qtd":1100,"unit":13.34,"unitBRL":0},{"sku":"EL-PR003","desc":"Paralama Traseiro CG / Titan 125 1979-1982","qtd":200,"unit":2.48,"unitBRL":0},{"sku":"EL-PR004","desc":"Paralama Dianteiro CG 125 1979-1982","qtd":300,"unit":2.5,"unitBRL":0},{"sku":"EL-PRT01","desc":"Protetor Escape XRE 300 2013-2023","qtd":600,"unit":2.75,"unitBRL":0},{"sku":"EL-PRF001","desc":"Parafuso Carburador Regulagem NX 200 / XR 200","qtd":500,"unit":0.74,"unitBRL":0},{"sku":"EL-PDL001","desc":"Pedal Câmbio Completo Intruder GN 125 2002-2016","qtd":1000,"unit":0.59,"unitBRL":0},{"sku":"EL-FA004","desc":"Farol Kansas 150 Preto Aro Cromado 2008-2015","qtd":300,"unit":5.52,"unitBRL":0},{"sku":"EL-FA003","desc":"Farol Kansas 150 Cromado 2008-2015","qtd":500,"unit":6.04,"unitBRL":0},{"sku":"EL-FA005","desc":"Farol Bloco Óptico Hornet CB600 2012-2014","qtd":100,"unit":9.49,"unitBRL":0},{"sku":"EL-CBC01","desc":"Cabeçote Intruder 125 2005-2010 Completo","qtd":228,"unit":22.63,"unitBRL":0}]},
-  {"id":"CTN-CHINOVA-2026-01","forn":"Chinova Co., Ltd — China","pedido":"2026-03-20","prev":"","invoice":"CN-BR260320","valor":15250.0,"cambio":0,"valorBRL":0,"status":"pedido","obs":"PI CN-BR260320. FOB Shanghai → Santos. Fornecedor: Chinova / Lucio. Câmbio 1USD=6.9CNY. Pagamento: 100% antes do embarque.","img":null,"skus":[{"sku":"EL-BAP007","desc":"Baú 45L Plástico ABS Preto c/ suporte, chaves, encosto — Chinova","qtd":1250,"unit":12.2,"unitBRL":0}]},
-  {"id":"CTN-TMAC-2026-01","forn":"TMAC — China","pedido":"","prev":"","invoice":"","valor":19953.87,"cambio":0,"valorBRL":0,"status":"pedido","obs":"Container TMAC.","img":null,"skus":[{"sku":"TMAC-LOT-35","desc":"Lote 35% do container (422 unidades)","qtd":422,"unit":15.96,"unitBRL":0},{"sku":"TMAC-LOT-65","desc":"Lote 65% do container (705 unidades)","qtd":705,"unit":18.75,"unitBRL":0}]},
-  {"id":"CTN-ELYON-2025-01","forn":"Royaumann Co., Ltd — China","pedido":"2025-05-07","prev":"","invoice":"K25RM05001","valor":39865.0,"cambio":0,"valorBRL":0,"status":"chegou","obs":"1º Container da Elyon do Brasil. 1x40HQ. FOB Ningbo → Santos.","img":null,"skus":[{"sku":"EL-RE001","desc":"Retrovisor Intruder GN 125 - All Years - Par","qtd":800,"unit":1.66,"unitBRL":0},{"sku":"EL-RE002","desc":"Retrovisor CG 125 1978-1982 - Par","qtd":800,"unit":1.41,"unitBRL":0},{"sku":"EL-CA001","desc":"Carburador Honda CBX200 NX200 XR200 XR250 XLR250","qtd":500,"unit":15.34,"unitBRL":0}]},
-  {"id":"CTN-R13-2025-01","forn":"Royaumann Co., Ltd — China","pedido":"2025-09-01","prev":"","invoice":"KB25RM07008","valor":53924.3,"cambio":0,"valorBRL":0,"status":"chegou","obs":"Container 1x40HQ. FOB Shanghai → Santos. Empresa: R13.","img":null,"skus":[{"sku":"EL-FA001","desc":"Farol DK 150 2018 à 2024","qtd":1000,"unit":5.52,"unitBRL":0},{"sku":"EL-BAP007","desc":"Baú 45 Litros Plástico ABS Preto","qtd":330,"unit":11.34,"unitBRL":0}]},
-  {"id":"CTN-2025-CHINA-01","forn":"China — Chef","pedido":"","prev":"","invoice":"","valor":0,"cambio":0,"valorBRL":0,"status":"transito","obs":"16 SKUs — planilha etiquetas/desenhos.","img":null,"skus":[{"sku":"EL-RE020","desc":"Retrovisor Intruder GN 125","qtd":1,"unit":0,"unitBRL":0},{"sku":"EL-FA010","desc":"Farol DK 150 2018 à 2024","qtd":1,"unit":0,"unitBRL":0}]}
-];
-
-async function seedIfEmpty(){
-  if(D.length>0)return;
-  for(const c of containers_seed){try{await dbSave(c);}catch(e){}}
-  D=[...containers_seed];
+function setSyncStatus(msg, color) {
+  const el = document.getElementById('sync-status');
+  el.textContent = msg; el.style.color = color;
 }
 
-function exportBackup(){
-  const blob=new Blob([JSON.stringify({version:3,exported:new Date().toISOString(),data:D},null,2)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download='elyon_backup_'+new Date().toISOString().slice(0,10)+'.json';a.click();
+// ─── CONFIG ──────────────────────────────────────────────────────────────────
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function saveConfig() {
+  const url = document.getElementById('cfg-url').value.trim();
+  const key = document.getElementById('cfg-key').value.trim();
+  if (!url || !key) { toast('Preencha URL e chave','error'); return; }
+  SBURL = url; SBKEY = key;
+  localStorage.setItem('sb_url', url); localStorage.setItem('sb_key', key);
+  closeModal('modal-config'); initSB(); loadAll();
 }
 
-function exportCSV(){
-  const h=['Nº Container','Fornecedor','Invoice','Data Pedido','Previsão','Valor US$','Câmbio','Valor R$','Status','SKUs','Unidades','Observações'];
-  const rows=D.map(c=>{
-    const u=(c.skus||[]).reduce((a,s)=>a+(+s.qtd||0),0);
-    return[c.id,c.forn,c.invoice,c.pedido,c.prev,c.valor,c.cambio||'',c.valorBRL||'',SL[c.status],(c.skus||[]).length,u,c.obs].map(v=>'"'+String(v||'').replace(/"/g,'""')+'"');
-  });
-  const sh=['','Nº Container','SKU','Descrição','Qtd','Unit US$','Unit R$','Total US$'];
-  const sr=[];
-  D.forEach(c=>(c.skus||[]).forEach(s=>sr.push(['',c.id,s.sku,s.desc,s.qtd,s.unit,s.unitBRL||'',(s.qtd*s.unit).toFixed(2)].map(v=>'"'+String(v||'').replace(/"/g,'""')+'"'))));
-  const csv=[h,...rows,[''],sh,...sr].map(r=>r.join(',')).join('\n');
-  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='elyon_containers.csv';a.click();
+// ─── CONTAINERS ──────────────────────────────────────────────────────────────
+async function loadContainers() {
+  const { data, error } = await sb.from('containers').select('*').order('updated_at', { ascending: false });
+  if (error) throw error;
+  S.containers = (data || []).map(r => ({ ...r.data, _row_id: r.id, _updated: r.updated_at }));
+  renderContainers();
+}
+function renderContainers() {
+  const grid = document.getElementById('containers-grid');
+  let items = S.containers;
+  if (S.filter !== 'all') items = items.filter(c => c.status === S.filter);
+  if (S.search) {
+    const q = S.search.toLowerCase();
+    items = items.filter(c =>
+      (c.id||'').toLowerCase().includes(q) ||
+      (c.forn||'').toLowerCase().includes(q) ||
+      (c.invoice||'').toLowerCase().includes(q) ||
+      (c.skus||[]).some(s => (s.sku||'').toLowerCase().includes(q) || (s.desc||'').toLowerCase().includes(q))
+    );
+  }
+  updateStats();
+  if (!items.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="icon">📦</div><p>Nenhum container encontrado</p></div>';
+    return;
+  }
+  grid.innerHTML = items.map(c => containerCard(c)).join('');
+}
+function containerCard(c) {
+  const statusLabel = {pedido:'Pedido',em_transito:'Em Trânsito',alfandega:'Alfândega',chegou:'Chegou'};
+  const totalQty = (c.skus||[]).reduce((a,s)=>a+(+s.qtd||0),0);
+  const totalUSD = c.valor ? `US$ ${(+c.valor).toLocaleString('pt-BR',{minimumFractionDigits:2})}` : (c.skus||[]).reduce((a,s)=>a+(+s.qtd||0)*(+s.unit||0),0).toLocaleString('pt-BR',{style:'currency',currency:'USD'});
+  const img = c.img ? `<img class="card-img" src="${c.img}" alt="" onerror="this.style.display='none'">` : '<div class="card-img">📦</div>';
+  const firstSkuImg = (c.skus||[]).flatMap(s=>s.images||[]).find(Boolean);
+  const thumbImg = firstSkuImg ? `<img src="${firstSkuImg}" style="width:32px;height:32px;object-fit:cover;border-radius:4px;border:1px solid var(--border)">` : '';
+  return `<div class="container-card" onclick="openDetail('${c.id}')">
+    <div class="card-header">
+      <div style="display:flex;flex-direction:column;gap:4px;flex:1;min-width:0">
+        <div class="card-title">${c.id||'—'}</div>
+        <div class="card-forn">${c.forn||'—'}</div>
+      </div>
+      <span class="card-status status-${c.status||'pedido'}">${statusLabel[c.status]||c.status}</span>
+    </div>
+    <div class="card-body">
+      <div class="card-field"><div class="card-field-label">Invoice</div><div class="card-field-value">${c.invoice||'—'}</div></div>
+      <div class="card-field"><div class="card-field-label">Pedido</div><div class="card-field-value">${fmtDate(c.pedido)}</div></div>
+      <div class="card-field"><div class="card-field-label">Previsão</div><div class="card-field-value">${fmtDate(c.prev)}</div></div>
+      <div class="card-field"><div class="card-field-label">Total US$</div><div class="card-field-value highlight">${totalUSD}</div></div>
+    </div>
+    <div class="card-footer">
+      <span class="card-skus">📦 ${(c.skus||[]).length} SKUs · ${totalQty.toLocaleString()} unid.</span>
+      ${thumbImg}
+    </div>
+  </div>`;
+}
+function updateStats() {
+  const cs = S.containers;
+  document.getElementById('st-total').textContent = cs.length;
+  document.getElementById('st-transit').textContent = cs.filter(c=>c.status==='em_transito').length;
+  document.getElementById('st-customs').textContent = cs.filter(c=>c.status==='alfandega').length;
+  const totalUSD = cs.reduce((a,c)=>a+(+c.valor||0),0);
+  document.getElementById('st-usd').textContent = 'US$ '+totalUSD.toLocaleString('pt-BR',{minimumFractionDigits:2});
+  const totalUnits = cs.reduce((a,c)=>a+(c.skus||[]).reduce((b,s)=>b+(+s.qtd||0),0),0);
+  document.getElementById('st-units').textContent = totalUnits.toLocaleString();
+}
+function setFilter(f) {
+  S.filter = f;
+  document.querySelectorAll('.filter-tab').forEach(b=>b.classList.toggle('active', b.textContent.toLowerCase().includes(f==='all'?'todos':f.replace('_',' '))));
+  renderContainers();
+}
+function setSearch(v) { S.search = v; renderContainers(); }
+
+// ─── CONTAINER MODAL ─────────────────────────────────────────────────────────
+let editingContainerId = null;
+function openContainerModal(c = null) {
+  editingContainerId = c ? c.id : null;
+  document.getElementById('container-modal-title').textContent = c ? 'Editar Container' : 'Novo Container';
+  document.getElementById('c-delete-btn').style.display = c ? '' : 'none';
+  // Fill supplier dropdown
+  const sel = document.getElementById('c-supplier-id');
+  sel.innerHTML = '<option value="">— selecionar do cadastro —</option>' +
+    S.suppliers.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  // Fill fields
+  document.getElementById('c-id').value = c?.id || genId();
+  document.getElementById('c-id').readOnly = !!c;
+  document.getElementById('c-forn').value = c?.forn || '';
+  document.getElementById('c-supplier-id').value = c?.supplier_id || '';
+  document.getElementById('c-invoice').value = c?.invoice || '';
+  document.getElementById('c-pedido').value = c?.pedido || '';
+  document.getElementById('c-prev').value = c?.prev || '';
+  document.getElementById('c-valor').value = c?.valor || '';
+  document.getElementById('c-cambio').value = c?.cambio || '';
+  document.getElementById('c-pol').value = c?.pol || 'SHANGHAI';
+  document.getElementById('c-pod').value = c?.pod || 'SANTOS';
+  document.getElementById('c-container-type').value = c?.container_type || '1*40HQ';
+  document.getElementById('c-incoterm').value = c?.incoterm || 'FOB';
+  document.getElementById('c-payment-term').value = c?.payment_term || '';
+  document.getElementById('c-status').value = c?.status || 'pedido';
+  document.getElementById('c-obs').value = c?.obs || '';
+  // Image
+  const preview = document.getElementById('c-img-preview');
+  if (c?.img) { preview.src = c.img; preview.style.display = 'block'; } else { preview.style.display = 'none'; }
+  // SKUs
+  renderSkuRows(c?.skus || []);
+  openModal('modal-container');
+}
+function editCurrentContainer() {
+  closeModal('modal-detail');
+  openContainerModal(S.detailContainer);
 }
 
-function calcTot(s){return(s||[]).reduce((a,r)=>a+((+r.qtd||0)*(+r.unit||0)),0);}
-function fmt(d){if(!d)return'—';const[y,m,dd]=d.split('-');return dd+'/'+m+'/'+y;}
-function isLate(p,s){if(s==='chegou')return false;if(!p)return false;return new Date(p)<new Date();}
-
-function renderMetrics(){
-  const cnt={todos:D.length,pedido:0,transito:0,alfandega:0,chegou:0};
-  let usd=0,brl=0,units=0;
-  D.forEach(c=>{cnt[c.status]++;usd+=+c.valor||0;brl+=+c.valorBRL||0;units+=(c.skus||[]).reduce((a,s)=>a+(+s.qtd||0),0);});
-  ['todos','pedido','transito','alfandega','chegou'].forEach(k=>{const el=document.getElementById('c-'+k);if(el)el.textContent=cnt[k];});
-  const defs=[
-    {l:'Containers',v:D.length,c:'#FFE500',sub:'total'},
-    {l:'Em Trânsito',v:cnt.transito,c:'#FF8C3A',sub:'containers'},
-    {l:'Alfândega',v:cnt.alfandega,c:'#FF5572',sub:'containers'},
-    {l:'Chegaram',v:cnt.chegou,c:'#3ECF7A',sub:'containers'},
-    {l:'Total US$',v:'US$ '+usd.toLocaleString('pt-BR',{minimumFractionDigits:2}),c:'#FFE500',sub:units.toLocaleString('pt-BR')+' unidades',small:true},
-    {l:'Total R$',v:brl>0?'R$ '+brl.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—',c:'#3ECF7A',sub:'câmbio médio ponderado',small:true},
-  ];
-  document.getElementById('metricsBar').innerHTML=defs.map(d=>'<div class="metric" style="--mc:'+d.c+'"><div class="m-lbl">'+d.l+'</div><div class="m-val" style="'+(d.small?'font-size:20px;margin-top:4px':'')+(d.small?';color:'+d.c:'')+'">'+d.v+'</div><div class="m-sub">'+d.sub+'</div></div>').join('');
+// Generate container ID
+function genId() {
+  const y = new Date().getFullYear();
+  const n = (S.containers.length+1).toString().padStart(2,'0');
+  return `CTN-ELYON-${y}-${n}`;
 }
 
-function render(){
-  const q=document.getElementById('srchInput').value.toLowerCase();
-  const grid=document.getElementById('cardsGrid');
-  const list=D.filter(c=>{
-    const mf=filt==='todos'||c.status===filt;
-    const ms=!q||c.id.toLowerCase().includes(q)||c.forn.toLowerCase().includes(q)||(c.invoice||'').toLowerCase().includes(q)||(c.skus||[]).some(s=>s.sku.toLowerCase().includes(q)||s.desc.toLowerCase().includes(q));
-    return mf&&ms;
-  });
-  renderMetrics();
-  if(!list.length){grid.innerHTML='<div class="empty"><div class="empty-ic">📦</div><div class="empty-tx">Nenhum container encontrado</div></div>';return;}
-  grid.innerHTML=list.map(c=>{
-    const idx=D.indexOf(c);
-    const sq=(c.skus||[]).length;
-    const su=(c.skus||[]).reduce((a,s)=>a+(+s.qtd||0),0);
-    const late=isLate(c.prev,c.status);
-    const img=c.img?'<img class="c-thumb" src="'+c.img+'" alt="">':'<div class="c-thumb-ph">📦 sem imagem</div>';
-    return '<div class="card" onclick="openDet('+idx+')">'
-      +img
-      +'<div class="c-body">'
-      +'<div class="c-head"><span class="badge '+SC[c.status]+'">'+SL[c.status]+'</span><span class="c-id">'+c.id+'</span><span class="c-forn">'+c.forn+'</span></div>'
-      +'<div class="c-meta">'
-      +'<div class="meta-i"><span class="meta-l">Invoice</span><span class="meta-v">'+(c.invoice||'—')+'</span></div>'
-      +'<div class="meta-i"><span class="meta-l">Pedido</span><span class="meta-v">'+fmt(c.pedido)+'</span></div>'
-      +'<div class="meta-i"><span class="meta-l">Previsão</span><span class="meta-v">'+fmt(c.prev)+(late?' <span class="late-tag">⚠ atrasado</span>':'')+'</span></div>'
-      +'<div class="meta-i"><span class="meta-l">Valor US$</span><span class="meta-v">US$ '+(+c.valor||0).toLocaleString('pt-BR',{minimumFractionDigits:2})+'</span></div>'
-      +'<div class="meta-i"><span class="meta-l">Valor R$</span><span class="meta-v" style="'+(c.valorBRL>0?'color:#3ECF7A':'')+'">'+(c.valorBRL>0?'R$ '+c.valorBRL.toLocaleString('pt-BR',{minimumFractionDigits:2}):'—')+'</span></div>'
-      +'</div>'
-      +'<div class="c-foot"><span class="c-skus">📦 '+sq+' SKUs · '+su.toLocaleString('pt-BR')+' unid.</span><div class="prog"><div class="pf '+PC[c.status]+'"></div></div></div>'
-      +'</div></div>';
-  }).join('');
+// Fill supplier fields when supplier selected
+function fillSupplierFields() {
+  const id = document.getElementById('c-supplier-id').value;
+  if (!id) return;
+  const sup = S.suppliers.find(s=>s.id===id);
+  if (!sup) return;
+  document.getElementById('c-forn').value = sup.name;
+  document.getElementById('c-pol').value = sup.pol || 'SHANGHAI';
+  document.getElementById('c-pod').value = sup.pod || 'SANTOS';
+  document.getElementById('c-container-type').value = sup.container_type || '1*40HQ';
+  document.getElementById('c-incoterm').value = sup.incoterm || 'FOB';
+  document.getElementById('c-payment-term').value = sup.payment_term || '';
 }
 
-function setF(f,btn){filt=f;document.querySelectorAll('.pipe-step').forEach(b=>b.classList.toggle('active',b.dataset.f===f));render();}
-
-function openAdd(){
-  eIdx=null;imgD=null;
-  document.getElementById('formTitle').textContent='Novo Container';
-  document.getElementById('saveBtn').textContent='SALVAR';
-  ['f-id','f-forn','f-pedido','f-prev','f-invoice','f-obs'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('f-valor').value='';
-  document.getElementById('f-cambio').value='';
-  document.getElementById('f-brl').value='';
-  document.getElementById('imgPrev').style.display='none';
-  cSt='pedido';
-  document.querySelectorAll('#stOpts .sopt').forEach(b=>{b.classList.remove('sel');if(b.classList.contains('s-pedido'))b.classList.add('sel');});
-  document.getElementById('skuLst').innerHTML='';addSkuRow();
-  document.getElementById('addOv').classList.add('open');
-}
-
-function calcBRL(){
-  const usd=parseFloat(document.getElementById('f-valor').value)||0;
-  const cambio=parseFloat(document.getElementById('f-cambio').value)||0;
-  const brl=document.getElementById('f-brl');
-  if(usd>0&&cambio>0){
-    brl.value='R$ '+(usd*cambio).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-    document.querySelectorAll('#skuLst .sku-row').forEach(row=>{const inp=row.querySelectorAll('input');const u=parseFloat(inp[3].value)||0;if(u>0)inp[4].value=(u*cambio).toFixed(2);});
-  }else brl.value='—';
-}
-
-function closeAdd(){document.getElementById('addOv').classList.remove('open');}
-function setSt(s,btn){cSt=s;document.querySelectorAll('#stOpts .sopt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
-
-function prevImg(input){
-  const f=input.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=e=>{imgD=e.target.result;const p=document.getElementById('imgPrev');p.src=imgD;p.style.display='block';};
-  r.readAsDataURL(f);
-}
-
-function addSkuRow(sku){
-  const lst=document.getElementById('skuLst');
-  const d=document.createElement('div');d.className='sku-row';
-  const unitBRL=sku&&sku.unitBRL?sku.unitBRL:'';
-  d.innerHTML='<input type="text" placeholder="SKU" value="'+(sku?sku.sku||'':'')+'">'
-    +'<input type="text" placeholder="descrição" value="'+(sku?sku.desc||'':'')+'">'
-    +'<input type="number" placeholder="0" min="0" value="'+(sku?sku.qtd||'':'')+'" oninput="recalcSkuBRL(this)">'
-    +'<input type="number" placeholder="0.00" min="0" step="0.01" value="'+(sku?sku.unit||'':'')+'" oninput="recalcSkuBRL(this)">'
-    +'<input type="number" placeholder="R$" min="0" step="0.01" value="'+unitBRL+'" style="background:var(--s3);color:var(--bv)" title="Valor unitário em R$">'
-    +'<button class="del" onclick="this.parentElement.remove()">✕</button>';
-  lst.appendChild(d);
-}
-
-function recalcSkuBRL(el){
-  const row=el.closest('.sku-row');
-  const inputs=row.querySelectorAll('input');
-  const usd=parseFloat(inputs[3].value)||0;
-  const cambio=parseFloat(document.getElementById('f-cambio').value)||0;
-  if(cambio>0)inputs[4].value=(usd*cambio).toFixed(2);
-}
-
-function getSkus(){
-  return Array.from(document.querySelectorAll('#skuLst .sku-row')).map(row=>{
-    const inp=row.querySelectorAll('input');
-    return{sku:inp[0].value.trim(),desc:inp[1].value.trim(),qtd:parseFloat(inp[2].value)||0,unit:parseFloat(inp[3].value)||0,unitBRL:parseFloat(inp[4].value)||0};
-  }).filter(s=>s.sku||s.desc);
-}
-
-async function saveC(){
-  const id=document.getElementById('f-id').value.trim();
-  const forn=document.getElementById('f-forn').value.trim();
-  if(!id||!forn){alert('Informe o nº do container e o fornecedor.');return;}
-  const cambio=parseFloat(document.getElementById('f-cambio').value)||0;
-  const valorUSD=parseFloat(document.getElementById('f-valor').value)||0;
-  const obj={
-    id,forn,
-    pedido:document.getElementById('f-pedido').value,
-    prev:document.getElementById('f-prev').value,
-    invoice:document.getElementById('f-invoice').value.trim(),
-    valor:valorUSD,cambio,valorBRL:cambio>0?(valorUSD*cambio):0,
-    status:cSt,
-    obs:document.getElementById('f-obs').value.trim(),
-    img:imgD!==null?imgD:(eIdx!==null?D[eIdx].img:null),
-    skus:getSkus(),
+// Container image
+function handleContainerImg(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const preview = document.getElementById('c-img-preview');
+    preview.src = e.target.result; preview.style.display = 'block';
   };
-  if(eIdx!==null)D[eIdx]=obj;else D.unshift(obj);
-  await save(obj);
-  closeAdd();render();
+  reader.readAsDataURL(file);
 }
 
-function openDet(idx){
-  dIdx=idx;const c=D[idx];
-  document.getElementById('detTitle').textContent=c.id;
-  const sr=(c.skus||[]).map(s=>'<tr><td title="'+s.sku+'">'+s.sku+'</td><td title="'+s.desc+'">'+s.desc+'</td><td style="text-align:right">'+(+s.qtd).toLocaleString('pt-BR')+'</td><td style="text-align:right">US$ '+(+s.unit).toFixed(2)+'</td><td style="text-align:right">US$ '+(s.qtd*s.unit).toFixed(2)+'</td><td style="text-align:right;color:#3ECF7A">'+(s.unitBRL>0?'R$ '+(+s.unitBRL).toFixed(2):'—')+'</td></tr>').join('');
-  const tot=calcTot(c.skus);
-  const su=(c.skus||[]).reduce((a,s)=>a+(+s.qtd||0),0);
-  const iH=c.img?'<img class="d-img" src="'+c.img+'" alt="">':'<div class="d-ph">📦 sem imagem</div>';
-  const sB=['pedido','transito','alfandega','chegou'].map(s=>'<button class="sopt s-'+s+(c.status===s?' sel':'')+'" onclick="chgSt(\'' +s+'\',this)">'+SL[s]+'</button>').join('');
-  const late=isLate(c.prev,c.status);
-  const rows=[
-    ['Fornecedor',c.forn],['Invoice',c.invoice||'—'],['Data do Pedido',fmt(c.pedido)],
-    ['Previsão',fmt(c.prev)+(late?' ⚠ atrasado':'')],
-    ['Valor Total US$','US$ '+(+c.valor||0).toLocaleString('pt-BR',{minimumFractionDigits:2})],
-    ['Câmbio','R$ '+(+c.cambio||0).toFixed(2)+' / US$'],
-    ['Valor Total R$',c.valorBRL>0?'<span style="color:#3ECF7A;font-weight:700">R$ '+c.valorBRL.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</span>':'—'],
-    ['Observações',c.obs||'—']
-  ].map(r=>'<div class="d-row"><span class="d-k">'+r[0]+'</span><span class="d-v">'+r[1]+'</span></div>').join('');
-  document.getElementById('detBody').innerHTML=iH+rows
-    +'<div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--w30);margin:14px 0 6px;font-weight:500">Alterar status:</div>'
-    +'<div class="s-change">'+sB+'</div>'
-    +'<div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--white);margin:16px 0 6px;display:flex;justify-content:space-between;align-items:center">Produtos<span style="font-weight:400;color:var(--w30);font-size:10px;text-transform:none">'+(c.skus||[]).length+' SKUs · '+su.toLocaleString('pt-BR')+' unid.</span></div>'
-    +((c.skus||[]).length?'<div style="overflow-x:auto"><table class="sku-tbl"><thead><tr><th style="width:14%">SKU</th><th>Descrição</th><th style="width:9%;text-align:right">Qtd</th><th style="width:12%;text-align:right">US$</th><th style="width:12%;text-align:right">Total US$</th><th style="width:13%;text-align:right;color:#3ECF7A">R$ unit</th></tr></thead><tbody>'+sr+'</tbody></table><div class="sku-tot"><span>Total US$</span><span>US$ '+tot.toFixed(2)+'</span></div>'+(c.valorBRL>0?'<div class="sku-tot" style="border-top:none;padding-top:4px"><span style="color:#3ECF7A">Total R$</span><span style="color:#3ECF7A">R$ '+c.valorBRL.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</span></div>':'')+'</div>':'<div style="font-size:12px;color:var(--w30);padding:8px 0">Nenhum produto cadastrado.</div>');
-  document.getElementById('detOv').classList.add('open');
+// Save container
+async function saveContainer() {
+  const id = document.getElementById('c-id').value.trim();
+  if (!id) { toast('Informe o Nº do Container','error'); return; }
+  const skus = collectSkuRows();
+  const totalUSD = skus.reduce((a,s)=>a+(+s.qtd||0)*(+s.unit||0),0);
+  const manualValor = document.getElementById('c-valor').value;
+  const imgPreview = document.getElementById('c-img-preview');
+  const data = {
+    id,
+    forn: document.getElementById('c-forn').value.trim(),
+    supplier_id: document.getElementById('c-supplier-id').value || null,
+    invoice: document.getElementById('c-invoice').value.trim(),
+    pedido: document.getElementById('c-pedido').value,
+    prev: document.getElementById('c-prev').value,
+    valor: manualValor ? +manualValor : +totalUSD.toFixed(2),
+    cambio: +document.getElementById('c-cambio').value || 0,
+    valorBRL: 0,
+    pol: document.getElementById('c-pol').value.trim() || 'SHANGHAI',
+    pod: document.getElementById('c-pod').value.trim() || 'SANTOS',
+    container_type: document.getElementById('c-container-type').value.trim() || '1*40HQ',
+    incoterm: document.getElementById('c-incoterm').value,
+    payment_term: document.getElementById('c-payment-term').value.trim(),
+    status: document.getElementById('c-status').value,
+    obs: document.getElementById('c-obs').value.trim(),
+    img: imgPreview.style.display !== 'none' ? imgPreview.src : null,
+    skus,
+  };
+  try {
+    const { error } = await sb.from('containers').upsert({ id, data, updated_at: new Date().toISOString() });
+    if (error) throw error;
+    toast('Container salvo!','success');
+    closeModal('modal-container');
+    await loadContainers();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
 }
 
-async function chgSt(s,btn){
-  if(dIdx===null)return;
-  D[dIdx].status=s;
-  await save(D[dIdx]);
-  document.querySelectorAll('#detBody .sopt').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');render();
+async function deleteCurrentContainer() {
+  if (!editingContainerId) return;
+  if (!confirm('Excluir este container?')) return;
+  try {
+    const { error } = await sb.from('containers').delete().eq('id', editingContainerId);
+    if (error) throw error;
+    toast('Container excluído','info');
+    closeModal('modal-container');
+    await loadContainers();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
 }
 
-function closeDet(){document.getElementById('detOv').classList.remove('open');dIdx=null;}
-
-function editFromDet(){
-  const idx=dIdx;closeDet();const c=D[idx];eIdx=idx;imgD=null;
-  document.getElementById('formTitle').textContent='Editar '+c.id;
-  document.getElementById('saveBtn').textContent='ATUALIZAR';
-  document.getElementById('f-id').value=c.id;
-  document.getElementById('f-forn').value=c.forn;
-  document.getElementById('f-pedido').value=c.pedido||'';
-  document.getElementById('f-prev').value=c.prev||'';
-  document.getElementById('f-invoice').value=c.invoice||'';
-  document.getElementById('f-valor').value=c.valor||'';
-  document.getElementById('f-cambio').value=c.cambio||'';
-  document.getElementById('f-brl').value=c.valorBRL>0?'R$ '+c.valorBRL.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}):'';
-  document.getElementById('f-obs').value=c.obs||'';
-  cSt=c.status;
-  document.querySelectorAll('#stOpts .sopt').forEach(b=>{b.classList.remove('sel');if(b.classList.contains('s-'+c.status))b.classList.add('sel');});
-  const p=document.getElementById('imgPrev');
-  if(c.img){p.src=c.img;p.style.display='block';}else p.style.display='none';
-  document.getElementById('skuLst').innerHTML='';
-  (c.skus||[]).forEach(s=>addSkuRow(s));
-  if(!(c.skus||[]).length)addSkuRow();
-  document.getElementById('addOv').classList.add('open');
+// ─── SKU ROWS ────────────────────────────────────────────────────────────────
+function renderSkuRows(skus) {
+  const cont = document.getElementById('skus-container');
+  cont.innerHTML = '';
+  skus.forEach((s,i) => addSkuRow(s));
+  updateSkuTotal();
+}
+function addSkuRow(sku = {}) {
+  const cont = document.getElementById('skus-container');
+  const idx = cont.children.length;
+  const div = document.createElement('div');
+  div.className = 'sku-entry';
+  div.dataset.idx = idx;
+  const imgs = (sku.images||[]);
+  div.innerHTML = `
+    <div class="sku-row">
+      <input type="text" class="sku-field" placeholder="SKU" value="${esc(sku.sku||'')}" onchange="skuChanged(this)">
+      <div>
+        <input type="text" class="sku-desc" placeholder="Descrição PT" value="${esc(sku.desc||'')}">
+        <button class="sku-toggle" onclick="toggleSkuExtra(this)">▸ campos da invoice</button>
+      </div>
+      <input type="number" class="sku-qty" placeholder="Qtd" value="${sku.qtd||''}" min="0" oninput="updateSkuTotal()">
+      <input type="number" class="sku-unit" placeholder="US$" value="${sku.unit||''}" step="0.01" oninput="updateSkuTotal()">
+      <input type="number" class="sku-unitbrl" placeholder="R$" value="${sku.unitBRL||''}" step="0.01">
+      <button class="btn-icon" onclick="removeSkuRow(this)" title="Remover">✕</button>
+    </div>
+    <div class="sku-expanded">
+      <div class="sku-extra-grid">
+        <div class="form-field"><label>Descrição EN (invoice)</label><textarea class="sku-desc-en" rows="2">${esc(sku.desc_en||'')}</textarea></div>
+        <div class="form-field"><label>Código OEM</label><input type="text" class="sku-oem" value="${esc(sku.oem_code||'')}"></div>
+        <div class="form-field"><label>NCM</label><input type="text" class="sku-ncm" value="${esc(sku.ncm||'')}"></div>
+        <div class="form-field"><label>Modelo</label><input type="text" class="sku-model" value="${esc(sku.model||'')}"></div>
+        <div class="form-field"><label>Packing</label><input type="text" class="sku-packing" value="${esc(sku.packing||'')}"></div>
+        <div class="form-field"><label>Unidade</label>
+          <select class="sku-unit-type">${['PÇ','PAR','UN','CONJ','KIT','CJ','KT'].map(u=>`<option${u===(sku.unit_type||'PÇ')?' selected':''}>${u}</option>`).join('')}</select>
+        </div>
+        <div class="form-field"><label>Peso Líq. (kg/cx)</label><input type="number" class="sku-nw" value="${sku.net_weight_kg||''}" step="0.001"></div>
+        <div class="form-field"><label>Peso Bruto (kg/cx)</label><input type="number" class="sku-gw" value="${sku.gross_weight_kg||''}" step="0.001"></div>
+        <div class="form-field"><label>Pçs/Caixa</label><input type="number" class="sku-pcs" value="${sku.pcs_per_box||''}"></div>
+        <div class="form-field"><label>Compr. (cm)</label><input type="number" class="sku-len" value="${sku.length_cm||''}" step="0.1"></div>
+        <div class="form-field"><label>Larg. (cm)</label><input type="number" class="sku-wid" value="${sku.width_cm||''}" step="0.1"></div>
+        <div class="form-field"><label>Alt. (cm)</label><input type="number" class="sku-hei" value="${sku.height_cm||''}" step="0.1"></div>
+      </div>
+      <div class="form-field" style="margin-bottom:8px">
+        <label>Etiqueta</label>
+        <textarea class="sku-label" rows="2">${esc(sku.label_text||'')}</textarea>
+      </div>
+      <div class="form-field" style="margin-bottom:8px">
+        <label>Remark (invoice)</label>
+        <input type="text" class="sku-remark" value="${esc(sku.remark||'')}">
+      </div>
+      <label style="font-size:11px;color:var(--text2);font-weight:500;margin-bottom:4px;display:block">Fotos</label>
+      <div class="sku-img-zone">
+        ${imgs.map(url=>`<img class="sku-img-thumb" src="${url}" onclick="viewImg('${url}')" onerror="this.remove()">`).join('')}
+        <div class="sku-img-add" onclick="pickSkuImg(this)" title="Adicionar foto">+</div>
+      </div>
+    </div>`;
+  cont.appendChild(div);
+}
+function toggleSkuExtra(btn) {
+  const exp = btn.closest('.sku-entry').querySelector('.sku-expanded');
+  exp.classList.toggle('open');
+  btn.textContent = exp.classList.contains('open') ? '▾ campos da invoice' : '▸ campos da invoice';
+}
+function removeSkuRow(btn) {
+  btn.closest('.sku-entry').remove();
+  updateSkuTotal();
+}
+function updateSkuTotal() {
+  let total = 0;
+  document.querySelectorAll('.sku-entry').forEach(entry => {
+    const qty = +entry.querySelector('.sku-qty').value || 0;
+    const unit = +entry.querySelector('.sku-unit').value || 0;
+    total += qty * unit;
+  });
+  const el = document.getElementById('skus-total');
+  el.textContent = total > 0 ? `Total US$: ${total.toLocaleString('pt-BR',{minimumFractionDigits:2})}` : '';
+}
+function collectSkuRows() {
+  return Array.from(document.querySelectorAll('.sku-entry')).map(entry => {
+    const imgs = Array.from(entry.querySelectorAll('.sku-img-zone .sku-img-thumb')).map(img=>img.src).filter(Boolean);
+    return {
+      sku: entry.querySelector('.sku-field').value.trim(),
+      desc: entry.querySelector('.sku-desc').value.trim(),
+      desc_en: entry.querySelector('.sku-desc-en').value.trim(),
+      oem_code: entry.querySelector('.sku-oem').value.trim(),
+      ncm: entry.querySelector('.sku-ncm').value.trim(),
+      model: entry.querySelector('.sku-model').value.trim(),
+      packing: entry.querySelector('.sku-packing').value.trim(),
+      unit_type: entry.querySelector('.sku-unit-type').value,
+      qtd: +entry.querySelector('.sku-qty').value || 0,
+      unit: +entry.querySelector('.sku-unit').value || 0,
+      unitBRL: +entry.querySelector('.sku-unitbrl').value || 0,
+      net_weight_kg: +entry.querySelector('.sku-nw').value || 0,
+      gross_weight_kg: +entry.querySelector('.sku-gw').value || 0,
+      pcs_per_box: +entry.querySelector('.sku-pcs').value || 0,
+      length_cm: +entry.querySelector('.sku-len').value || 0,
+      width_cm: +entry.querySelector('.sku-wid').value || 0,
+      height_cm: +entry.querySelector('.sku-hei').value || 0,
+      label_text: entry.querySelector('.sku-label').value.trim(),
+      remark: entry.querySelector('.sku-remark').value.trim(),
+      images: imgs,
+    };
+  }).filter(s => s.sku);
 }
 
-async function delC(){
-  if(dIdx===null)return;
-  const c=D[dIdx];
-  if(!confirm('Excluir container '+c.id+'?'))return;
-  D.splice(dIdx,1);
-  await save(c,true);
-  closeDet();render();
+// Auto-fill SKU from catalog when SKU code typed
+function skuChanged(input) {
+  const entry = input.closest('.sku-entry');
+  const sku = input.value.trim().toUpperCase();
+  const prod = S.products.find(p => p.sku.toUpperCase() === sku);
+  if (!prod) return;
+  entry.querySelector('.sku-desc').value = prod.description_pt || '';
+  const exp = entry.querySelector('.sku-expanded');
+  exp.querySelector('.sku-desc-en').value = prod.description_en || '';
+  exp.querySelector('.sku-oem').value = prod.oem_code || '';
+  exp.querySelector('.sku-ncm').value = prod.ncm || '';
+  exp.querySelector('.sku-model').value = prod.model || '';
+  exp.querySelector('.sku-packing').value = prod.packing || '';
+  exp.querySelector('.sku-unit-type').value = prod.unit_type || 'PÇ';
+  entry.querySelector('.sku-unit').value = prod.fob_usd || '';
+  exp.querySelector('.sku-nw').value = prod.net_weight_kg || '';
+  exp.querySelector('.sku-gw').value = prod.gross_weight_kg || '';
+  exp.querySelector('.sku-pcs').value = prod.pcs_per_box || '';
+  exp.querySelector('.sku-len').value = prod.length_cm || '';
+  exp.querySelector('.sku-wid').value = prod.width_cm || '';
+  exp.querySelector('.sku-hei').value = prod.height_cm || '';
+  exp.querySelector('.sku-label').value = prod.label_text || '';
+  exp.querySelector('.sku-remark').value = prod.remark || '';
+  // Add product images
+  const imgZone = exp.querySelector('.sku-img-zone');
+  (prod.images||[]).forEach(url => {
+    const img = document.createElement('img');
+    img.className = 'sku-img-thumb'; img.src = url;
+    img.onclick = () => viewImg(url);
+    imgZone.insertBefore(img, imgZone.lastElementChild);
+  });
+  if (!exp.classList.contains('open')) toggleSkuExtra(entry.querySelector('.sku-toggle'));
+  updateSkuTotal();
+  toast('Campos preenchidos do catálogo: '+prod.sku,'info');
 }
 
-document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+// SKU image picker
+function pickSkuImg(addBtn) {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*'; input.multiple = true;
+  input.onchange = async e => {
+    const zone = addBtn.closest('.sku-img-zone');
+    for (const file of e.target.files) {
+      const url = await uploadProductImage(file);
+      if (url) {
+        const img = document.createElement('img');
+        img.className = 'sku-img-thumb'; img.src = url;
+        img.onclick = () => viewImg(url);
+        zone.insertBefore(img, addBtn);
+      }
+    }
+  };
+  input.click();
+}
 
-async function init(){await dbLoad();}
-init();
+// ─── CATALOG SELECTOR ────────────────────────────────────────────────────────
+function openCatalogSelector() {
+  S.catalogSelected = {};
+  renderCatalogList(S.products);
+  document.getElementById('catalog-search').value = '';
+  openModal('modal-catalog');
+}
+function filterCatalog(q) {
+  const ql = q.toLowerCase();
+  const filtered = S.products.filter(p =>
+    !q || (p.sku||'').toLowerCase().includes(ql) ||
+    (p.description_pt||'').toLowerCase().includes(ql) ||
+    (p.model||'').toLowerCase().includes(ql)
+  );
+  renderCatalogList(filtered);
+}
+function renderCatalogList(products) {
+  const list = document.getElementById('catalog-list');
+  if (!products.length) {
+    list.innerHTML = '<div class="empty-state" style="padding:30px"><p>Nenhum produto no catálogo ainda.<br>Cadastre produtos na aba Catálogo.</p></div>';
+    return;
+  }
+  list.innerHTML = products.map(p => {
+    const img = (p.images||[])[0];
+    const thumbHtml = img ? `<img src="${img}" class="catalog-item-img">` : `<div class="catalog-item-img">📦</div>`;
+    const sel = S.catalogSelected[p.sku];
+    return `<div class="catalog-item${sel?' selected':''}" data-sku="${p.sku}">
+      ${thumbHtml}
+      <div class="catalog-item-info">
+        <div class="catalog-item-sku">${p.sku}</div>
+        <div class="catalog-item-desc">${p.description_pt||p.model||'—'}</div>
+      </div>
+      <div class="catalog-item-price">${p.fob_usd ? 'US$ '+p.fob_usd : '—'}</div>
+      <input type="number" class="catalog-qty" placeholder="Qtd" min="1" value="${sel||''}"
+        onclick="event.stopPropagation()"
+        oninput="catalogSetQty('${p.sku}', this.value, this.closest('.catalog-item'))">
+    </div>`;
+  }).join('');
+  list.querySelectorAll('.catalog-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const sku = el.dataset.sku;
+      const qtyInput = el.querySelector('.catalog-qty');
+      if (S.catalogSelected[sku]) { delete S.catalogSelected[sku]; el.classList.remove('selected'); qtyInput.value=''; }
+      else { S.catalogSelected[sku] = 1; el.classList.add('selected'); qtyInput.value=1; }
+    });
+  });
+}
+function catalogSetQty(sku, val, el) {
+  const n = parseInt(val);
+  if (n > 0) { S.catalogSelected[sku] = n; el.classList.add('selected'); }
+  else { delete S.catalogSelected[sku]; el.classList.remove('selected'); }
+}
+function addCatalogSelection() {
+  const entries = Object.entries(S.catalogSelected);
+  if (!entries.length) { toast('Selecione ao menos um produto','error'); return; }
+  entries.forEach(([sku, qty]) => {
+    const prod = S.products.find(p=>p.sku===sku);
+    if (!prod) return;
+    addSkuRow({
+      sku: prod.sku,
+      desc: prod.description_pt || '',
+      desc_en: prod.description_en || '',
+      oem_code: prod.oem_code || '',
+      ncm: prod.ncm || '',
+      model: prod.model || '',
+      packing: prod.packing || '',
+      unit_type: prod.unit_type || 'PÇ',
+      qtd: qty,
+      unit: prod.fob_usd || 0,
+      unitBRL: 0,
+      net_weight_kg: prod.net_weight_kg || 0,
+      gross_weight_kg: prod.gross_weight_kg || 0,
+      pcs_per_box: prod.pcs_per_box || 0,
+      length_cm: prod.length_cm || 0,
+      width_cm: prod.width_cm || 0,
+      height_cm: prod.height_cm || 0,
+      label_text: prod.label_text || '',
+      remark: prod.remark || '',
+      images: prod.images || [],
+    });
+  });
+  updateSkuTotal();
+  closeModal('modal-catalog');
+  toast(`${entries.length} produto(s) adicionado(s)`,'success');
+}
+
+// ─── DETAIL VIEW ─────────────────────────────────────────────────────────────
+function openDetail(id) {
+  const c = S.containers.find(x=>x.id===id);
+  if (!c) return;
+  S.detailContainer = c;
+  document.getElementById('detail-title').textContent = c.id;
+  const sup = c.supplier_id ? S.suppliers.find(s=>s.id===c.supplier_id) : null;
+  const statusLabel = {pedido:'Pedido',em_transito:'Em Trânsito',alfandega:'Alfândega',chegou:'Chegou'};
+  const totalUSD = (c.skus||[]).reduce((a,s)=>a+(+s.qtd||0)*(+s.unit||0),0);
+  const totalQty = (c.skus||[]).reduce((a,s)=>a+(+s.qtd||0),0);
+  const totalCBM = (c.skus||[]).reduce((a,s)=>{
+    const boxes = s.pcs_per_box ? Math.ceil(s.qtd/s.pcs_per_box) : 0;
+    const cbm = (s.length_cm||0)*(s.width_cm||0)*(s.height_cm||0)/1000000;
+    return a+cbm*boxes;
+  },0);
+  document.getElementById('detail-body').innerHTML = `
+    <div class="detail-grid" style="margin-bottom:16px">
+      <div class="detail-field"><div class="detail-field-label">Fornecedor</div><div class="detail-field-value">${c.forn||'—'}</div></div>
+      <div class="detail-field"><div class="detail-field-label">Invoice PI</div><div class="detail-field-value">${c.invoice||'—'}</div></div>
+      <div class="detail-field"><div class="detail-field-label">Status</div><div class="detail-field-value"><span class="card-status status-${c.status||'pedido'}">${statusLabel[c.status]||c.status}</span></div></div>
+      <div class="detail-field"><div class="detail-field-label">Pedido</div><div class="detail-field-value">${fmtDate(c.pedido)}</div></div>
+      <div class="detail-field"><div class="detail-field-label">Previsão</div><div class="detail-field-value">${fmtDate(c.prev)}</div></div>
+      <div class="detail-field"><div class="detail-field-label">Total US$</div><div class="detail-field-value highlight">US$ ${(+c.valor||totalUSD).toLocaleString('pt-BR',{minimumFractionDigits:2})}</div></div>
+      <div class="detail-field"><div class="detail-field-label">Câmbio</div><div class="detail-field-value">${c.cambio ? 'R$ '+c.cambio : '—'}</div></div>
+      <div class="detail-field"><div class="detail-field-label">Container</div><div class="detail-field-value">${c.container_type||'—'}</div></div>
+      <div class="detail-field"><div class="detail-field-label">POL → POD</div><div class="detail-field-value">${c.pol||'—'} → ${c.pod||'—'}</div></div>
+      <div class="detail-field"><div class="detail-field-label">Incoterm</div><div class="detail-field-value">${c.incoterm||'—'}</div></div>
+      <div class="detail-field"><div class="detail-field-label">Total Unidades</div><div class="detail-field-value">${totalQty.toLocaleString()}</div></div>
+      <div class="detail-field"><div class="detail-field-label">Total CBM</div><div class="detail-field-value">${totalCBM.toFixed(3)} m³</div></div>
+    </div>
+    ${c.obs ? `<div style="background:var(--bg3);padding:10px 12px;border-radius:6px;font-size:13px;color:var(--text2);margin-bottom:16px">${c.obs}</div>` : ''}
+    <div class="detail-section">
+      <h3>SKUs (${(c.skus||[]).length})</h3>
+      ${(c.skus||[]).map(s => {
+        const boxes = s.pcs_per_box ? Math.ceil(s.qtd/s.pcs_per_box) : 0;
+        const cbm = (s.length_cm||0)*(s.width_cm||0)*(s.height_cm||0)/1000000;
+        const totalCbm = cbm * boxes;
+        return `<div class="sku-detail-row">
+          <div class="sku-detail-name">
+            <span>${s.sku}</span>
+            ${s.ncm?`<span class="ncm-badge">${s.ncm}</span>`:''}
+            <span style="font-weight:400;font-size:13px;color:var(--text2)">${s.unit_type||''}</span>
+          </div>
+          <div class="sku-detail-desc">${s.desc||''}</div>
+          ${s.desc_en?`<div style="font-size:11px;color:var(--text3);margin-bottom:6px;font-style:italic">${s.desc_en}</div>`:''}
+          <div class="sku-detail-meta">
+            <span class="sku-detail-tag">Qtd: <strong>${(+s.qtd||0).toLocaleString()}</strong></span>
+            <span class="sku-detail-tag">FOB: <strong>US$ ${s.unit||0}</strong></span>
+            <span class="sku-detail-tag">Total: <strong>US$ ${((+s.qtd||0)*(+s.unit||0)).toLocaleString('pt-BR',{minimumFractionDigits:2})}</strong></span>
+            ${s.packing?`<span class="sku-detail-tag">${s.packing}</span>`:''}
+            ${s.model?`<span class="sku-detail-tag">${s.model}</span>`:''}
+            ${s.net_weight_kg?`<span class="sku-detail-tag">NW: ${s.net_weight_kg}kg/cx</span>`:''}
+            ${s.pcs_per_box?`<span class="sku-detail-tag">${s.pcs_per_box}pç/cx · ${boxes}cx</span>`:''}
+            ${totalCbm?`<span class="sku-detail-tag">${totalCbm.toFixed(3)} CBM</span>`:''}
+          </div>
+          ${(s.images||[]).length?`<div class="sku-images">${s.images.map(url=>`<img src="${url}" onclick="viewImg('${url}')" onerror="this.remove()">`).join('')}</div>`:''}
+        </div>`;
+      }).join('')}
+    </div>`;
+  openModal('modal-detail');
+}
+
+// ─── PRODUCTS ────────────────────────────────────────────────────────────────
+async function loadProducts() {
+  const { data, error } = await sb.from('products').select('*').order('sku');
+  if (error) throw error;
+  S.products = data || [];
+  renderProducts();
+}
+function setProdSearch(v) { S.prodSearch = v; renderProducts(); }
+function renderProducts() {
+  const el = document.getElementById('products-list');
+  let items = S.products;
+  if (S.prodSearch) {
+    const q = S.prodSearch.toLowerCase();
+    items = items.filter(p =>
+      (p.sku||'').toLowerCase().includes(q) ||
+      (p.description_pt||'').toLowerCase().includes(q) ||
+      (p.ncm||'').includes(q) ||
+      (p.model||'').toLowerCase().includes(q)
+    );
+  }
+  if (!items.length) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">📦</div><p>Nenhum produto cadastrado ainda</p></div>';
+    return;
+  }
+  el.innerHTML = `<table class="data-table">
+    <thead><tr>
+      <th>Foto</th><th>SKU</th><th>Descrição</th><th>NCM</th><th>Modelo</th>
+      <th>Packing</th><th>FOB US$</th><th>Pç/Cx</th><th>Dim (LxAxH cm)</th><th>Ações</th>
+    </tr></thead>
+    <tbody>${items.map(p => {
+      const img = (p.images||[])[0];
+      const thumb = img ? `<img class="sku-thumb" src="${img}" onclick="viewImg('${img}')" onerror="this.remove()">` : '<div class="sku-thumb-placeholder">📦</div>';
+      return `<tr>
+        <td>${thumb}</td>
+        <td><strong>${p.sku}</strong></td>
+        <td style="max-width:200px;white-space:normal">${p.description_pt||'—'}</td>
+        <td><span class="ncm-badge">${p.ncm||'—'}</span></td>
+        <td>${p.model||'—'}</td>
+        <td>${p.packing||'—'}</td>
+        <td class="highlight">${p.fob_usd ? 'US$ '+p.fob_usd : '—'}</td>
+        <td>${p.pcs_per_box||'—'}</td>
+        <td>${p.length_cm?`${p.length_cm}×${p.width_cm}×${p.height_cm}`:'—'}</td>
+        <td><div class="actions">
+          <button class="btn-ghost btn-sm" onclick="openProductModal(${JSON.stringify(p).replace(/"/g,'&quot;')})">✏</button>
+        </div></td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table>`;
+}
+
+let editingProductId = null;
+let productImages = []; // {url, file?}
+
+function openProductModal(p = null) {
+  editingProductId = p ? p.id : null;
+  document.getElementById('product-modal-title').textContent = p ? 'Editar Produto' : 'Novo Produto';
+  document.getElementById('p-delete-btn').style.display = p ? '' : 'none';
+  document.getElementById('p-sku').value = p?.sku || '';
+  document.getElementById('p-sku').readOnly = !!p;
+  document.getElementById('p-oem').value = p?.oem_code || '';
+  document.getElementById('p-ncm').value = p?.ncm || '';
+  document.getElementById('p-desc-pt').value = p?.description_pt || '';
+  document.getElementById('p-model').value = p?.model || '';
+  document.getElementById('p-desc-en').value = p?.description_en || '';
+  document.getElementById('p-packing').value = p?.packing || '';
+  document.getElementById('p-unit-type').value = p?.unit_type || 'PÇ';
+  document.getElementById('p-fob').value = p?.fob_usd || '';
+  document.getElementById('p-pcs-box').value = p?.pcs_per_box || '';
+  document.getElementById('p-nw').value = p?.net_weight_kg || '';
+  document.getElementById('p-gw').value = p?.gross_weight_kg || '';
+  document.getElementById('p-len').value = p?.length_cm || '';
+  document.getElementById('p-wid').value = p?.width_cm || '';
+  document.getElementById('p-hei').value = p?.height_cm || '';
+  document.getElementById('p-label').value = p?.label_text || '';
+  document.getElementById('p-remark').value = p?.remark || '';
+  productImages = (p?.images || []).map(url => ({ url }));
+  renderProductGallery();
+  openModal('modal-product');
+}
+
+function renderProductGallery() {
+  const gallery = document.getElementById('p-img-gallery');
+  gallery.innerHTML = productImages.map((img,i) =>
+    `<div class="img-gallery-item">
+      <img src="${img.url}" onerror="this.src=''">
+      <button class="del" onclick="removeProductImg(${i})">✕</button>
+    </div>`
+  ).join('');
+}
+function removeProductImg(i) { productImages.splice(i,1); renderProductGallery(); }
+
+async function handleProductImgs(input) {
+  for (const file of input.files) {
+    toast('Enviando imagem…','info');
+    const url = await uploadProductImage(file);
+    if (url) productImages.push({ url });
+  }
+  renderProductGallery();
+}
+function handleProductImgDrop(e) {
+  e.preventDefault();
+  document.getElementById('p-img-zone').classList.remove('drag');
+  const dt = e.dataTransfer;
+  if (dt.files.length) handleProductImgs({ files: dt.files });
+}
+
+async function uploadProductImage(file) {
+  try {
+    const ext = file.name.split('.').pop();
+    const path = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+    const { data, error } = await sb.storage.from('product-images').upload(path, file, { upsert: true });
+    if (error) throw error;
+    const { data: { publicUrl } } = sb.storage.from('product-images').getPublicUrl(path);
+    return publicUrl;
+  } catch(e) { toast('Erro no upload: '+e.message,'error'); return null; }
+}
+
+async function saveProduct() {
+  const sku = document.getElementById('p-sku').value.trim().toUpperCase();
+  if (!sku) { toast('Informe o SKU','error'); return; }
+  const data = {
+    sku,
+    oem_code: document.getElementById('p-oem').value.trim(),
+    ncm: document.getElementById('p-ncm').value.trim(),
+    description_pt: document.getElementById('p-desc-pt').value.trim(),
+    model: document.getElementById('p-model').value.trim(),
+    description_en: document.getElementById('p-desc-en').value.trim(),
+    packing: document.getElementById('p-packing').value.trim(),
+    unit_type: document.getElementById('p-unit-type').value,
+    fob_usd: +document.getElementById('p-fob').value || null,
+    pcs_per_box: +document.getElementById('p-pcs-box').value || null,
+    net_weight_kg: +document.getElementById('p-nw').value || null,
+    gross_weight_kg: +document.getElementById('p-gw').value || null,
+    length_cm: +document.getElementById('p-len').value || null,
+    width_cm: +document.getElementById('p-wid').value || null,
+    height_cm: +document.getElementById('p-hei').value || null,
+    label_text: document.getElementById('p-label').value.trim(),
+    remark: document.getElementById('p-remark').value.trim(),
+    images: productImages.map(i=>i.url),
+    updated_at: new Date().toISOString(),
+  };
+  try {
+    let err;
+    if (editingProductId) {
+      const { error } = await sb.from('products').update(data).eq('id', editingProductId);
+      err = error;
+    } else {
+      const { error } = await sb.from('products').insert(data);
+      err = error;
+    }
+    if (err) throw err;
+    toast('Produto salvo!','success');
+    closeModal('modal-product');
+    await loadProducts();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
+}
+async function deleteCurrentProduct() {
+  if (!editingProductId || !confirm('Excluir este produto?')) return;
+  try {
+    const { error } = await sb.from('products').delete().eq('id', editingProductId);
+    if (error) throw error;
+    toast('Produto excluído','info');
+    closeModal('modal-product');
+    await loadProducts();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
+}
+
+function exportProductsCSV() {
+  const header = ['SKU','Descrição PT','Descrição EN','NCM','OEM','Modelo','Packing','Unidade','FOB USD','Pçs/Cx','NW kg/cx','GW kg/cx','Compr cm','Larg cm','Alt cm','Label','Remark'];
+  const rows = S.products.map(p=>[p.sku,p.description_pt,p.description_en,p.ncm,p.oem_code,p.model,p.packing,p.unit_type,p.fob_usd,p.pcs_per_box,p.net_weight_kg,p.gross_weight_kg,p.length_cm,p.width_cm,p.height_cm,p.label_text,p.remark]);
+  downloadCSV([header,...rows],'catalogo_produtos.csv');
+}
+
+// ─── SUPPLIERS ───────────────────────────────────────────────────────────────
+async function loadSuppliers() {
+  const { data, error } = await sb.from('suppliers').select('*').order('name');
+  if (error) throw error;
+  S.suppliers = data || [];
+  renderSuppliers();
+}
+function renderSuppliers() {
+  const el = document.getElementById('suppliers-list');
+  if (!S.suppliers.length) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">🏭</div><p>Nenhum fornecedor cadastrado</p></div>';
+    return;
+  }
+  el.innerHTML = `<table class="data-table">
+    <thead><tr><th>Nome</th><th>Email</th><th>Tel</th><th>Fax</th><th>Incoterm</th><th>POL</th><th>POD</th><th>Ações</th></tr></thead>
+    <tbody>${S.suppliers.map(s=>`<tr>
+      <td><strong>${s.name}</strong><br><span style="font-size:11px;color:var(--text3)">${s.address||''}</span></td>
+      <td>${s.email||'—'}</td><td>${s.tel||'—'}</td><td>${s.fax||'—'}</td>
+      <td>${s.incoterm||'—'}</td><td>${s.pol||'—'}</td><td>${s.pod||'—'}</td>
+      <td><button class="btn-ghost btn-sm" onclick='openSupplierModal(${JSON.stringify(s).replace(/'/g,"&#39;")})'>✏ Editar</button></td>
+    </tr>`).join('')}</tbody>
+  </table>`;
+}
+
+let editingSupplierId = null;
+function openSupplierModal(s = null) {
+  editingSupplierId = s ? s.id : null;
+  document.getElementById('supplier-modal-title').textContent = s ? 'Editar Fornecedor' : 'Novo Fornecedor';
+  document.getElementById('s-delete-btn').style.display = s ? '' : 'none';
+  document.getElementById('s-name').value = s?.name || '';
+  document.getElementById('s-address').value = s?.address || '';
+  document.getElementById('s-website').value = s?.website || '';
+  document.getElementById('s-email').value = s?.email || '';
+  document.getElementById('s-fax').value = s?.fax || '';
+  document.getElementById('s-tel').value = s?.tel || '';
+  document.getElementById('s-incoterm').value = s?.incoterm || 'FOB';
+  document.getElementById('s-pol').value = s?.pol || 'SHANGHAI';
+  document.getElementById('s-pod').value = s?.pod || 'SANTOS';
+  document.getElementById('s-container-type').value = s?.container_type || '1*40HQ';
+  document.getElementById('s-payment-term').value = s?.payment_term || '';
+  document.getElementById('s-bank-bene-name').value = s?.bank_beneficiary_name || '';
+  document.getElementById('s-bank-account').value = s?.bank_account || '';
+  document.getElementById('s-bank-name').value = s?.bank_name || '';
+  document.getElementById('s-bank-swift').value = s?.bank_swift || '';
+  document.getElementById('s-bank-address').value = s?.bank_address || '';
+  document.getElementById('s-bank-acct-address').value = s?.bank_tel || '';
+  openModal('modal-supplier');
+}
+async function saveSupplier() {
+  const name = document.getElementById('s-name').value.trim();
+  if (!name) { toast('Informe o nome do fornecedor','error'); return; }
+  const data = {
+    name, address: document.getElementById('s-address').value.trim(),
+    website: document.getElementById('s-website').value.trim(),
+    email: document.getElementById('s-email').value.trim(),
+    fax: document.getElementById('s-fax').value.trim(),
+    tel: document.getElementById('s-tel').value.trim(),
+    incoterm: document.getElementById('s-incoterm').value,
+    pol: document.getElementById('s-pol').value.trim(),
+    pod: document.getElementById('s-pod').value.trim(),
+    container_type: document.getElementById('s-container-type').value.trim(),
+    payment_term: document.getElementById('s-payment-term').value.trim(),
+    bank_beneficiary_name: document.getElementById('s-bank-bene-name').value.trim(),
+    bank_account: document.getElementById('s-bank-account').value.trim(),
+    bank_name: document.getElementById('s-bank-name').value.trim(),
+    bank_swift: document.getElementById('s-bank-swift').value.trim(),
+    bank_address: document.getElementById('s-bank-address').value.trim(),
+    bank_tel: document.getElementById('s-bank-acct-address').value.trim(),
+    updated_at: new Date().toISOString(),
+  };
+  try {
+    let err;
+    if (editingSupplierId) {
+      const { error } = await sb.from('suppliers').update(data).eq('id', editingSupplierId);
+      err = error;
+    } else {
+      const { error } = await sb.from('suppliers').insert(data);
+      err = error;
+    }
+    if (err) throw err;
+    toast('Fornecedor salvo!','success');
+    closeModal('modal-supplier');
+    await loadSuppliers();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
+}
+async function deleteCurrentSupplier() {
+  if (!editingSupplierId || !confirm('Excluir fornecedor?')) return;
+  try {
+    const { error } = await sb.from('suppliers').delete().eq('id', editingSupplierId);
+    if (error) throw error;
+    toast('Fornecedor excluído','info');
+    closeModal('modal-supplier'); await loadSuppliers();
+  } catch(e) { toast('Erro: '+e.message,'error'); }
+}
+
+// ─── INVOICE EXPORT (Excel) ───────────────────────────────────────────────────
+function exportInvoice() {
+  const c = S.detailContainer;
+  if (!c) return;
+  const sup = c.supplier_id ? S.suppliers.find(s=>s.id===c.supplier_id) : null;
+  const wb = XLSX.utils.book_new();
+  const ws = {};
+  const R = (r,c) => XLSX.utils.encode_cell({r,c});
+  const set = (row,col,val,t='s') => { ws[R(row,col)] = { v: val, t }; };
+  const num = (row,col,val) => { if (val) ws[R(row,col)] = { v: +val, t:'n' }; };
+
+  // ROW 0: Title
+  set(0,0,'PROFORMA INVOICE');
+  // ROW 3: Shipper
+  set(3,0,'Shipper：');
+  set(3,1,sup?.name || c.forn || '');
+  set(3,10,`Fax: ${sup?.fax||''}`);
+  // ROW 4
+  set(4,1,sup?.address || '');
+  set(4,10,`Tel: ${sup?.tel||''}`);
+  // ROW 5
+  set(5,1,sup?.website||'');
+  set(5,10,`incoterm : ${c.incoterm||sup?.incoterm||'FOB'} - PORTO `);
+  // ROW 6
+  set(6,1,sup?.email||'');
+  set(6,10,`PI No.:  ${c.invoice||''}`);
+  // ROW 7
+  set(7,10,`Date: ${c.pedido ? new Date(c.pedido+'T00:00:00').toLocaleDateString('zh') : ''}`);
+  // ROW 8: Buyer
+  set(8,0,'Buyer:');
+  set(8,1,'ELYON DO BRASIL LTDA');
+  set(8,10,`Container:  ${c.container_type||'1*40HQ'}`);
+  // ROW 9
+  set(9,1,'Rua Hermógenes La Regina nº 236 - loja 01 - Centro - CEP: 08550-230 - Poá, São Paulo, Brasil   CNPJ: 06.021.079/0001-13');
+  set(9,10,`Payment Term: ${c.payment_term||sup?.payment_term||'TT'}`);
+  // ROW 10
+  set(10,1,'55 11 94338-2994');
+  set(10,10,`POL: ${c.pol||'SHANGHAI'}`);
+  // ROW 11
+  set(11,10,`POD: ${c.pod||'SANTOS'}`);
+
+  // ROW 13: Headers
+  const headers = ['S/N','OEM CODE','NCM','','PRODUCT DESCRIPTION','MODEL','PHOTO','PACKING','QTY','UNIT','FOB USD','AMOUNT USD','Remark','Etiqueta','N.W(kg）','G.W(kg)(Kg/CAIXA)','Total KG','QTY PÇS /CAIXA','QUANTIDADE TOTAL DE CAIXAS','COMPRIMENTO\n(CM)','Largo\n(CM)','Alto\n(CM)','Measure ment\n（CBM)','Total CBM'];
+  headers.forEach((h,i) => set(13,i,h));
+
+  // DATA ROWS (start at row 14)
+  const skus = c.skus || [];
+  skus.forEach((s,i) => {
+    const row = 14 + i;
+    const boxes = s.pcs_per_box ? s.qtd/s.pcs_per_box : 0;
+    const cbm = (s.length_cm||0)*(s.width_cm||0)*(s.height_cm||0)/1000000;
+    const totalCbm = cbm * boxes;
+    const nwTotal = (s.net_weight_kg||0) * boxes;
+    num(row,0,i+1);
+    set(row,1,s.oem_code||'');
+    set(row,2,s.ncm||'');
+    set(row,4,s.desc_en||s.desc||'');
+    set(row,5,s.model||'');
+    set(row,7,s.packing||'');
+    num(row,8,s.qtd);
+    set(row,9,s.unit_type||'PÇ');
+    num(row,10,s.unit);
+    num(row,11,(+s.qtd||0)*(+s.unit||0));
+    set(row,12,s.remark||'');
+    set(row,13,s.label_text||'');
+    if (s.net_weight_kg) num(row,14,s.net_weight_kg);
+    if (s.gross_weight_kg) num(row,15,s.gross_weight_kg);
+    if (nwTotal) num(row,16,+nwTotal.toFixed(2));
+    if (s.pcs_per_box) num(row,17,s.pcs_per_box);
+    if (boxes) num(row,18,+Math.ceil(boxes).toFixed(0));
+    if (s.length_cm) num(row,19,s.length_cm);
+    if (s.width_cm) num(row,20,s.width_cm);
+    if (s.height_cm) num(row,21,s.height_cm);
+    if (cbm) num(row,22,+cbm.toFixed(6));
+    if (totalCbm) num(row,23,+totalCbm.toFixed(3));
+  });
+
+  // TOTAL ROW
+  const totalRow = 14 + skus.length;
+  set(totalRow,0,'TOTAL');
+  const totalUSD = skus.reduce((a,s)=>a+(+s.qtd||0)*(+s.unit||0),0);
+  num(totalRow,8,skus.reduce((a,s)=>a+(+s.qtd||0),0));
+  num(totalRow,11,+totalUSD.toFixed(2));
+  const totalCBM2 = skus.reduce((a,s)=>{
+    const boxes = s.pcs_per_box ? s.qtd/s.pcs_per_box : 0;
+    const cbm = (s.length_cm||0)*(s.width_cm||0)*(s.height_cm||0)/1000000;
+    return a+cbm*boxes;
+  },0);
+  if (totalCBM2) num(totalRow,23,+totalCBM2.toFixed(3));
+
+  // FOOTER
+  const fr = totalRow + 2;
+  const amt = totalUSD.toFixed(2);
+  set(fr,0,`COUNTRY OF ORIGN : CHINA`);
+  set(fr+1,0,'COUNTRY OF PROCEDENCE / ADQUISION : ');
+  set(fr+1,5,'BRAZIL');
+  const totalNW = skus.reduce((a,s)=>{const bx=s.pcs_per_box?s.qtd/s.pcs_per_box:0;return a+(s.net_weight_kg||0)*bx;},0);
+  const totalGW = skus.reduce((a,s)=>{const bx=s.pcs_per_box?s.qtd/s.pcs_per_box:0;return a+(s.gross_weight_kg||0)*bx;},0);
+  const totalBoxes = skus.reduce((a,s)=>a+(s.pcs_per_box?Math.ceil(s.qtd/s.pcs_per_box):0),0);
+  set(fr+2,0,`GW(KGS): ${totalGW.toFixed(2)} // NW(KGS): ${totalNW.toFixed(2)} // QTD.VOLUMES: ${totalBoxes} CARTONS // CBM: ${totalCBM2.toFixed(2)} CBM`);
+  set(fr+4,0,'Payments Term:');
+  set(fr+4,4,c.payment_term||sup?.payment_term||'30% Advance before production; Balance before shipment.');
+  set(fr+5,0,'Goods ready time:');
+  set(fr+5,4,'30-45 days after receiving the Advance Payment');
+  // Bank info
+  if (sup?.bank_name) {
+    set(fr+8,0,'For T/T payment, please note our bank infomation is as below:');
+    set(fr+10,0,`Beneficiary Bank: ${sup.bank_name}`);
+    set(fr+11,0,`SWIFT BIC: ${sup.bank_swift||''}`);
+    set(fr+12,0,`ADD: ${sup.bank_address||''}`);
+    set(fr+14,0,`Beneficiary Name: ${sup.bank_beneficiary_name||''}`);
+    set(fr+15,0,`Account No: ${sup.bank_account||''}`);
+    set(fr+16,0,`ACCOUNT ADD: ${sup.bank_tel||''}`);
+  }
+  set(fr+18,6,'Confirmed by buyer');
+
+  // Merges
+  ws['!merges'] = [
+    {s:{r:0,c:0},e:{r:0,c:23}},
+    {s:{r:3,c:1},e:{r:3,c:9}},
+    {s:{r:4,c:1},e:{r:4,c:9}},
+    {s:{r:5,c:1},e:{r:5,c:9}},
+    {s:{r:6,c:1},e:{r:6,c:9}},
+    {s:{r:8,c:1},e:{r:8,c:9}},
+    {s:{r:9,c:1},e:{r:9,c:9}},
+    {s:{r:13,c:2},e:{r:13,c:3}},
+  ];
+
+  // Column widths
+  ws['!cols'] = [
+    {wch:5},{wch:22},{wch:12},{wch:4},{wch:45},{wch:20},{wch:8},{wch:14},
+    {wch:8},{wch:6},{wch:9},{wch:12},{wch:20},{wch:22},{wch:10},{wch:12},
+    {wch:10},{wch:10},{wch:12},{wch:12},{wch:8},{wch:8},{wch:10},{wch:10},
+  ];
+
+  ws['!ref'] = XLSX.utils.encode_range({s:{r:0,c:0},e:{r:fr+20,c:23}});
+  XLSX.utils.book_append_sheet(wb, ws, '1');
+  XLSX.writeFile(wb, `PI_${c.id}_${c.invoice||'draft'}.xlsx`);
+  toast('Invoice exportada!','success');
+}
+
+// ─── CSV EXPORT ──────────────────────────────────────────────────────────────
+function exportCSV() {
+  const header = ['Container','Fornecedor','Invoice','Pedido','Previsão','Status','Valor US$','Câmbio','SKU','Descrição','Qtd','Unit US$'];
+  const rows = S.containers.flatMap(c =>
+    (c.skus||[]).map(s => [c.id,c.forn,c.invoice,c.pedido,c.prev,c.status,c.valor,c.cambio,s.sku,s.desc,s.qtd,s.unit])
+  );
+  downloadCSV([header,...rows], 'containers.csv');
+}
+function downloadCSV(rows, filename) {
+  const csv = rows.map(r => r.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = filename; a.click();
+}
+
+// ─── TABS ────────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  const idx = ['containers','products','suppliers'].indexOf(tab);
+  document.querySelectorAll('.nav-tab')[idx].classList.add('active');
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+function fmtDate(d) {
+  if (!d) return '—';
+  try { return new Date(d+'T00:00:00').toLocaleDateString('pt-BR'); } catch { return d; }
+}
+function esc(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function viewImg(url) {
+  document.getElementById('imgview-src').src = url;
+  openModal('modal-imgview');
+}
+function toast(msg, type='info') {
+  const el = document.createElement('div');
+  el.className = `toast-msg ${type}`;
+  el.textContent = msg;
+  document.getElementById('toast').appendChild(el);
+  setTimeout(()=>el.remove(), 3500);
+}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay && overlay.id !== 'modal-imgview') {
+      // don't close heavy modals on outside click
+    }
+  });
+});
+// ESC to close
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+// Pre-fill config modal
+document.getElementById('cfg-url').value = SBURL;
+document.getElementById('cfg-key').value = SBKEY;
 </script>
 </body>
 </html>
