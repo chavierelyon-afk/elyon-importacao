@@ -460,7 +460,7 @@ nav{display:flex;gap:2px;flex:1}
       <h2 id="detail-title">Container</h2>
       <div style="display:flex;gap:6px;margin-left:auto">
         <button class="btn-ghost btn-sm" onclick="editCurrentContainer()">✏ Editar</button>
-        <button class="btn-yellow btn-sm" onclick="exportInvoice()">⬇ Invoice Excel</button>
+        <button class="btn-yellow btn-sm" onclick="exportInvoice()">⬇ Invoice CSV</button>
         <button class="modal-close" onclick="closeModal('modal-detail')">✕</button>
       </div>
     </div>
@@ -732,13 +732,54 @@ nav{display:flex;gap:2px;flex:1}
   </div>
 </div>
 
-<script type="module">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-window.supabase = { createClient };
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 'use strict';
+// ─── SUPABASE REST CLIENT (sem CDN externo) ──────────────────────────────────
+function mkSB(url, key) {
+  const h0 = { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' };
+  function builder(method, table, body, extraH = {}) {
+    const qp = [];
+    const self = {
+      select(cols = '*') { qp.unshift('select=' + cols); return self; },
+      order(col, { ascending = true } = {}) { qp.push('order=' + col + '.' + (ascending ? 'asc' : 'desc')); return self; },
+      eq(col, val)  { qp.push(col + '=eq.' + encodeURIComponent(val)); return self; },
+      then(res, rej) {
+        const qs = qp.join('&');
+        const fullUrl = url + '/rest/v1/' + table + (qs ? '?' + qs : '');
+        fetch(fullUrl, { method, headers: { ...h0, ...extraH }, body: body != null ? JSON.stringify(body) : undefined })
+          .then(r => r.status === 204
+            ? { data: null, error: null }
+            : r.json().then(j => r.ok ? { data: j, error: null } : { data: null, error: j }))
+          .then(res, rej);
+      }
+    };
+    return self;
+  }
+  return {
+    from(table) {
+      return {
+        select: (cols = '*') => builder('GET', table).select(cols),
+        insert: (data) => builder('POST', table, Array.isArray(data) ? data : [data], { Prefer: 'return=representation' }),
+        upsert:  (data) => builder('POST', table, Array.isArray(data) ? data : [data], { Prefer: 'resolution=merge-duplicates,return=representation' }),
+        update: (data) => builder('PATCH', table, data, { Prefer: 'return=representation' }),
+        delete: ()     => builder('DELETE', table, null),
+      };
+    },
+    storage: {
+      from(bucket) {
+        return {
+          upload(path, file, opts = {}) {
+            const h = { apikey: key, Authorization: `Bearer ${key}`, ...(opts.upsert ? { 'x-upsert': 'true' } : {}) };
+            return fetch(url + '/storage/v1/object/' + bucket + '/' + path, { method: 'POST', headers: h, body: file })
+              .then(r => r.json().then(j => r.ok ? { data: j, error: null } : { data: null, error: j }));
+          },
+          getPublicUrl(path) { return { data: { publicUrl: url + '/storage/v1/object/public/' + bucket + '/' + path } }; }
+        };
+      }
+    }
+  };
+}
+
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let sb = null;
 let SBURL = '', SBKEY = '';
@@ -767,7 +808,7 @@ async function init() {
   }
 }
 function initSB() {
-  try { sb = supabase.createClient(SBURL, SBKEY); } catch(e) { toast('Erro ao inicializar Supabase: '+e.message,'error'); }
+  try { sb = mkSB(SBURL, SBKEY); } catch(e) { toast('Erro ao inicializar Supabase: '+e.message,'error'); }
 }
 async function loadAll() {
   setSyncStatus('⟳ carregando…', '#aaa');
@@ -1569,140 +1610,48 @@ function exportInvoice() {
   const c = S.detailContainer;
   if (!c) return;
   const sup = c.supplier_id ? S.suppliers.find(s=>s.id===c.supplier_id) : null;
-  const wb = XLSX.utils.book_new();
-  const ws = {};
-  const R = (r,c) => XLSX.utils.encode_cell({r,c});
-  const set = (row,col,val,t='s') => { ws[R(row,col)] = { v: val, t }; };
-  const num = (row,col,val) => { if (val) ws[R(row,col)] = { v: +val, t:'n' }; };
-
-  // ROW 0: Title
-  set(0,0,'PROFORMA INVOICE');
-  // ROW 3: Shipper
-  set(3,0,'Shipper：');
-  set(3,1,sup?.name || c.forn || '');
-  set(3,10,`Fax: ${sup?.fax||''}`);
-  // ROW 4
-  set(4,1,sup?.address || '');
-  set(4,10,`Tel: ${sup?.tel||''}`);
-  // ROW 5
-  set(5,1,sup?.website||'');
-  set(5,10,`incoterm : ${c.incoterm||sup?.incoterm||'FOB'} - PORTO `);
-  // ROW 6
-  set(6,1,sup?.email||'');
-  set(6,10,`PI No.:  ${c.invoice||''}`);
-  // ROW 7
-  set(7,10,`Date: ${c.pedido ? new Date(c.pedido+'T00:00:00').toLocaleDateString('zh') : ''}`);
-  // ROW 8: Buyer
-  set(8,0,'Buyer:');
-  set(8,1,'ELYON DO BRASIL LTDA');
-  set(8,10,`Container:  ${c.container_type||'1*40HQ'}`);
-  // ROW 9
-  set(9,1,'Rua Hermógenes La Regina nº 236 - loja 01 - Centro - CEP: 08550-230 - Poá, São Paulo, Brasil   CNPJ: 06.021.079/0001-13');
-  set(9,10,`Payment Term: ${c.payment_term||sup?.payment_term||'TT'}`);
-  // ROW 10
-  set(10,1,'55 11 94338-2994');
-  set(10,10,`POL: ${c.pol||'SHANGHAI'}`);
-  // ROW 11
-  set(11,10,`POD: ${c.pod||'SANTOS'}`);
-
-  // ROW 13: Headers
-  const headers = ['S/N','OEM CODE','NCM','','PRODUCT DESCRIPTION','MODEL','PHOTO','PACKING','QTY','UNIT','FOB USD','AMOUNT USD','Remark','Etiqueta','N.W(kg）','G.W(kg)(Kg/CAIXA)','Total KG','QTY PÇS /CAIXA','QUANTIDADE TOTAL DE CAIXAS','COMPRIMENTO\n(CM)','Largo\n(CM)','Alto\n(CM)','Measure ment\n（CBM)','Total CBM'];
-  headers.forEach((h,i) => set(13,i,h));
-
-  // DATA ROWS (start at row 14)
+  // Exportar como CSV formatado (abre direto no Excel)
+  const rows = [];
+  rows.push(['PROFORMA INVOICE']);
+  rows.push([]);
+  rows.push([]);
+  rows.push(['Shipper:', sup?.name||c.forn||'', '', '', '', '', '', '', '', '', `Fax: ${sup?.fax||''}`]);
+  rows.push(['', sup?.address||'', '', '', '', '', '', '', '', '', `Tel: ${sup?.tel||''}`]);
+  rows.push(['', sup?.website||'', '', '', '', '', '', '', '', '', `Incoterm: ${c.incoterm||sup?.incoterm||'FOB'}`]);
+  rows.push(['', sup?.email||'', '', '', '', '', '', '', '', '', `PI No.: ${c.invoice||''}`]);
+  rows.push(['', '', '', '', '', '', '', '', '', '', `Date: ${c.pedido||''}`]);
+  rows.push(['Buyer:', 'ELYON DO BRASIL LTDA', '', '', '', '', '', '', '', '', `Container: ${c.container_type||'1*40HQ'}`]);
+  rows.push(['', 'Rua Hermógenes La Regina 236 - Poá SP - CNPJ: 06.021.079/0001-13', '', '', '', '', '', '', '', '', `Payment: ${c.payment_term||sup?.payment_term||'TT'}`]);
+  rows.push(['', '55 11 94338-2994', '', '', '', '', '', '', '', '', `POL: ${c.pol||'SHANGHAI'}`]);
+  rows.push(['', '', '', '', '', '', '', '', '', '', `POD: ${c.pod||'SANTOS'}`]);
+  rows.push([]);
+  rows.push(['S/N','OEM CODE','NCM','','PRODUCT DESCRIPTION','MODEL','PHOTO','PACKING','QTY','UNIT','FOB USD','AMOUNT USD','Remark','Etiqueta','N.W kg/cx','G.W kg/cx','Total KG','Pçs/cx','Qtd Caixas','Compr cm','Larg cm','Alt cm','CBM/cx','Total CBM']);
   const skus = c.skus || [];
   skus.forEach((s,i) => {
-    const row = 14 + i;
     const boxes = s.pcs_per_box ? s.qtd/s.pcs_per_box : 0;
     const cbm = (s.length_cm||0)*(s.width_cm||0)*(s.height_cm||0)/1000000;
     const totalCbm = cbm * boxes;
     const nwTotal = (s.net_weight_kg||0) * boxes;
-    num(row,0,i+1);
-    set(row,1,s.oem_code||'');
-    set(row,2,s.ncm||'');
-    set(row,4,s.desc_en||s.desc||'');
-    set(row,5,s.model||'');
-    set(row,7,s.packing||'');
-    num(row,8,s.qtd);
-    set(row,9,s.unit_type||'PÇ');
-    num(row,10,s.unit);
-    num(row,11,(+s.qtd||0)*(+s.unit||0));
-    set(row,12,s.remark||'');
-    set(row,13,s.label_text||'');
-    if (s.net_weight_kg) num(row,14,s.net_weight_kg);
-    if (s.gross_weight_kg) num(row,15,s.gross_weight_kg);
-    if (nwTotal) num(row,16,+nwTotal.toFixed(2));
-    if (s.pcs_per_box) num(row,17,s.pcs_per_box);
-    if (boxes) num(row,18,+Math.ceil(boxes).toFixed(0));
-    if (s.length_cm) num(row,19,s.length_cm);
-    if (s.width_cm) num(row,20,s.width_cm);
-    if (s.height_cm) num(row,21,s.height_cm);
-    if (cbm) num(row,22,+cbm.toFixed(6));
-    if (totalCbm) num(row,23,+totalCbm.toFixed(3));
+    rows.push([i+1,s.oem_code||'',s.ncm||'','',s.desc_en||s.desc||'',s.model||'','',s.packing||'',+s.qtd||0,s.unit_type||'PÇ',+s.unit||0,(+s.qtd||0)*(+s.unit||0),s.remark||'',s.label_text||'',s.net_weight_kg||'',s.gross_weight_kg||'',nwTotal?+nwTotal.toFixed(2):'',s.pcs_per_box||'',boxes?Math.ceil(boxes):'',s.length_cm||'',s.width_cm||'',s.height_cm||'',cbm?+cbm.toFixed(6):'',totalCbm?+totalCbm.toFixed(3):'']);
   });
-
-  // TOTAL ROW
-  const totalRow = 14 + skus.length;
-  set(totalRow,0,'TOTAL');
   const totalUSD = skus.reduce((a,s)=>a+(+s.qtd||0)*(+s.unit||0),0);
-  num(totalRow,8,skus.reduce((a,s)=>a+(+s.qtd||0),0));
-  num(totalRow,11,+totalUSD.toFixed(2));
-  const totalCBM2 = skus.reduce((a,s)=>{
-    const boxes = s.pcs_per_box ? s.qtd/s.pcs_per_box : 0;
-    const cbm = (s.length_cm||0)*(s.width_cm||0)*(s.height_cm||0)/1000000;
-    return a+cbm*boxes;
-  },0);
-  if (totalCBM2) num(totalRow,23,+totalCBM2.toFixed(3));
-
-  // FOOTER
-  const fr = totalRow + 2;
-  const amt = totalUSD.toFixed(2);
-  set(fr,0,`COUNTRY OF ORIGN : CHINA`);
-  set(fr+1,0,'COUNTRY OF PROCEDENCE / ADQUISION : ');
-  set(fr+1,5,'BRAZIL');
+  const totalCBM2 = skus.reduce((a,s)=>{const bx=s.pcs_per_box?s.qtd/s.pcs_per_box:0;return a+(s.length_cm||0)*(s.width_cm||0)*(s.height_cm||0)/1000000*bx;},0);
   const totalNW = skus.reduce((a,s)=>{const bx=s.pcs_per_box?s.qtd/s.pcs_per_box:0;return a+(s.net_weight_kg||0)*bx;},0);
   const totalGW = skus.reduce((a,s)=>{const bx=s.pcs_per_box?s.qtd/s.pcs_per_box:0;return a+(s.gross_weight_kg||0)*bx;},0);
   const totalBoxes = skus.reduce((a,s)=>a+(s.pcs_per_box?Math.ceil(s.qtd/s.pcs_per_box):0),0);
-  set(fr+2,0,`GW(KGS): ${totalGW.toFixed(2)} // NW(KGS): ${totalNW.toFixed(2)} // QTD.VOLUMES: ${totalBoxes} CARTONS // CBM: ${totalCBM2.toFixed(2)} CBM`);
-  set(fr+4,0,'Payments Term:');
-  set(fr+4,4,c.payment_term||sup?.payment_term||'30% Advance before production; Balance before shipment.');
-  set(fr+5,0,'Goods ready time:');
-  set(fr+5,4,'30-45 days after receiving the Advance Payment');
-  // Bank info
+  rows.push(['TOTAL','','','','','','','',skus.reduce((a,s)=>a+(+s.qtd||0),0),'','',+totalUSD.toFixed(2),'','','','',+totalNW.toFixed(2),'',totalBoxes,'','','','' ,+totalCBM2.toFixed(3)]);
+  rows.push([]);
+  rows.push([`COUNTRY OF ORIGIN: CHINA`]);
+  rows.push([`GW: ${totalGW.toFixed(2)} kg // NW: ${totalNW.toFixed(2)} kg // Volumes: ${totalBoxes} cartons // CBM: ${totalCBM2.toFixed(2)}`]);
+  rows.push([]);
+  rows.push(['Payment Term:', c.payment_term||sup?.payment_term||'30% adiantamento antes produção; saldo antes embarque']);
   if (sup?.bank_name) {
-    set(fr+8,0,'For T/T payment, please note our bank infomation is as below:');
-    set(fr+10,0,`Beneficiary Bank: ${sup.bank_name}`);
-    set(fr+11,0,`SWIFT BIC: ${sup.bank_swift||''}`);
-    set(fr+12,0,`ADD: ${sup.bank_address||''}`);
-    set(fr+14,0,`Beneficiary Name: ${sup.bank_beneficiary_name||''}`);
-    set(fr+15,0,`Account No: ${sup.bank_account||''}`);
-    set(fr+16,0,`ACCOUNT ADD: ${sup.bank_tel||''}`);
+    rows.push([]);
+    rows.push([`Banco: ${sup.bank_name} | SWIFT: ${sup.bank_swift||''} | Beneficiário: ${sup.bank_beneficiary_name||''}`]);
+    rows.push([`Conta: ${sup.bank_account||''} | End. banco: ${sup.bank_address||''}`]);
   }
-  set(fr+18,6,'Confirmed by buyer');
-
-  // Merges
-  ws['!merges'] = [
-    {s:{r:0,c:0},e:{r:0,c:23}},
-    {s:{r:3,c:1},e:{r:3,c:9}},
-    {s:{r:4,c:1},e:{r:4,c:9}},
-    {s:{r:5,c:1},e:{r:5,c:9}},
-    {s:{r:6,c:1},e:{r:6,c:9}},
-    {s:{r:8,c:1},e:{r:8,c:9}},
-    {s:{r:9,c:1},e:{r:9,c:9}},
-    {s:{r:13,c:2},e:{r:13,c:3}},
-  ];
-
-  // Column widths
-  ws['!cols'] = [
-    {wch:5},{wch:22},{wch:12},{wch:4},{wch:45},{wch:20},{wch:8},{wch:14},
-    {wch:8},{wch:6},{wch:9},{wch:12},{wch:20},{wch:22},{wch:10},{wch:12},
-    {wch:10},{wch:10},{wch:12},{wch:12},{wch:8},{wch:8},{wch:10},{wch:10},
-  ];
-
-  ws['!ref'] = XLSX.utils.encode_range({s:{r:0,c:0},e:{r:fr+20,c:23}});
-  XLSX.utils.book_append_sheet(wb, ws, '1');
-  XLSX.writeFile(wb, `PI_${c.id}_${c.invoice||'draft'}.xlsx`);
-  toast('Invoice exportada!','success');
+  downloadCSV(rows, `PI_${c.id}_${c.invoice||'draft'}.csv`);
+  toast('Invoice exportada (CSV)!','success');
 }
 
 // ─── CSV EXPORT ──────────────────────────────────────────────────────────────
